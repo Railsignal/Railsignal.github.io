@@ -15977,6 +15977,43 @@ body.dark-theme #hmisDashboard .hmis-nested .hmis-nested-title{color:#f0eaff!imp
   },false);
 })();
 </script>
+
+<style id="rails-manual-light-cards-v4">
+/* Explicit light-mode override after legacy !important navy selectors. */
+body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item,
+body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item{
+ background:linear-gradient(145deg,#ffffff,#f0edff)!important;
+ border:1.5px solid #c6b9f1!important;
+ box-shadow:0 5px 14px rgba(82,66,153,.13)!important;
+}
+body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-name,
+body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-name{
+ color:#26345b!important;
+}
+body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item:active,
+body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item:active{
+ background:#e7e1ff!important;
+}
+</style>
+<script id="rails-manual-outside-touch-v4">
+(function(){
+ const selector='.hmis-nested[data-parent="irsemSubmenu"],.hmis-nested[data-parent="irtemSubmenu"]';
+ function closeAll(){
+  const root=document.getElementById('hmisDashboard');if(!root)return;
+  root.querySelectorAll(selector).forEach(n=>n.remove());
+  root.querySelectorAll('.hmis-item[data-nested-id]').forEach(b=>b.setAttribute('aria-expanded','false'));
+ }
+ // Capture pointerdown covers touch, mouse and stylus; do not close on selector controls.
+ document.addEventListener('pointerdown',function(e){
+  const root=document.getElementById('hmisDashboard');if(!root||!root.querySelector(selector))return;
+  if(e.target.closest('#hmisDashboard .hmis-item[data-nested-id="irsemSubmenu"],#hmisDashboard .hmis-item[data-nested-id="irtemSubmenu"]'))return;
+  if(e.target.closest('#hmisDashboard '+selector.replace(',',',#hmisDashboard '))){
+   if(!e.target.closest('.hmis-item'))return;
+  }
+  closeAll();
+ },true);
+})();
+</script>
 </body>
 </html>
 <!-- v100: Samsung/tablet landscape sidebar expansion/bleed fix -->
