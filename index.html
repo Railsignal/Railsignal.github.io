@@ -15952,27 +15952,29 @@ body.dark-theme #hmisDashboard .hmis-nested .hmis-nested-title{color:#f0eaff!imp
  #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] > .hmis-grid{grid-template-columns:1fr!important}
 }
 </style>
-<script id="rails-inline-manual-autoscroll-controller-v1">
+<script id="rails-inline-manual-autoscroll-controller-v2">
+/* Delegated handler: HMIS is built later and lives in its own scroll container. */
 (function(){
-  const root=document.getElementById('hmisDashboard');if(!root)return;
-  root.addEventListener('click',function(event){
-    const tile=event.target.closest('.hmis-item[data-nested-id]');
-    if(!tile||!root.contains(tile))return;
+  function scrollToManual(tile,id){
+    const root=document.getElementById('hmisDashboard');
+    if(!root)return;
+    const grid=tile.closest('.hmis-grid');
+    const selector=grid&&Array.from(grid.children).find(el=>el.classList.contains('hmis-nested')&&el.dataset.parent===id);
+    if(!selector||!selector.isConnected)return;
+    const r=selector.getBoundingClientRect(), h=root.getBoundingClientRect();
+    const desired=root.scrollTop+r.top-h.top-Math.max(18,(h.height-r.height)*.38);
+    const max=root.scrollHeight-root.clientHeight;
+    root.scrollTo({top:Math.max(0,Math.min(max,desired)),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  }
+  document.addEventListener('click',function(e){
+    const tile=e.target.closest('#hmisDashboard .hmis-item[data-nested-id]');
+    if(!tile)return;
     const id=tile.dataset.nestedId;
     if(id!=='irsemSubmenu'&&id!=='irtemSubmenu')return;
-    // The existing dashboard click handler builds the inline selector synchronously.
-    // Scroll its own scroll container, not the window (body uses overflow:hidden).
-    requestAnimationFrame(function(){requestAnimationFrame(function(){
-      const grid=tile.closest('.hmis-grid');
-      const selector=grid&&Array.from(grid.children).find(x=>x.classList.contains('hmis-nested')&&x.dataset.parent===id);
-      if(!selector)return;
-      const scrollRoot=root;
-      const box=selector.getBoundingClientRect();
-      const host=scrollRoot.getBoundingClientRect();
-      const top=scrollRoot.scrollTop+(box.top-host.top)-Math.max(12,(host.height-box.height)/2);
-      scrollRoot.scrollTo({top:Math.max(0,top),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
-    });});
-  });
+    // Native click creates submenu, then allow layout to settle.
+    requestAnimationFrame(()=>requestAnimationFrame(()=>scrollToManual(tile,id)));
+    setTimeout(()=>scrollToManual(tile,id),180);
+  },false);
 })();
 </script>
 </body>
@@ -18289,4 +18291,15 @@ body.dark-theme #hmisDashboard .hmis-bottom button{color:#d8d7ff!important}
 @media(max-width:699px){#hmisDashboard .hmis-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}#hmisDashboard .hmis-card{padding:15px 10px!important}#hmisDashboard .hmis-item{min-height:125px!important}}
 @media(max-width:360px){#hmisDashboard .hmis-grid{gap:9px 6px!important}#hmisDashboard .hmis-item{padding:9px 2px!important}#hmisDashboard .hmis-name{font-size:9px!important}}
 @media(prefers-reduced-motion:reduce){#hmisDashboard .hmis-item{transition:none!important}}
+</style>
+
+<style id="rails-manual-autoscroll-final-v2">
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]{background:linear-gradient(135deg,#e8eaff,#f6f1ff)!important;border:2px solid #9b8aee!important;box-shadow:0 7px 20px #6555c42a!important}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-nested-title,#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-nested-title{color:#26236d!important;font-weight:900!important}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item,#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item{background:linear-gradient(135deg,#192f60,#10234a)!important;border:1px solid #647db9!important;min-height:76px!important;padding:12px!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-name,#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-name{color:#fff!important;font-size:clamp(11px,1.6vw,15px)!important;text-align:left!important}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-icon,#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-icon{width:45px!important;height:45px!important;min-width:45px!important;border-radius:12px!important}
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]{background:linear-gradient(135deg,#1a2750,#272044)!important;border-color:#a78bfa!important}
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-nested-title,body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-nested-title{color:#f0eaff!important}
+@media(max-width:430px){#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"]>.hmis-grid,#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]>.hmis-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style>
