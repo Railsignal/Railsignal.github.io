@@ -16068,6 +16068,41 @@ body.dark-theme .hmis-summary-back {background:#17253c;color:#f1f5ff;border-colo
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
+
+<!-- v8: Final desktop precedence. Preserve touch-tablet layout in either orientation. -->
+<style id="rails-laptop-desktop-restore-v8">
+@media (pointer:fine) and (hover:hover), (min-width:1367px) {
+ body.hmis-home-active #hmisDashboard, #hmisDashboard {display:none!important}
+ body.hmis-home-active #appSidebar {display:flex!important;position:relative!important;transform:none!important;visibility:visible!important;width:290px!important;flex:0 0 290px!important}
+ body.hmis-home-active #dashboardView,
+ body.hmis-home-active #dashboardView.hmis-original-summary {display:flex!important;flex-direction:column!important;overflow-y:auto!important;height:auto!important;width:100%!important}
+ body.hmis-home-active #mainContent {padding:14px 18px!important;overflow-y:auto!important}
+ body.hmis-home-active .menu-toggle-btn,body.hmis-home-active #mobileMenuBtn {display:none!important}
+ body.hmis-home-active #dashboardView .process-track-container {grid-template-columns:repeat(10,minmax(0,1fr))!important;overflow-x:visible!important}
+ body.hmis-home-active #dashboardView .dash-charts-grid {grid-template-columns:2fr 1fr!important}
+ #mobileBottomNav,.hmis-bottom {display:none!important}
+}
+</style>
+<script id="rails-laptop-desktop-restore-controller-v8">
+(function(){
+ function desktop(){return matchMedia('(pointer:fine) and (hover:hover), (min-width:1367px)').matches}
+ function sync(){
+  const panel=document.getElementById('hmisDashboard'),dash=document.getElementById('dashboardView'),main=document.getElementById('mainContent');
+  if(!panel||!dash||!main)return;
+  if(desktop()){
+   if(dash.parentElement!==main)main.insertBefore(dash,panel.nextSibling);
+   panel.classList.remove('hmis-summary-page','hmis-summary-open');
+  }else if(dash.parentElement!==panel){
+   const cards=panel.querySelectorAll(':scope > .hmis-card');
+   const last=cards.length?cards[cards.length-1]:null;
+   if(last)last.after(dash);else panel.appendChild(dash);
+  }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync);else sync();
+ window.addEventListener('resize',sync,{passive:true});
+ window.addEventListener('pageshow',sync);
+})();
+</script>
 </body>
 </html>
 <!-- v100: Samsung/tablet landscape sidebar expansion/bleed fix -->
