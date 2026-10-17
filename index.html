@@ -15995,23 +15995,25 @@ body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .h
  background:#e7e1ff!important;
 }
 </style>
-<script id="rails-manual-outside-touch-v4">
+<script id="rails-manual-outside-touch-v5">
+/* Close on completed click, never on pointerdown: removing a panel during
+   pointerdown can retarget the subsequent click to an underlying tile. */
 (function(){
  const selector='.hmis-nested[data-parent="irsemSubmenu"],.hmis-nested[data-parent="irtemSubmenu"]';
- function closeAll(){
-  const root=document.getElementById('hmisDashboard');if(!root)return;
-  root.querySelectorAll(selector).forEach(n=>n.remove());
-  root.querySelectorAll('.hmis-item[data-nested-id]').forEach(b=>b.setAttribute('aria-expanded','false'));
+ const trigger='#hmisDashboard .hmis-item[data-nested-id="irsemSubmenu"],#hmisDashboard .hmis-item[data-nested-id="irtemSubmenu"]';
+ function closeAll(root){
+   root.querySelectorAll(selector).forEach(n=>n.remove());
+   root.querySelectorAll('.hmis-item[data-nested-id]').forEach(b=>b.setAttribute('aria-expanded','false'));
  }
- // Capture pointerdown covers touch, mouse and stylus; do not close on selector controls.
- document.addEventListener('pointerdown',function(e){
-  const root=document.getElementById('hmisDashboard');if(!root||!root.querySelector(selector))return;
-  if(e.target.closest('#hmisDashboard .hmis-item[data-nested-id="irsemSubmenu"],#hmisDashboard .hmis-item[data-nested-id="irtemSubmenu"]'))return;
-  if(e.target.closest('#hmisDashboard '+selector.replace(',',',#hmisDashboard '))){
-   if(!e.target.closest('.hmis-item'))return;
-  }
-  closeAll();
- },true);
+ document.addEventListener('click',function(e){
+   const root=document.getElementById('hmisDashboard');
+   if(!root||!root.querySelector(selector))return;
+   if(e.target.closest(trigger))return;
+   if(e.target.closest(selector))return;
+   // The original click target remains intact until all normal click handlers
+   // have finished; empty-space taps cannot activate a tile beneath the panel.
+   closeAll(root);
+ },false);
 })();
 </script>
 </body>
