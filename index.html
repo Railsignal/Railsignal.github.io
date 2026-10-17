@@ -16016,6 +16016,58 @@ body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .h
  },false);
 })();
 </script>
+
+<!-- Mobile/tablet-only isolated S&T summary page; desktop layout untouched. -->
+<style id="rail-summary-isolated-mobile-v1">
+@media (max-width:1366px) {
+ body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-card:not(.hmis-summary-launcher),
+ body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-bottom,
+ body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-no-results {display:none!important}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-top .hmis-search {display:none!important}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page #dashboardView.hmis-original-summary {display:flex!important;flex-direction:column!important;flex:0 0 auto!important;height:auto!important;overflow:visible!important}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page {overflow-y:auto!important;overscroll-behavior-y:contain!important}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-summary-launcher {position:relative}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-summary-arrow {transform:rotate(180deg)}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-summary-back {display:inline-flex!important}
+}
+.hmis-summary-back {display:none;align-items:center;justify-content:center;gap:6px;border:1px solid #a7b9d3;border-radius:10px;background:#fff;color:#17385e;font-weight:800;padding:9px 12px;cursor:pointer;white-space:nowrap}
+body.dark-theme .hmis-summary-back {background:#17253c;color:#f1f5ff;border-color:#526381}
+</style>
+<script id="rail-summary-isolated-mobile-controller-v1">
+(function(){
+ function init(){
+  const panel=document.getElementById('hmisDashboard');
+  if(!panel||panel.dataset.summaryPageInstalled)return;
+  const launch=panel.querySelector('.hmis-summary-toggle');
+  if(!launch)return;
+  panel.dataset.summaryPageInstalled='1';
+  const back=document.createElement('button');back.type='button';back.className='hmis-summary-back';
+  back.innerHTML='<i class="fa-solid fa-arrow-left"></i> Back to Home';
+  const top=panel.querySelector('.hmis-top');
+  if(top)top.insertBefore(back,top.firstChild);
+  function mobile(){return matchMedia('(max-width:1366px)').matches}
+  function exit(){panel.classList.remove('hmis-summary-page');panel.classList.remove('hmis-summary-open');launch.setAttribute('aria-expanded','false');}
+  back.addEventListener('click',function(e){e.stopPropagation();exit();panel.scrollTo({top:0,behavior:'instant'});});
+  launch.addEventListener('click',function(e){
+   if(!mobile())return;
+   // The original handler runs before this listener; restore the desired isolated state.
+   const open=!panel.classList.contains('hmis-summary-page');
+   panel.classList.toggle('hmis-summary-page',open);
+   panel.classList.toggle('hmis-summary-open',open);
+   launch.setAttribute('aria-expanded',String(open));
+   if(open){requestAnimationFrame(function(){panel.scrollTo({top:0,behavior:'instant'});if(typeof updateDashboardView==='function')updateDashboardView();});}
+  });
+  panel.querySelectorAll('.hmis-bottom button').forEach(function(b){b.addEventListener('click',exit)});
+  window.addEventListener('resize',function(){if(!mobile())exit()},{passive:true});
+  document.addEventListener('click',function(e){
+   if(!panel.classList.contains('hmis-summary-page'))return;
+   if(e.target.closest('#hmisDashboard .hmis-summary-back, #hmisDashboard .hmis-summary-toggle'))return;
+   if(e.target.closest('header .menu-toggle-btn, #appSidebar .nav-item, #appSidebar .home-btn'))exit();
+  },true);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
 </body>
 </html>
 <!-- v100: Samsung/tablet landscape sidebar expansion/bleed fix -->
