@@ -18303,3 +18303,91 @@ body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],body.dar
 body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-nested-title,body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-nested-title{color:#f0eaff!important}
 @media(max-width:430px){#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"]>.hmis-grid,#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]>.hmis-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style>
+
+
+<!-- v3: Unified IRSEM/IRTEM selector geometry and global exclusive close -->
+<style id="rails-manual-uniform-v3">
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],
+#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]{
+ --manual-accent:#8b78ec;
+ padding:16px!important;border:2px solid var(--manual-accent)!important;
+ border-radius:20px!important;background:linear-gradient(135deg,#edeaff,#f8f5ff)!important;
+ box-shadow:0 8px 24px rgba(74,57,160,.17)!important;
+}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"]>.hmis-grid,
+#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]>.hmis-grid{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;
+}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item,
+#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item{
+ box-sizing:border-box!important;min-width:0!important;min-height:86px!important;
+ display:flex!important;flex-direction:row!important;justify-content:flex-start!important;
+ align-items:center!important;gap:12px!important;padding:12px!important;
+ border-radius:15px!important;background:linear-gradient(140deg,#1a315e,#10254b)!important;
+ border:1.5px solid #7185c4!important;box-shadow:0 5px 13px rgba(15,28,65,.22)!important;
+}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-icon,
+#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-icon{
+ width:50px!important;height:50px!important;min-width:50px!important;flex:0 0 50px!important;
+ margin:0!important;border-radius:13px!important;
+}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-name,
+#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-name{
+ color:#fff!important;text-align:left!important;font-size:clamp(11px,1.45vw,15px)!important;
+ line-height:1.35!important;font-weight:800!important;overflow-wrap:break-word!important;
+}
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]{
+ background:linear-gradient(135deg,#1a2750,#282145)!important;
+ border-color:#9b85ff!important;box-shadow:0 8px 24px rgba(0,0,0,.3)!important;
+}
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item,
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item{
+ background:linear-gradient(140deg,#1a315e,#10254b)!important;
+ border-color:#7185c4!important;min-height:86px!important;
+}
+@media(max-width:430px){
+ #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item,
+ #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item{gap:8px!important;padding:9px!important;}
+ #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-icon,
+ #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-icon{width:40px!important;height:40px!important;min-width:40px!important;flex-basis:40px!important;}
+}
+</style>
+<script id="rails-manual-exclusive-close-v3">
+(function(){
+ const rootId='hmisDashboard';
+ function closeManuals(except){
+  const root=document.getElementById(rootId);if(!root)return;
+  root.querySelectorAll('.hmis-nested[data-parent="irsemSubmenu"],.hmis-nested[data-parent="irtemSubmenu"]').forEach(node=>{
+   if(except && node.dataset.parent===except)return;
+   node.remove();
+  });
+  root.querySelectorAll('.hmis-item[data-nested-id]').forEach(btn=>{
+   const id=btn.dataset.nestedId;
+   btn.setAttribute('aria-expanded',String(!!root.querySelector('.hmis-nested[data-parent="'+id+'"]')));
+  });
+ }
+ // Capture click: other dashboard cards, section headings, search, navigation, and sidebar close any open manual.
+ // Manual parent tiles retain their original toggle and auto-scroll handlers.
+ document.addEventListener('click',function(e){
+  const root=document.getElementById(rootId);if(!root)return;
+  const tile=e.target.closest('#hmisDashboard .hmis-item[data-nested-id]');
+  if(tile && (tile.dataset.nestedId==='irsemSubmenu'||tile.dataset.nestedId==='irtemSubmenu')){
+   closeManuals(tile.dataset.nestedId);return;
+  }
+  const withinManual=e.target.closest('#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"]');
+  // Clicking an actual submenu option navigates away and closes it; blank selector background does not.
+  if(withinManual&&!e.target.closest('.hmis-item'))return;
+  if(e.target.closest('#hmisDashboard .hmis-item,#hmisDashboard .hmis-title,#hmisDashboard .hmis-bottom,#hmisDashboard .hmis-summary-toggle,#hmisDashboard .hmis-search,#appSidebar .nav-item,#appSidebar .sidebar-section-title,header,.menu-toggle-btn')){
+   closeManuals();
+  }
+ },true);
+ // When any category or HOME is opened via another route (including JS), close the selector.
+ document.addEventListener('click',function(e){
+  if(e.target.closest('#hmisDashboard .hmis-item[data-nested-id]'))return;
+  if(e.target.closest('#hmisDashboard .hmis-item,#hmisDashboard .hmis-bottom,#appSidebar .nav-item')){
+   requestAnimationFrame(()=>closeManuals());
+  }
+ },false);
+})();
+</script>
