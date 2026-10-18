@@ -6751,66 +6751,38 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon i
  }
 }
 </style>
-
-<!-- RailSNTGyan login-only motion enhancement; all portal styles unchanged -->
-<style id="rail-login-motion-only">
+<style id="rsnt-premium-login-only">
 #loginScreen{isolation:isolate;overflow:hidden}
-#loginScreen::before{content:"";position:absolute;inset:-35%;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 18% 30%,rgba(0,194,207,.19),transparent 43%),radial-gradient(ellipse at 82% 72%,rgba(21,88,166,.23),transparent 45%),radial-gradient(ellipse at 65% 14%,rgba(249,115,22,.07),transparent 35%);animation:railAurora 19s ease-in-out infinite alternate}
+#loginScreen::before{content:"";position:absolute;inset:-18%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 16% 26%,rgba(0,206,255,.25),transparent 42%),radial-gradient(ellipse at 84% 75%,rgba(0,118,255,.22),transparent 44%),radial-gradient(ellipse at 78% 17%,rgba(249,115,22,.09),transparent 35%);animation:rsntAurora 21s ease-in-out infinite alternate;will-change:transform,opacity}
+#loginScreen .rsnt-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#loginScreen .rsnt-particle{position:absolute;left:var(--x);top:var(--y);width:var(--sz);height:var(--sz);border-radius:50%;background:var(--color);box-shadow:0 0 9px 2px var(--color);opacity:.52;animation:rsntParticle var(--dur) ease-in-out var(--delay) infinite alternate}
 #loginScreen .login-card{position:relative;z-index:1;isolation:isolate}
-#loginScreen .login-card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;z-index:-1;background:conic-gradient(from var(--rail-angle,0deg),rgba(249,115,22,.7),transparent 25%,rgba(0,209,227,.7) 50%,transparent 75%,rgba(249,115,22,.7));opacity:.42;filter:blur(9px);animation:railBorder 11s linear infinite}
-#loginScreen .login-logo-container{animation:railLogoFloat 5s ease-in-out infinite;will-change:transform}
-#loginScreen .login-input-wrapper:focus-within .login-input{border-color:#22d3ee!important;box-shadow:0 0 0 3px rgba(34,211,238,.2),0 0 18px rgba(34,211,238,.34)!important;transition:box-shadow .3s,border-color .3s}
-#loginScreen .login-btn{position:relative;overflow:hidden;background-size:220% 220%;animation:railButtonShine 7s ease-in-out infinite}
-#loginScreen .login-btn:active{transform:translateY(2px) scale(.99)}
-#loginScreen .login-btn.rail-login-loading{pointer-events:none;opacity:.85}
-#loginScreen .rail-login-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:white;border-radius:50%;animation:railSpin .8s linear infinite}
-#loginScreen .rail-motion-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-#loginScreen .rail-motion-particles span{position:absolute;bottom:-12px;width:3px;height:3px;border-radius:50%;background:#67e8f9;opacity:.4;animation:railParticle var(--dur) linear infinite;animation-delay:var(--delay);left:var(--x)}
-#loginScreen .rail-motion-particles span:nth-child(3n){background:#fb923c}
-#railLoginWelcome{position:fixed;inset:0;z-index:100001;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;background:radial-gradient(circle at 50% 35%,#0c4757,#07101d 70%);color:#e5edf7;opacity:0;pointer-events:none;transition:opacity .3s ease}
-#railLoginWelcome.rail-show{opacity:1;pointer-events:auto}
-#railLoginWelcome .rail-welcome-brand{font-size:clamp(26px,6vw,42px);font-weight:900;color:#5ee7e7}
-#railLoginWelcome .rail-welcome-brand b{color:#fb923c}
-#railLoginWelcome .rail-welcome-icon{font-size:48px;animation:railLogoFloat 3s ease-in-out infinite}
-@keyframes railAurora{to{transform:translate(7%,-5%) rotate(7deg)}}
-@keyframes railBorder{to{transform:rotate(360deg)}}
-@keyframes railLogoFloat{50%{transform:translateY(-6px)}}
-@keyframes railButtonShine{50%{filter:brightness(1.13)}}
-@keyframes railSpin{to{transform:rotate(360deg)}}
-@keyframes railParticle{to{transform:translateY(-105vh);opacity:0}}
-@media(prefers-reduced-motion:reduce){#loginScreen::before,#loginScreen .login-card::before,#loginScreen .login-logo-container,#loginScreen .login-btn,#loginScreen .rail-motion-particles span,#railLoginWelcome .rail-welcome-icon{animation:none!important}}
+#loginScreen .login-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;border:1.5px solid rgba(0,208,255,.65);box-shadow:0 0 13px rgba(0,198,255,.26),inset 0 0 12px rgba(0,174,255,.08);animation:rsntBorder 7s ease-in-out infinite alternate}
+#loginScreen .login-logo-container{animation:rsntFloat 4s ease-in-out infinite alternate;box-shadow:0 0 20px rgba(0,207,255,.32),0 0 38px rgba(0,175,255,.14),inset 0 1px 1px rgba(255,255,255,.5)!important}
+#loginScreen .login-input:focus{border-color:#00d8ff!important;box-shadow:0 0 0 2px rgba(0,218,255,.48),0 0 17px rgba(0,202,255,.46),inset 0 0 6px rgba(0,204,255,.13)!important;transition:border-color .25s,box-shadow .25s!important}
+#loginScreen .login-btn{background-size:180% 180%;animation:rsntButton 8s ease-in-out infinite alternate}
+#loginScreen .login-btn:active{transform:scale(.98)!important}
+#loginScreen .login-btn.rsnt-loading{cursor:wait;opacity:.95}
+#loginScreen .rsnt-spinner{width:17px;height:17px;display:inline-block;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:rsntSpin .75s linear infinite}
+#loginScreen.rsnt-welcoming .login-card{opacity:0;transform:scale(.94);transition:opacity .32s,transform .32s;pointer-events:none}
+#loginScreen .rsnt-welcome{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;color:#f8fafc;opacity:0;pointer-events:none;transform:scale(.94);transition:opacity .36s,transform .5s;padding:20px}
+#loginScreen.rsnt-welcoming .rsnt-welcome{opacity:1;transform:scale(1)}
+#loginScreen .rsnt-welcome-logo{width:126px;height:126px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.98) 0 51%,rgba(0,200,255,.28) 73%,transparent 75%);box-shadow:0 0 0 2px rgba(0,205,255,.45),0 0 35px rgba(0,200,255,.65);position:relative}
+#loginScreen .rsnt-welcome-logo::after{content:"";position:absolute;inset:-15px;border:1px solid rgba(0,211,255,.4);border-radius:50%;animation:rsntRing 2s ease-out infinite}
+#loginScreen .rsnt-welcome-logo svg{width:92px;height:92px}
+#loginScreen .rsnt-welcome-title{font-size:clamp(24px,5vw,35px);font-weight:900}.rsnt-welcome-title span{color:#fb923c}
+#loginScreen .rsnt-welcome-sub{font-size:17px}
+#loginScreen.rsnt-welcome-out .rsnt-welcome{opacity:0;transform:scale(1.09)}
+@keyframes rsntAurora{from{transform:translate3d(-3%,2%,0) rotate(-3deg);opacity:.65}to{transform:translate3d(4%,-3%,0) rotate(4deg);opacity:1}}
+@keyframes rsntParticle{to{transform:translate3d(12px,-25px,0);opacity:.15}}
+@keyframes rsntBorder{from{box-shadow:0 0 8px rgba(0,198,255,.15),inset 0 0 8px rgba(0,174,255,.06)}to{box-shadow:0 0 20px rgba(0,198,255,.45),inset 0 0 16px rgba(0,174,255,.13)}}
+@keyframes rsntFloat{to{transform:translateY(-5px)}}
+@keyframes rsntButton{to{background-position:100% 100%}}
+@keyframes rsntSpin{to{transform:rotate(360deg)}}
+@keyframes rsntRing{to{transform:scale(1.22);opacity:0}}
+@media(max-width:600px){#loginScreen .rsnt-particle:nth-child(n+8){display:none}}
+@media(prefers-reduced-motion:reduce){#loginScreen::before,#loginScreen .rsnt-particle,#loginScreen .login-card::after,#loginScreen .login-logo-container,#loginScreen .login-btn,#loginScreen .rsnt-spinner,#loginScreen .rsnt-welcome-logo::after{animation:none!important}#loginScreen .rsnt-welcome,#loginScreen .login-card{transition:none!important}}
 </style>
-<style id="rail-login-visual-fidelity-v2">
-/* Login only: stronger reference-style light without modifying application UI. */
-#loginScreen::before{inset:-18%;background:radial-gradient(ellipse at 12% 22%,rgba(0,211,226,.32),transparent 44%),radial-gradient(ellipse at 83% 68%,rgba(16,106,197,.35),transparent 46%),radial-gradient(ellipse at 72% 18%,rgba(249,115,22,.13),transparent 40%);animation:railAurora 13s ease-in-out infinite alternate}
-#loginScreen .login-card{overflow:visible!important}
-#loginScreen .login-card::before{inset:-4px;opacity:.85;filter:blur(11px);animation:railBorder 8s linear infinite}
-#loginScreen .login-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 2px 0 0 rgba(34,211,238,.52),inset -2px 0 0 rgba(249,115,22,.27),0 0 22px rgba(0,209,227,.2)}
-#loginScreen .login-logo-container{box-shadow:0 0 0 7px rgba(0,194,207,.08),0 0 30px rgba(0,209,227,.35),0 12px 30px rgba(0,0,0,.25)!important}
-#loginScreen .rail-motion-particles span{width:4px;height:4px;opacity:.7;box-shadow:0 0 8px currentColor}
-#loginScreen .login-btn{background-image:linear-gradient(110deg,#07527b,#0a81ac,#0b3b60)!important;background-size:220% 220%!important}
-/* Chrome opening a downloaded content:// HTML can request a desktop-sized
-   layout viewport on some Android devices. Scale ONLY the login card in that case. */
-html.rail-login-wide-viewport #loginScreen .login-card{transform:scale(var(--rail-login-fit-scale,1.75))!important;transform-origin:center center!important;animation:none!important}
-@media(prefers-reduced-motion:reduce){#loginScreen .login-card::before{animation:none!important}}
-</style>
-<script id="rail-login-mobile-viewport-guard">
-(function(){
- function fix(){
-  var mobile=/Android.*Mobile|iPhone|iPod/i.test(navigator.userAgent);
-  var wide=mobile && window.innerWidth>600 && window.innerWidth>screen.width*1.35;
-  document.documentElement.classList.toggle('rail-login-wide-viewport',wide);
-  if(wide){var card=document.querySelector('#loginScreen .login-card');if(card){
-   var desired=Math.min(window.innerWidth*.88,window.innerWidth-36);
-   var base=card.offsetWidth;
-   var scale=Math.min(2.1,Math.max(1,desired/Math.max(1,base)));
-   document.documentElement.style.setProperty('--rail-login-fit-scale',scale.toFixed(3));
-  }}
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix,{once:true});else fix();
- window.addEventListener('resize',fix);
-})();
-</script>
 </head>
 <script id="rn-theme-prebody-v33">
 (function(){
@@ -6835,6 +6807,8 @@ html.rail-login-wide-viewport #loginScreen .login-card{transform:scale(var(--rai
 
   <!-- FULL PAGE LOGIN SCREEN -->
   <div id="loginScreen">
+    <div class="rsnt-particles" aria-hidden="true"></div>
+    <div class="rsnt-welcome" aria-live="polite"><div class="rsnt-welcome-logo"></div><div class="rsnt-welcome-title">Welcome to <strong>RailSNT<span>Gyan</span></strong></div><div class="rsnt-welcome-sub">🙏 Great to see you again!</div></div>
     <div class="login-card">
       <div class="login-brand-wrapper">
         <!-- PROMINENT CENTERED LOGO ABOVE BRAND TEXT -->
@@ -6978,7 +6952,7 @@ html.rail-login-wide-viewport #loginScreen .login-card{transform:scale(var(--rai
         </div>
       </div>
 
-      <button type="button" class="login-btn" onclick="checkPortalPassword()">
+      <button type="button" class="login-btn" id="rsntLoginButton" onclick="checkPortalPassword()">
         <i class="fa-solid fa-right-to-bracket"></i> Login
       </button>
 
@@ -6987,22 +6961,6 @@ html.rail-login-wide-viewport #loginScreen .login-card{transform:scale(var(--rai
       </div>
     </div>
   </div>
-
-
-<script id="rail-login-motion-script">
-(function(){
-function init(){
- const screen=document.getElementById('loginScreen');if(!screen)return;
- const particles=document.createElement('div');particles.className='rail-motion-particles';particles.setAttribute('aria-hidden','true');
- for(let i=0;i<13;i++){const dot=document.createElement('span');dot.style.setProperty('--x',((i*37+11)%97)+'%');dot.style.setProperty('--dur',(15+i%6*3)+'s');dot.style.setProperty('--delay',(-i*2.7)+'s');particles.appendChild(dot)}screen.insertBefore(particles,screen.firstChild);
- const welcome=document.createElement('div');welcome.id='railLoginWelcome';welcome.setAttribute('role','status');welcome.setAttribute('aria-live','polite');welcome.innerHTML='<div class="rail-welcome-icon" aria-hidden="true">🙏</div><div>Welcome to</div><div class="rail-welcome-brand">RailSNT<b>Gyan</b></div>';
- document.body.appendChild(welcome);
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-window.railLoginMotionBusy=function(busy){const btn=document.querySelector('#loginScreen .login-btn');if(!btn)return;if(busy){if(!btn.dataset.railOriginal)btn.dataset.railOriginal=btn.innerHTML;btn.classList.add('rail-login-loading');btn.disabled=true;btn.innerHTML='<span class="rail-login-spinner" aria-hidden="true"></span> Logging in...'}else{btn.classList.remove('rail-login-loading');btn.disabled=false;if(btn.dataset.railOriginal)btn.innerHTML=btn.dataset.railOriginal}};
-window.railLoginMotionWelcome=function(){const el=document.getElementById('railLoginWelcome');if(!el)return;el.classList.add('rail-show');setTimeout(()=>el.classList.remove('rail-show'),1100)};
-})();
-</script>
 
   <!-- HEADER -->
   <header id="mainHeader">
@@ -8310,8 +8268,8 @@ window.railLoginMotionWelcome=function(){const el=document.getElementById('railL
     function railSetLoginVisible(visible) {
       const screen = document.getElementById('loginScreen');
       if (!screen) return;
-      document.documentElement.classList.toggle('portal-session-auth', !visible);
-      screen.style.display = visible ? 'flex' : 'none';
+      document.documentElement.classList.toggle('portal-session-auth', !visible && !(typeof rsntManualLogin !== 'undefined' && rsntManualLogin));
+      screen.style.display = (visible || (typeof rsntManualLogin !== 'undefined' && rsntManualLogin)) ? 'flex' : 'none';
       document.documentElement.classList.remove('rail-auth-pending');
     }
 
@@ -8351,14 +8309,58 @@ window.railLoginMotionWelcome=function(){const el=document.getElementById('railL
       railSetLoginVisible(true);
     });
 
+    // Login-only presentation: original Firebase authentication and authorization remain authoritative.
+    let rsntLoginBusy = false;
+    let rsntManualLogin = false;
+    function rsntButtonState(loading) {
+      const btn = document.getElementById('rsntLoginButton');
+      if (!btn) return;
+      btn.disabled = loading;
+      btn.classList.toggle('rsnt-loading', loading);
+      btn.innerHTML = loading ? '<span class="rsnt-spinner" aria-hidden="true"></span> Logging in...' : '<i class="fa-solid fa-right-to-bracket"></i> Login';
+    }
+    function rsntWelcomeStart() {
+      const screen = document.getElementById('loginScreen');
+      if (!screen) return;
+      const logo = screen.querySelector('.login-logo-svg');
+      const target = screen.querySelector('.rsnt-welcome-logo');
+      if (logo && target && !target.firstElementChild) {
+        const clone = logo.cloneNode(true);
+        clone.removeAttribute('class');
+        clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+        target.appendChild(clone);
+      }
+      screen.classList.add('rsnt-welcoming');
+    }
+    function rsntWelcomeEnd() {
+      const screen = document.getElementById('loginScreen');
+      if (screen) screen.classList.add('rsnt-welcome-out');
+      return new Promise(resolve => setTimeout(resolve, 350));
+    }
+    (function rsntInitParticles(){
+      const holder = document.querySelector('#loginScreen .rsnt-particles');
+      if (!holder) return;
+      for (let i=0;i<14;i++) {
+        const dot=document.createElement('span'); dot.className='rsnt-particle';
+        dot.style.setProperty('--x', ((i*67+13)%97)+'%');
+        dot.style.setProperty('--y', ((i*41+9)%91)+'%');
+        dot.style.setProperty('--sz', (i%3+2)+'px');
+        dot.style.setProperty('--color', ['#04d8ff','#248cff','#ff9a35'][i%3]);
+        dot.style.setProperty('--dur', (8+i%6)+'s');
+        dot.style.setProperty('--delay', (-i*.9)+'s');holder.appendChild(dot);
+      }
+    })();
     async function checkPortalPassword() {
+      if (rsntLoginBusy) return;
       const email = document.getElementById('pageEmailInput').value.trim();
       const password = document.getElementById('pagePasswordInput').value;
       const errorMsg = document.getElementById('loginErrorMsg');
       errorMsg.style.display = 'none';
       if (!email || !password) { errorMsg.textContent = 'Please enter email and password.'; errorMsg.style.display = 'block'; return; }
+      rsntLoginBusy = true;
+      rsntManualLogin = true;
+      rsntButtonState(true);
       try {
-        if (window.railLoginMotionBusy) railLoginMotionBusy(true);
         await railSessionPersistenceReady;
         const credential = await auth.signInWithEmailAndPassword(email, password);
         const result = await credential.user.getIdTokenResult(true);
@@ -8366,10 +8368,16 @@ window.railLoginMotionWelcome=function(){const el=document.getElementById('railL
         await railApplyUser(credential.user);
         if (!sessionStorage.getItem('secr_portal_authorized')) throw new Error('Authorization not completed');
         document.getElementById('pagePasswordInput').value = '';
+        // Show welcome only for an explicitly successful manual sign-in.
+        railSetLoginVisible(true);
+        rsntWelcomeStart();
+        await new Promise(resolve => setTimeout(resolve, 1750));
+        await rsntWelcomeEnd();
+        railSetLoginVisible(false);
+        document.getElementById('loginScreen').classList.remove('rsnt-welcoming','rsnt-welcome-out');
         sessionStorage.removeItem('importantLinksReturnState');
         document.querySelectorAll('.modal-overlay').forEach(modal => { modal.style.display = 'none'; });
         goHome(false);
-        if (window.railLoginMotionWelcome) railLoginMotionWelcome();
         try {
           history.replaceState({ view: 'guard', railsntgyan: true }, '', window.location.href);
           history.pushState({ view: 'home', railsntgyan: true }, '', window.location.href);
@@ -8378,8 +8386,12 @@ window.railLoginMotionWelcome=function(){const el=document.getElementById('railL
         console.error('Firebase sign-in failed:', error.code || error.message);
         errorMsg.textContent = 'Login failed. Check email/password and your connection.';
         errorMsg.style.display = 'block';
+        railSetLoginVisible(true);
+        document.getElementById('loginScreen').classList.remove('rsnt-welcoming','rsnt-welcome-out');
       } finally {
-        if (window.railLoginMotionBusy) railLoginMotionBusy(false);
+        rsntManualLogin = false;
+        rsntLoginBusy = false;
+        rsntButtonState(false);
       }
     }
 
