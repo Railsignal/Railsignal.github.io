@@ -2,6 +2,18 @@
 <head>
   <meta charset="UTF-8">
   <meta id="railsViewportMeta" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <script id="rails-tablet-viewport-core">
+  (function () {
+    // Android tablets: landscape often reports 1280 CSS px, wrongly triggering desktop styles.
+    // Keep the existing <=1024px tablet CSS active without changing laptop breakpoints.
+    var ua = navigator.userAgent || '';
+    var androidTablet = /Android/i.test(ua) && !/Mobile/i.test(ua);
+    var samsungTab = /SM-X216|SM-X210|SM-X218|SM-X215|SM-X216B/i.test(ua);
+    if (!(androidTablet || samsungTab)) return;
+    var meta = document.getElementById('railsViewportMeta');
+    if (meta) meta.setAttribute('content', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+  })();
+  </script>
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#07101d">
   <!-- v83: Dark theme is the default from the very first paint, including BFCache/back navigation. -->
@@ -2172,7 +2184,7 @@ html.rail-saved-light body:not(.dark-theme) {
     /* ========================================================
        ULTRA COMPACT RESPONSIVE DESIGN (TABLET & MOBILE)
        ======================================================== */
-    @media (max-width: 1024px) and (pointer: coarse) {
+    @media (max-width: 1024px) {
       :root {
         --col-1-w: 42px;
         --col-2-min-w: 110px;
@@ -4097,7 +4109,7 @@ body.v58-chapterwise #mainRecordTable td.v58-description-col{
    ============================================================ */
 
 /* Proper word-boundary wrapping for normal table text. */
-@media (max-width:1024px) and (pointer: coarse){
+@media (max-width:1024px){
   html, body { max-width:100%; }
   main, #tableViewSection, .table-container { min-width:0; max-width:100%; }
   .table-container{
@@ -4327,7 +4339,7 @@ body.v58-chapterwise #mainRecordTable td.v58-description-col{
 
 <style id="v82-mobile-tablet-header-tagline-visible">
 /* v82: Keep the existing Learn | Explore | Apply | Excel tagline visible on mobile/tablet only. */
-@media (max-width: 1024px) and (pointer: coarse) {
+@media (max-width: 1024px) {
   #mainHeader .brand-tagline-motto {
     display: flex !important;
     align-items: center !important;
@@ -4450,7 +4462,7 @@ body:not(.dark-theme) #dashboardView .infographic-title-tag {
       touch-action: pan-y;
       scrollbar-gutter: stable;
     }
-    @media (max-width: 1024px) and (pointer: coarse) {
+    @media (max-width: 1024px) {
       #appSidebar > .collapsible-group:not(.collapsed) > .nav-list {
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
@@ -4790,7 +4802,7 @@ body.dark-theme .btn-success{background:linear-gradient(135deg,#059669,#047857)!
 <style id="v-tablet-home-full-width-fix">
 /* Tablet-only Home/dashboard width correction.
    Scope: 769px–1024px only. No table, data, Firebase, navigation or desktop/mobile logic changed. */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) and (pointer:coarse) {
   html, body {
     width: 100% !important;
     max-width: 100% !important;
@@ -4867,7 +4879,7 @@ body.dark-theme .btn-success{background:linear-gradient(135deg,#059669,#047857)!
 /* Mobile/tablet drawer only:
    Expanded subsection list stays below its parent without consuming the entire
    remaining sidebar height, so the following main section headers remain nearby. */
-@media (max-width: 1024px) and (pointer: coarse) {
+@media (max-width: 1024px) {
   #appSidebar {
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -5438,7 +5450,7 @@ body.dark-theme #grpImportantLinks > .sidebar-section-title {
   No ::before/::after pseudo-element is allowed to recreate header wording.
   This prevents duplicate labels and guarantees identical names/order across views.
 */
-@media (max-width: 1024px) and (pointer: coarse) {
+@media (max-width: 1024px) {
   #mainRecordTable thead th,
   #mainRecordTable thead td {
     text-transform: none !important;
@@ -5732,7 +5744,7 @@ body.dark-theme #appSidebar .nav-item.selected {
 <!-- v13: HOME responsive desktop scaling — preserve tablet/mobile; use large screens instead of leaving empty space -->
 <style id="v13-home-large-screen-responsive-fix">
 /* Normal laptop / Full-HD desktop: stable 9-card row and balanced charts. */
-@media (min-width:1367px), (pointer: fine) {
+@media (min-width:1367px) {
   #dashboardView{
     width:100% !important;
     min-width:0 !important;
@@ -5909,7 +5921,7 @@ body.dark-theme #appSidebar .nav-item.selected {
   z-index: auto !important;
   box-shadow: none !important;
 }
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   #mainRecordTable.unfreeze-table.description-second-first-freeze thead th:nth-child(1),
   #mainRecordTable.unfreeze-table.description-second-first-freeze tbody td:nth-child(1) {
     width: 48px !important; min-width: 48px !important; max-width: 48px !important;
@@ -5936,7 +5948,7 @@ body.dark-theme #appSidebar .nav-item.selected {
 /* FINAL <=1024px layout lock: closed drawer occupies ZERO layout width.
    Main is pinned to the app-container edges, so no inherited flex/sidebar
    basis, margin or width can leave a blank strip on the left. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   html, body {
     width:100% !important;
     max-width:100% !important;
@@ -6009,7 +6021,7 @@ body.dark-theme #appSidebar .nav-item.selected {
 <style id="v-mobile-light-drawer-paint-fix">
 /* Mobile/tablet LIGHT-THEME drawer paint fix only.
    Geometry, font sizing, accordion behaviour and dark theme are untouched. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar {
     background:#f8fafc !important;
     background-color:#f8fafc !important;
@@ -6068,7 +6080,7 @@ body.dark-theme #appSidebar .nav-item.selected {
 <style id="drawer-full-transparent-tail-final">
 /* Mobile/tablet drawer: panel ends visually at the last navigation item.
    The area below remains fully transparent so the HOME page is directly visible. */
-@media (max-width: 1024px) and (pointer: coarse) {
+@media (max-width: 1024px) {
   aside.sidebar,
   .sidebar {
     background: transparent !important;
@@ -6169,7 +6181,7 @@ html body #appSidebar > .collapsible-group {flex-shrink:0 !important;}
 #tableViewSection[style*="flex"] > .top-scrollbar-wrapper { flex-shrink:0 !important; }
 #tableViewSection[style*="flex"] #mainTableContainer { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:none !important; overflow-x:auto !important; overflow-y:auto !important; overscroll-behavior-y:contain; }
 #tableViewSection[style*="flex"] #mainRecordTable thead th { position:sticky !important; top:0 !important; }
-@media(max-width:1024px) and (pointer: coarse){
+@media(max-width:1024px){
  #mainContent:has(#tableViewSection[style*="flex"]) {overflow:hidden !important;}
  #tableViewSection[style*="flex"] {height:100% !important; min-height:0 !important; overflow:hidden !important;}
  #tableViewSection[style*="flex"] #mainTableContainer {height:auto !important; min-height:0 !important; overflow-y:auto !important;}
@@ -6475,7 +6487,7 @@ body.dark-theme #mainTableContainer.signal-image-gallery-mode .signal-read-pdf {
 
 <style id="rail-mobile-table-repair-20261014">
 /* Tablet/mobile-only: prevent translucent frozen cells exposing the first row. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   html body #mainTableContainer #mainRecordTable tbody td:nth-child(1),
   html body #mainTableContainer #mainRecordTable tbody td:nth-child(2) {
     background-color:#fff !important;
@@ -6543,7 +6555,7 @@ body.dark-theme .hmis-nested-title{color:#e3c4f6}
 body.dark-theme .hmis-summary-btn{background:#293651;color:#e3e6ff;border-color:#526080}
 @media(min-width:700px){.hmis-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:22px 15px}.hmis-name{font-size:12px}.hmis-card{padding:20px}.hmis-icon{width:72px;height:72px}.hmis-icon>i:first-child{font-size:32px}}
 @media(min-width:1100px){.hmis-grid{grid-template-columns:repeat(7,minmax(0,1fr))}}
-@media(max-width:699px){body.hmis-home-active #mainContent{padding:10px 10px 0!important}#hmisDashboard{padding-bottom:90px}.hmis-card{padding:15px 10px}.hmis-bottom{display:flex;position:fixed;bottom:12px;left:4%;width:92%;z-index:80;border-radius:40px;padding:12px 10px;background:#fff;box-shadow:0 5px 24px #0003;justify-content:space-around}.hmis-bottom button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:4px;color:#4d4388;font-size:10px;font-weight:800}.hmis-bottom i{font-size:20px}body.dark-theme .hmis-bottom{background:#1a2c44}}
+@media(max-width:699px){body.hmis-home-active #mainContent{padding:10px 10px 0!important}#hmisDashboard{padding-bottom:16px}.hmis-card{padding:15px 10px}}
 </style>
 <style id="hmis-mobile-login-recovery-css">
 html.rail-auth-pending body { visibility:visible !important; }
@@ -6576,7 +6588,7 @@ body.hmis-home-active #hmisDashboard.hmis-summary-open #dashboardView.hmis-origi
 </style>
 <style id="hmis-group-consolidation-v8">
 /* Consolidation applies only to HMIS phone/tablet navigation; preserve desktop sidebar. */
-@media (max-width:1024px) and (pointer: coarse) { #appSidebar > #grpHqLetters, #appSidebar > #grpJpo {display:none !important;} }
+@media (max-width:1024px) { #appSidebar > #grpHqLetters, #appSidebar > #grpJpo {display:none !important;} }
 #hmisDashboard .hmis-card[data-source-group="grpHqLetters"],
 #hmisDashboard .hmis-card[data-source-group="grpJpo"] {display:none !important;}
 </style>
@@ -6611,21 +6623,24 @@ body.dark-theme #hmisDashboard .hmis-title{border-bottom-color:#38445f}
 <style id="hmis-top-summary-search-v10">
 /* Replace redundant RailSNTGyan heading with the existing summary launcher and search. */
 body.hmis-home-active #hmisDashboard .hmis-top{display:flex!important;align-items:stretch!important;justify-content:space-between!important;gap:12px!important;width:100%;margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;}
-body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-launcher{flex:1 1 54%;min-width:0;margin:0!important;padding:8px 12px!important;display:flex;align-items:center;}
-body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle{min-height:44px!important;gap:9px!important;padding:0!important;}
-body.hmis-home-active #hmisDashboard .hmis-top .hmis-search{flex:1 1 46%;min-width:0;margin:0!important;align-self:stretch;}
+body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-launcher{flex:1 1 54%;min-width:0;margin:0!important;padding:2px 8px!important;display:flex;align-items:center;height:38px!important;min-height:38px!important;}
+body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle{min-height:32px!important;height:32px!important;gap:7px!important;padding:0!important;}
+body.hmis-home-active #hmisDashboard .hmis-top .hmis-search{flex:1 1 46%;min-width:0;margin:0!important;align-self:center;height:38px!important;min-height:38px!important;padding:5px 10px!important;}
 body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label strong{font-size:clamp(10px,1.5vw,14px);line-height:1.25;}
-body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-size:10px;}
+body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-size:9px;line-height:1.15;}
+body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label{gap:2px;}
+body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon{width:26px!important;height:26px!important;border-radius:7px!important;}
+body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon i{font-size:14px!important;}
 @media(max-width:699px){
  body.hmis-home-active #hmisDashboard .hmis-top{gap:7px!important;}
- body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-launcher{flex:0 1 54%;padding:7px!important;border-radius:12px!important;}
+ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-launcher{flex:0 1 54%;padding:2px 5px!important;border-radius:12px!important;}
  body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle{gap:5px!important;}
- body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon{width:30px!important;height:30px!important;border-radius:9px!important;}
- body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon i{font-size:15px!important;}
+ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon{width:26px!important;height:26px!important;border-radius:7px!important;}
+ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon i{font-size:14px!important;}
  body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label strong{font-size:10px!important;}
  body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{display:none!important;}
  body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-arrow{font-size:10px!important;}
- body.hmis-home-active #hmisDashboard .hmis-top .hmis-search{flex:1 1 46%;gap:6px!important;padding:8px!important;border-radius:12px!important;}
+ body.hmis-home-active #hmisDashboard .hmis-top .hmis-search{flex:1 1 46%;gap:6px!important;padding:5px 8px!important;border-radius:12px!important;}
  body.hmis-home-active #hmisDashboard .hmis-top .hmis-search input{font-size:11px!important;}
 }
 </style>
@@ -6644,6 +6659,158 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
  }
 }
 </style>
+
+<style id="rails-mobile-overflow-and-fit-pan-fix-20261017">
+/* Keep all mobile navigation labels within their own cards. */
+@media (max-width: 1366px) {
+ #hmisDashboard .hmis-grid, #hmisDashboard .hmis-nested {min-width:0!important;}
+ #hmisDashboard .hmis-item {min-width:0!important;max-width:100%!important;overflow:visible!important;}
+ #hmisDashboard .hmis-name {display:block!important;width:100%!important;max-width:100%!important;
+   white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important;
+   hyphens:auto!important;line-height:1.3!important;font-size:clamp(9px,2.6vw,11px)!important;}
+ #hmisDashboard .hmis-icon {max-width:100%!important;flex-shrink:0!important;}
+ #mainTableContainer.rails-fit-mode {overflow-x:auto!important;overflow-y:auto!important;
+   touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch!important;
+   overscroll-behavior:contain!important;min-height:0!important;}
+ #mainTableContainer.rails-fit-mode #railsFitTable {touch-action:pan-x pan-y!important;}
+}
+</style>
+<style id="rails-tablet-login-fit-smooth-fix">
+/* Center login in the usable WebView viewport on phones and tablets. */
+#loginScreen {
+ inset:0;
+ width:100%;
+ height:100dvh;
+ min-height:0;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ overflow-y:auto;
+ overscroll-behavior:contain;
+ padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));
+}
+#loginScreen .login-card {
+ flex:0 1 440px;
+ margin:auto;
+ max-width:min(440px,100%);
+}
+@media (max-height:560px) {
+ #loginScreen {align-items:safe center;}
+ #loginScreen .login-card {margin:auto;}
+}
+/* Native single-finger panning stays enabled when the fit preview is zoomed. */
+#mainTableContainer.rails-fit-mode {
+ touch-action:pan-x pan-y !important;
+ -webkit-overflow-scrolling:touch;
+ overflow:auto!important;
+}
+#mainTableContainer.rails-fit-mode #railsFitTable {
+ transform:none!important;
+ transform-origin:top left;
+}
+</style>
+
+<style id="rails-remove-mobile-tablet-bottom-nav">
+/* HOME / BOOKS / LDCE floating navigation removed on phones and tablets. */
+@media (max-width:1099px) {
+  #hmisDashboard .hmis-bottom,
+  body.hmis-home-active #hmisDashboard .hmis-bottom,
+  #hmisDashboard.hmis-summary-page > .hmis-bottom {
+    display:none!important;
+    visibility:hidden!important;
+  }
+  body.hmis-home-active #hmisDashboard {padding-bottom:16px!important;}
+}
+</style>
+
+<style id="rails-manual-selector-text-wrap-fix">
+/* Only IRSEM/IRTEM selection cards: keep every label inside its own card. */
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item,
+#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item {
+  min-width:0!important; max-width:100%!important; overflow:hidden!important;
+}
+#hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-name,
+#hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-name {
+  display:block!important; flex:1 1 0!important; width:auto!important;
+  min-width:0!important; max-width:100%!important;
+  white-space:normal!important; overflow-wrap:anywhere!important;
+  word-break:normal!important; hyphens:auto!important;
+  font-size:clamp(10px,1.6vw,14px)!important;
+  line-height:1.35!important; text-align:left!important;
+}
+@media (max-width:600px) {
+ #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item,
+ #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item {
+   flex-direction:column!important; justify-content:center!important;
+   align-items:center!important; gap:8px!important; padding:12px 7px!important;
+ }
+ #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-item .hmis-name,
+ #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-item .hmis-name {
+   flex:0 1 auto!important; width:100%!important; text-align:center!important;
+   font-size:clamp(10px,2.8vw,13px)!important;
+ }
+}
+</style>
+
+<!-- RailSNTGyan login-only motion enhancement; all portal styles unchanged -->
+<style id="rail-login-motion-only">
+#loginScreen{isolation:isolate;overflow:hidden}
+#loginScreen::before{content:"";position:absolute;inset:-35%;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 18% 30%,rgba(0,194,207,.19),transparent 43%),radial-gradient(ellipse at 82% 72%,rgba(21,88,166,.23),transparent 45%),radial-gradient(ellipse at 65% 14%,rgba(249,115,22,.07),transparent 35%);animation:railAurora 19s ease-in-out infinite alternate}
+#loginScreen .login-card{position:relative;z-index:1;isolation:isolate}
+#loginScreen .login-card::before{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;z-index:-1;background:conic-gradient(from var(--rail-angle,0deg),rgba(249,115,22,.7),transparent 25%,rgba(0,209,227,.7) 50%,transparent 75%,rgba(249,115,22,.7));opacity:.42;filter:blur(9px);animation:railBorder 11s linear infinite}
+#loginScreen .login-logo-container{animation:railLogoFloat 5s ease-in-out infinite;will-change:transform}
+#loginScreen .login-input-wrapper:focus-within .login-input{border-color:#22d3ee!important;box-shadow:0 0 0 3px rgba(34,211,238,.2),0 0 18px rgba(34,211,238,.34)!important;transition:box-shadow .3s,border-color .3s}
+#loginScreen .login-btn{position:relative;overflow:hidden;background-size:220% 220%;animation:railButtonShine 7s ease-in-out infinite}
+#loginScreen .login-btn:active{transform:translateY(2px) scale(.99)}
+#loginScreen .login-btn.rail-login-loading{pointer-events:none;opacity:.85}
+#loginScreen .rail-login-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:white;border-radius:50%;animation:railSpin .8s linear infinite}
+#loginScreen .rail-motion-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#loginScreen .rail-motion-particles span{position:absolute;bottom:-12px;width:3px;height:3px;border-radius:50%;background:#67e8f9;opacity:.4;animation:railParticle var(--dur) linear infinite;animation-delay:var(--delay);left:var(--x)}
+#loginScreen .rail-motion-particles span:nth-child(3n){background:#fb923c}
+#railLoginWelcome{position:fixed;inset:0;z-index:100001;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;background:radial-gradient(circle at 50% 35%,#0c4757,#07101d 70%);color:#e5edf7;opacity:0;pointer-events:none;transition:opacity .3s ease}
+#railLoginWelcome.rail-show{opacity:1;pointer-events:auto}
+#railLoginWelcome .rail-welcome-brand{font-size:clamp(26px,6vw,42px);font-weight:900;color:#5ee7e7}
+#railLoginWelcome .rail-welcome-brand b{color:#fb923c}
+#railLoginWelcome .rail-welcome-icon{font-size:48px;animation:railLogoFloat 3s ease-in-out infinite}
+@keyframes railAurora{to{transform:translate(7%,-5%) rotate(7deg)}}
+@keyframes railBorder{to{transform:rotate(360deg)}}
+@keyframes railLogoFloat{50%{transform:translateY(-6px)}}
+@keyframes railButtonShine{50%{filter:brightness(1.13)}}
+@keyframes railSpin{to{transform:rotate(360deg)}}
+@keyframes railParticle{to{transform:translateY(-105vh);opacity:0}}
+@media(prefers-reduced-motion:reduce){#loginScreen::before,#loginScreen .login-card::before,#loginScreen .login-logo-container,#loginScreen .login-btn,#loginScreen .rail-motion-particles span,#railLoginWelcome .rail-welcome-icon{animation:none!important}}
+</style>
+<style id="rail-login-visual-fidelity-v2">
+/* Login only: stronger reference-style light without modifying application UI. */
+#loginScreen::before{inset:-18%;background:radial-gradient(ellipse at 12% 22%,rgba(0,211,226,.32),transparent 44%),radial-gradient(ellipse at 83% 68%,rgba(16,106,197,.35),transparent 46%),radial-gradient(ellipse at 72% 18%,rgba(249,115,22,.13),transparent 40%);animation:railAurora 13s ease-in-out infinite alternate}
+#loginScreen .login-card{overflow:visible!important}
+#loginScreen .login-card::before{inset:-4px;opacity:.85;filter:blur(11px);animation:railBorder 8s linear infinite}
+#loginScreen .login-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 2px 0 0 rgba(34,211,238,.52),inset -2px 0 0 rgba(249,115,22,.27),0 0 22px rgba(0,209,227,.2)}
+#loginScreen .login-logo-container{box-shadow:0 0 0 7px rgba(0,194,207,.08),0 0 30px rgba(0,209,227,.35),0 12px 30px rgba(0,0,0,.25)!important}
+#loginScreen .rail-motion-particles span{width:4px;height:4px;opacity:.7;box-shadow:0 0 8px currentColor}
+#loginScreen .login-btn{background-image:linear-gradient(110deg,#07527b,#0a81ac,#0b3b60)!important;background-size:220% 220%!important}
+/* Chrome opening a downloaded content:// HTML can request a desktop-sized
+   layout viewport on some Android devices. Scale ONLY the login card in that case. */
+html.rail-login-wide-viewport #loginScreen .login-card{transform:scale(var(--rail-login-fit-scale,1.75))!important;transform-origin:center center!important;animation:none!important}
+@media(prefers-reduced-motion:reduce){#loginScreen .login-card::before{animation:none!important}}
+</style>
+<script id="rail-login-mobile-viewport-guard">
+(function(){
+ function fix(){
+  var mobile=/Android.*Mobile|iPhone|iPod/i.test(navigator.userAgent);
+  var wide=mobile && window.innerWidth>600 && window.innerWidth>screen.width*1.35;
+  document.documentElement.classList.toggle('rail-login-wide-viewport',wide);
+  if(wide){var card=document.querySelector('#loginScreen .login-card');if(card){
+   var desired=Math.min(window.innerWidth*.88,window.innerWidth-36);
+   var base=card.offsetWidth;
+   var scale=Math.min(2.1,Math.max(1,desired/Math.max(1,base)));
+   document.documentElement.style.setProperty('--rail-login-fit-scale',scale.toFixed(3));
+  }}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix,{once:true});else fix();
+ window.addEventListener('resize',fix);
+})();
+</script>
 </head>
 <script id="rn-theme-prebody-v33">
 (function(){
@@ -6820,6 +6987,22 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
       </div>
     </div>
   </div>
+
+
+<script id="rail-login-motion-script">
+(function(){
+function init(){
+ const screen=document.getElementById('loginScreen');if(!screen)return;
+ const particles=document.createElement('div');particles.className='rail-motion-particles';particles.setAttribute('aria-hidden','true');
+ for(let i=0;i<13;i++){const dot=document.createElement('span');dot.style.setProperty('--x',((i*37+11)%97)+'%');dot.style.setProperty('--dur',(15+i%6*3)+'s');dot.style.setProperty('--delay',(-i*2.7)+'s');particles.appendChild(dot)}screen.insertBefore(particles,screen.firstChild);
+ const welcome=document.createElement('div');welcome.id='railLoginWelcome';welcome.setAttribute('role','status');welcome.setAttribute('aria-live','polite');welcome.innerHTML='<div class="rail-welcome-icon" aria-hidden="true">🙏</div><div>Welcome to</div><div class="rail-welcome-brand">RailSNT<b>Gyan</b></div>';
+ document.body.appendChild(welcome);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+window.railLoginMotionBusy=function(busy){const btn=document.querySelector('#loginScreen .login-btn');if(!btn)return;if(busy){if(!btn.dataset.railOriginal)btn.dataset.railOriginal=btn.innerHTML;btn.classList.add('rail-login-loading');btn.disabled=true;btn.innerHTML='<span class="rail-login-spinner" aria-hidden="true"></span> Logging in...'}else{btn.classList.remove('rail-login-loading');btn.disabled=false;if(btn.dataset.railOriginal)btn.innerHTML=btn.dataset.railOriginal}};
+window.railLoginMotionWelcome=function(){const el=document.getElementById('railLoginWelcome');if(!el)return;el.classList.add('rail-show');setTimeout(()=>el.classList.remove('rail-show'),1100)};
+})();
+</script>
 
   <!-- HEADER -->
   <header id="mainHeader">
@@ -7451,20 +7634,6 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
         </ul>
       </div>
 
-      <!-- SECTION 4: LETTER ISSUED BY HQ -->
-      <div class="collapsible-group collapsed" id="grpHqLetters">
-        <div class="sidebar-section-title" onclick="switchCategory('LETTER ISSUED BY HQ', true)" role="button" tabindex="0">
-          <span class="sidebar-section-title-left"><i class="fa-solid fa-paper-plane" style="color:#2563eb;"></i> LETTER ISSUED BY HQ</span>
-        </div>
-      </div>
-
-      <!-- SECTION 5: JPO (JOINT PROCEDURE ORDER) -->
-      <div class="collapsible-group collapsed" id="grpJpo">
-        <div class="sidebar-section-title" onclick="switchCategory('JPO (JOINT PROCEDURE ORDER)', true)" role="button" tabindex="0">
-          <span class="sidebar-section-title-left"><i class="fa-solid fa-people-group" style="color:#7c3aed;"></i> JPO (JOINT PROCEDURE ORDER)</span>
-        </div>
-      </div>
-
       <!-- SECTION 6: LDCE GR. B QUESTION PAPER -->
       <div class="collapsible-group collapsed" id="grpLdcePapers">
         <div class="sidebar-section-title" onclick="toggleAccordion('grpLdcePapers')">
@@ -7479,7 +7648,7 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
           <li class="nav-item" onclick="switchCategory('AFA')"><i class="fa-solid fa-calculator" style="color: #3b82f6;"></i> AFA</li>
           <li class="nav-item" onclick="switchCategory('AME')"><i class="fa-solid fa-gears" style="color: #8b5cf6;"></i> AME</li>
           <li class="nav-item" onclick="switchCategory('ACM')"><i class="fa-solid fa-ticket" style="color: #ec4899;"></i> ACM</li>
-          <li class="nav-item" onclick="switchCategory('AOM')"><i class="fa-solid fa-train-track" style="color: #06b6d4;"></i> AOM</li>
+          <li class="nav-item" onclick="switchCategory('AOM')"><i class="fa-solid fa-train" style="color: #06b6d4;"></i> AOM</li>
           <li class="nav-item" onclick="switchCategory('AEE')"><i class="fa-solid fa-bolt-lightning" style="color: #facc15;"></i> AEE</li>
         </ul>
       </div>
@@ -8189,6 +8358,7 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
       errorMsg.style.display = 'none';
       if (!email || !password) { errorMsg.textContent = 'Please enter email and password.'; errorMsg.style.display = 'block'; return; }
       try {
+        if (window.railLoginMotionBusy) railLoginMotionBusy(true);
         await railSessionPersistenceReady;
         const credential = await auth.signInWithEmailAndPassword(email, password);
         const result = await credential.user.getIdTokenResult(true);
@@ -8199,6 +8369,7 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
         sessionStorage.removeItem('importantLinksReturnState');
         document.querySelectorAll('.modal-overlay').forEach(modal => { modal.style.display = 'none'; });
         goHome(false);
+        if (window.railLoginMotionWelcome) railLoginMotionWelcome();
         try {
           history.replaceState({ view: 'guard', railsntgyan: true }, '', window.location.href);
           history.pushState({ view: 'home', railsntgyan: true }, '', window.location.href);
@@ -8207,6 +8378,8 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
         console.error('Firebase sign-in failed:', error.code || error.message);
         errorMsg.textContent = 'Login failed. Check email/password and your connection.';
         errorMsg.style.display = 'block';
+      } finally {
+        if (window.railLoginMotionBusy) railLoginMotionBusy(false);
       }
     }
 
@@ -8470,6 +8643,21 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
       if (backNavigationBusy) return;
       backNavigationBusy = true;
       const finish = () => setTimeout(() => { backNavigationBusy = false; }, 80);
+
+      // Summary is a child route of HOME on mobile/tablet. Handle it before
+      // the HOME boundary/logout guard, including Android hardware Back.
+      const summaryPanel = document.getElementById('hmisDashboard');
+      if (summaryPanel && summaryPanel.classList.contains('hmis-summary-page')) {
+        summaryPanel.classList.remove('hmis-summary-page', 'hmis-summary-open');
+        const summaryToggle = summaryPanel.querySelector('.hmis-summary-toggle');
+        if (summaryToggle) summaryToggle.setAttribute('aria-expanded', 'false');
+        if (currentCategory !== 'HOME') goHome(false);
+        // The popped entry is the HOME route. Never show the logout prompt
+        // for this transition, regardless of the browser's state payload.
+        try { history.replaceState({ view: 'home', railsntgyan: true }, '', window.location.href); } catch(e) {}
+        finish();
+        return;
+      }
 
       // PRIORITY 1: If a drawer is open, Back only closes the drawer.
       const sidebar = document.getElementById('appSidebar');
@@ -9238,8 +9426,7 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
     // use normal browser navigation instead of the in-page iframe viewer.
     function openExternalLinkSafe(title, url) {
       if (!url || url === '#') return;
-      saveImportantLinksReturnState();
-      window.location.href = url;
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     function closeInAppWebModal() {
@@ -9996,7 +10183,7 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label small{font-si
               <td class="important-website-cell">
                 ${rec.directLink ? `
                   <a href="${escapeHtml(rec.directLink)}"
-                     onclick="saveImportantLinksReturnState()"
+                     target="_blank" rel="noopener noreferrer"
                      class="important-website-link"
                      title="${escapeHtml(rec.directLink)}">
                     <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
@@ -14736,7 +14923,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
 /* Mobile/tablet overlay drawer: keep navigation surfaces readable, but make
    the unused area below the last navigation group transparent so the dimmed
    page/backdrop remains visible. Desktop sidebar is intentionally unchanged. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   #appSidebar,
   body.dark-theme #appSidebar,
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar {
@@ -14778,7 +14965,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
 <style id="v-mobile-tablet-drawer-no-background-blur">
 /* Responsive drawer: keep the underlying HOME/table page sharp while the
    drawer is open. The overlay may dim the page, but must never blur it. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   .sidebar-overlay,
   .sidebar-overlay.active,
   .sidebar-overlay.show {
@@ -14808,7 +14995,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
   - no blur/dim overlay
   Desktop is untouched.
 */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   /* Drawer is only a positioning shell; it must not paint a panel. */
   #appSidebar,
   body:not(.dark-theme) #appSidebar,
@@ -14895,7 +15082,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
   Only the nav-list canvas and the gaps between subsection items are transparent,
   so the actual HOME page shows through clearly.
 */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   /* Expanded subsection container itself must paint nothing. */
   #appSidebar > .collapsible-group > .nav-list,
   #appSidebar > .collapsible-group:not(.collapsed) > .nav-list,
@@ -14955,7 +15142,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
 <style id="v-mobile-tablet-subsection-distinct-colors-final">
 /* Distinguish expanded subsection cards from the HOME page on mobile/tablet.
    Main section cards, icons, layout, transparency gaps and desktop remain unchanged. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   /* LIGHT: soft blue-grey subsection surface */
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar .nav-list > li,
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar .nav-list > li > a,
@@ -14990,7 +15177,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
 <style id="v-mobile-tablet-modern-subsection-cards-final">
 /* Modern, sophisticated subsection palette for responsive drawer only.
    Keeps parent section colors, icon colors, transparent gaps, and desktop unchanged. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   /* LIGHT — cool mist/slate surface, visibly distinct from white dashboard */
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar .nav-list > li,
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar .nav-list > li > a,
@@ -15045,7 +15232,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
 <style id="v-mobile-tablet-subsection-teal-palette-final">
 /* Teal/cyan subsection palette inspired by the selected reference palette.
    Responsive drawer only; parent cards, icon colors, transparent gaps and desktop unchanged. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   /* LIGHT THEME — soft cyan/teal surface */
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar .nav-list > li,
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar .nav-list > li > a,
@@ -15101,7 +15288,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
   Subtle premium neon treatment for SUBSECTION cards only (<=1024px).
   Main section cards, layout, transparent gaps, icons and desktop remain unchanged.
 */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
 
   /* LIGHT THEME: crisp teal edge with a very restrained glow */
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar .nav-list > li,
@@ -15167,7 +15354,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
 <style id="v-responsive-parent-section-opaque-both-themes-final">
 /* Final requested treatment: parent SECTION strips are fully opaque on mobile/tablet.
    Subsection palette/neon treatment, transparent gaps, layout and desktop remain unchanged. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar > .collapsible-group > .sidebar-section-title {
     background:#f8fafc !important;
     background-color:#f8fafc !important;
@@ -15218,7 +15405,7 @@ body.dark-theme .process-track-container { gap:8px !important; }
 }
 
 /* Neutralize the earlier mobile/tablet viewport-height rule too. */
-@media (max-width:1024px) and (pointer: coarse){
+@media (max-width:1024px){
   #tableViewSection{
     flex:0 0 auto !important;
     height:auto !important;
@@ -15364,7 +15551,7 @@ html body:not(.dark-theme) #appSidebar#appSidebar#appSidebar#appSidebar > .colla
   border-color:#c9d9ff!important;border-left:3px solid #2969f5!important;
 }
 @keyframes rnReveal {from{opacity:.5;translate:0 -5px}to{opacity:1;translate:0 0}}
-@media(max-width:1024px) and (pointer: coarse) {
+@media(max-width:1024px) {
   html body #appSidebar#appSidebar#appSidebar#appSidebar.mobile-open {width:min(370px,92vw)!important;max-width:92vw!important;}
   html body #appSidebar#appSidebar#appSidebar#appSidebar.mobile-open > .collapsible-group {margin:3px 0 5px!important;}
   html body #appSidebar#appSidebar#appSidebar#appSidebar.mobile-open > .collapsible-group > .sidebar-section-title {margin:0!important;}
@@ -15391,7 +15578,7 @@ body #appSidebar#appSidebar#appSidebar#appSidebar.mobile-open .nav-item > i:firs
 <style id="rn-sidebar-no-empty-bottom-v5">
 /* Mobile/tablet: the drawer ends directly after the last visible menu item.
    If expanded content exceeds the viewport, it remains independently scrollable. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   html body #appSidebar,
   html body #appSidebar.mobile-open,
   html body.dark-theme #appSidebar.mobile-open,
@@ -15412,7 +15599,7 @@ body #appSidebar#appSidebar#appSidebar#appSidebar.mobile-open .nav-item > i:firs
 
 <style id="rn-rounded-content-fit-sidebar-v6">
 /* Rounded, content-sized responsive navigation drawer; no blank tail. */
-@media (max-width: 1024px) and (pointer: coarse) {
+@media (max-width: 1024px) {
   html body #appSidebar.mobile-open,
   html body.dark-theme #appSidebar.mobile-open,
   html body:not(.dark-theme) #appSidebar.mobile-open {
@@ -15784,7 +15971,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 <style id="rail-table-canonical-v4">
-@media(max-width:1024px) and (pointer: coarse){
+@media(max-width:1024px){
  #mainTableContainer{overflow-x:auto!important;overflow-y:auto!important;position:relative!important;isolation:auto!important;}
  #mainRecordTable{border-collapse:separate!important;border-spacing:0!important;table-layout:fixed!important;width:max-content!important;min-width:100%!important;max-width:none!important;}
  #mainRecordTable thead,#mainRecordTable thead tr{position:static!important;transform:none!important;}
@@ -15822,7 +16009,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 <style id="rail-important-links-visible-borders-v6">
-@media(max-width:1024px) and (pointer: coarse){
+@media(max-width:1024px){
  #mainTableContainer:has(#mainRecordTable.rn-important-links){border:2px solid #f97316!important;border-radius:7px!important;overflow-x:auto!important;}
  #mainRecordTable.rn-important-links{border:1px solid #f97316!important;border-collapse:separate!important;border-spacing:0!important;}
  #mainRecordTable.rn-important-links thead th{border-bottom:2px solid #f97316!important;border-right:1px solid #f97316!important;}
@@ -15858,7 +16045,7 @@ body.dark-theme #railsManualSheet .rms-choice{background:#243653;color:#f0f5ff;b
 body.dark-theme #railsManualSheet .rms-choice-copy small,body.dark-theme #railsManualSheet .rms-heading small{color:#b5c3da}
 body.dark-theme #railsManualSheet .rms-close{background:#344666;color:#fff}
 @keyframes rms-rise{from{transform:translateY(100%);opacity:.65}to{transform:translateY(0);opacity:1}}
-@media (min-width:1367px), (pointer: fine){#railsManualSheet{display:none!important}}
+@media(min-width:1367px){#railsManualSheet{display:none!important}}
 @media(prefers-reduced-motion:reduce){#railsManualSheet .rms-panel{animation:none}}
 </style>
 <div id="railsManualSheet" role="dialog" aria-modal="true" aria-labelledby="rmsTitle" aria-hidden="true">
@@ -16017,21 +16204,17 @@ body:not(.dark-theme) #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .h
 })();
 </script>
 
-<!-- Mobile/tablet-only isolated S&T summary page; desktop layout untouched. -->
+<!-- Mobile/tablet summary route: single dashboard surface, browser-history navigation. -->
 <style id="rail-summary-isolated-mobile-v1">
-@media (max-width:1366px) and (pointer: coarse) {
- body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-card:not(.hmis-summary-launcher),
+@media (max-width:1300px) {
+ body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-card,
  body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-bottom,
- body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-no-results {display:none!important}
- body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-top .hmis-search {display:none!important}
- body.hmis-home-active #hmisDashboard.hmis-summary-page #dashboardView.hmis-original-summary {display:flex!important;flex-direction:column!important;flex:0 0 auto!important;height:auto!important;overflow:visible!important}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-no-results,
+ body.hmis-home-active #hmisDashboard.hmis-summary-page > .hmis-top {display:none!important}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page #dashboardView.hmis-original-summary {display:flex!important;flex-direction:column!important;flex:1 0 auto!important;height:auto!important;overflow:visible!important;width:100%!important;min-width:0!important}
  body.hmis-home-active #hmisDashboard.hmis-summary-page {overflow-y:auto!important;overscroll-behavior-y:contain!important}
- body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-summary-launcher {position:relative}
- body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-summary-arrow {transform:rotate(180deg)}
- body.hmis-home-active #hmisDashboard.hmis-summary-page .hmis-summary-back {display:inline-flex!important}
+ body.hmis-home-active #hmisDashboard.hmis-summary-page #dashboardView .process-track-container {width:100%!important;min-width:0!important}
 }
-.hmis-summary-back {display:none;align-items:center;justify-content:center;gap:6px;border:1px solid #a7b9d3;border-radius:10px;background:#fff;color:#17385e;font-weight:800;padding:9px 12px;cursor:pointer;white-space:nowrap}
-body.dark-theme .hmis-summary-back {background:#17253c;color:#f1f5ff;border-color:#526381}
 </style>
 <script id="rail-summary-isolated-mobile-controller-v1">
 (function(){
@@ -16041,66 +16224,35 @@ body.dark-theme .hmis-summary-back {background:#17253c;color:#f1f5ff;border-colo
   const launch=panel.querySelector('.hmis-summary-toggle');
   if(!launch)return;
   panel.dataset.summaryPageInstalled='1';
-  const back=document.createElement('button');back.type='button';back.className='hmis-summary-back';
-  back.innerHTML='<i class="fa-solid fa-arrow-left"></i> Back to Home';
-  const top=panel.querySelector('.hmis-top');
-  if(top)top.insertBefore(back,top.firstChild);
-  function mobile(){return matchMedia('(max-width:1366px) and (pointer: coarse)').matches}
-  function exit(){panel.classList.remove('hmis-summary-page');panel.classList.remove('hmis-summary-open');launch.setAttribute('aria-expanded','false');}
-  back.addEventListener('click',function(e){e.stopPropagation();exit();panel.scrollTo({top:0,behavior:'instant'});});
-  launch.addEventListener('click',function(e){
+  function mobile(){return matchMedia('(max-width:1300px)').matches || /Android/i.test(navigator.userAgent)}
+  function exit(){panel.classList.remove('hmis-summary-page','hmis-summary-open');launch.setAttribute('aria-expanded','false');}
+  function enter(){
+   const dashboard=document.getElementById('dashboardView');
+   const top=panel.querySelector('.hmis-top');
+   if(dashboard&&top&&dashboard.parentElement!==panel)top.after(dashboard);
+   panel.classList.add('hmis-summary-page','hmis-summary-open');
+   launch.setAttribute('aria-expanded','true');
+   requestAnimationFrame(function(){panel.scrollTop=0;if(typeof updateDashboardView==='function')updateDashboardView();});
+  }
+  launch.addEventListener('click',function(){
    if(!mobile())return;
-   // The original handler runs before this listener; restore the desired isolated state.
    const open=!panel.classList.contains('hmis-summary-page');
-   panel.classList.toggle('hmis-summary-page',open);
-   panel.classList.toggle('hmis-summary-open',open);
-   launch.setAttribute('aria-expanded',String(open));
-   if(open){requestAnimationFrame(function(){panel.scrollTo({top:0,behavior:'instant'});if(typeof updateDashboardView==='function')updateDashboardView();});}
+   if(open){enter();try{history.pushState({view:'rail-summary',railsntgyan:true},'','');}catch(e){}}
+   else if(history.state&&history.state.view==='rail-summary')history.back();
+   else exit();
   });
-  panel.querySelectorAll('.hmis-bottom button').forEach(function(b){b.addEventListener('click',exit)});
+  window.addEventListener('popstate',function(e){
+   if(!mobile())return;
+   if(e.state&&e.state.view==='rail-summary')enter();else exit();
+  });
   window.addEventListener('resize',function(){if(!mobile())exit()},{passive:true});
+  panel.querySelectorAll('.hmis-bottom button').forEach(function(b){b.addEventListener('click',exit)});
   document.addEventListener('click',function(e){
    if(!panel.classList.contains('hmis-summary-page'))return;
-   if(e.target.closest('#hmisDashboard .hmis-summary-back, #hmisDashboard .hmis-summary-toggle'))return;
    if(e.target.closest('header .menu-toggle-btn, #appSidebar .nav-item, #appSidebar .home-btn'))exit();
   },true);
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
-</script>
-
-<!-- v8: Final desktop precedence. Preserve touch-tablet layout in either orientation. -->
-<style id="rails-laptop-desktop-restore-v8">
-@media (pointer:fine) and (hover:hover), (min-width:1367px) {
- body.hmis-home-active #hmisDashboard, #hmisDashboard {display:none!important}
- body.hmis-home-active #appSidebar {display:flex!important;position:relative!important;transform:none!important;visibility:visible!important;width:290px!important;flex:0 0 290px!important}
- body.hmis-home-active #dashboardView,
- body.hmis-home-active #dashboardView.hmis-original-summary {display:flex!important;flex-direction:column!important;overflow-y:auto!important;height:auto!important;width:100%!important}
- body.hmis-home-active #mainContent {padding:14px 18px!important;overflow-y:auto!important}
- body.hmis-home-active .menu-toggle-btn,body.hmis-home-active #mobileMenuBtn {display:none!important}
- body.hmis-home-active #dashboardView .process-track-container {grid-template-columns:repeat(10,minmax(0,1fr))!important;overflow-x:visible!important}
- body.hmis-home-active #dashboardView .dash-charts-grid {grid-template-columns:2fr 1fr!important}
- #mobileBottomNav,.hmis-bottom {display:none!important}
-}
-</style>
-<script id="rails-laptop-desktop-restore-controller-v8">
-(function(){
- function desktop(){return matchMedia('(pointer:fine) and (hover:hover), (min-width:1367px)').matches}
- function sync(){
-  const panel=document.getElementById('hmisDashboard'),dash=document.getElementById('dashboardView'),main=document.getElementById('mainContent');
-  if(!panel||!dash||!main)return;
-  if(desktop()){
-   if(dash.parentElement!==main)main.insertBefore(dash,panel.nextSibling);
-   panel.classList.remove('hmis-summary-page','hmis-summary-open');
-  }else if(dash.parentElement!==panel){
-   const cards=panel.querySelectorAll(':scope > .hmis-card');
-   const last=cards.length?cards[cards.length-1]:null;
-   if(last)last.after(dash);else panel.appendChild(dash);
-  }
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync);else sync();
- window.addEventListener('resize',sync,{passive:true});
- window.addEventListener('pageshow',sync);
 })();
 </script>
 </body>
@@ -16113,7 +16265,7 @@ body.dark-theme .hmis-summary-back {background:#17253c;color:#f1f5ff;border-colo
 <style id="v-final-section-subsection-visual-match-107">
 /* v107 FINAL VISUAL OVERRIDE — responsive drawer only.
    Restores clear neon borders on subsection strips and reference-style parent cards. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
   /* Parent/main section cards: opaque fill + individual accent border. */
   #appSidebar > .collapsible-group > .sidebar-section-title {
     margin:3px 5px !important;
@@ -16177,7 +16329,7 @@ body.dark-theme .hmis-summary-back {background:#17253c;color:#f1f5ff;border-colo
 <style id="v108-reference-photo-card-colours">
 /* v108 — Match the supplied reference image.
    Responsive drawer only. No layout, data, table, Firebase or desktop changes. */
-@media (max-width:1024px) and (pointer: coarse) {
+@media (max-width:1024px) {
 
   /* ---------- MAIN SECTION CARDS ---------- */
   #appSidebar > .collapsible-group > .sidebar-section-title {
@@ -17566,7 +17718,7 @@ html body #appSidebar > .collapsible-group:not(.collapsed) > .nav-list {
   max-height:min(58dvh,560px)!important;
   overflow-y:auto!important;
 }
-@media(max-width:1024px) and (pointer: coarse){
+@media(max-width:1024px){
  html body #appSidebar.mobile-open{
    height:100dvh!important;min-height:0!important;
    max-height:100dvh!important;
@@ -17932,7 +18084,7 @@ html body #mainRecordTable.jpo-table td.jpo-number-cell b {
 
 <style id="rail-important-links-layout-final">
 /* Important Links only: compact action buttons and a genuinely wide website column. */
-@media(max-width:1024px) and (pointer: coarse){
+@media(max-width:1024px){
  html body #mainRecordTable.rn-important-links{table-layout:fixed!important;width:100%!important;min-width:0!important;max-width:100%!important;border-spacing:0!important;}
  html body #mainRecordTable.rn-important-links col.ril-number{width:40px!important;}
  html body #mainRecordTable.rn-important-links col.ril-website{width:auto!important;}
@@ -18000,12 +18152,14 @@ if(originalDashboard){
   summaryBtn.type='button';summaryBtn.className='hmis-summary-toggle';
   summaryBtn.setAttribute('aria-expanded','false');
   summaryBtn.setAttribute('aria-controls','dashboardView');
-  summaryBtn.innerHTML='<span class="hmis-icon" style="--hmis-icon-color:#287fa8"><i class="fa-solid fa-chart-pie"></i></span><span class="hmis-summary-label"><strong>S&T TECHNICAL SUMMARY</strong><small>Financial Year-wise report, approval cards & charts</small></span><i class="fa-solid fa-chevron-down hmis-summary-arrow"></i>';
+  summaryBtn.innerHTML='<span class="hmis-icon" style="--hmis-icon-color:#287fa8"><i class="fa-solid fa-chart-simple"></i></span><span class="hmis-summary-label"><strong>S&T TECHNICAL SUMMARY</strong></span><i class="fa-solid fa-chevron-down hmis-summary-arrow"></i>';
   summaryCard.appendChild(summaryBtn);
   top.appendChild(summaryCard);
   panel.appendChild(originalDashboard);
   originalDashboard.classList.add('hmis-original-summary');
   summaryBtn.addEventListener('click',()=>{
+    // The separate mobile/tablet page controller owns this interaction.
+    if((matchMedia('(max-width:1300px)').matches || /Android/i.test(navigator.userAgent)) && getComputedStyle(panel).display!=='none')return;
     const opened=panel.classList.toggle('hmis-summary-open');
     summaryBtn.setAttribute('aria-expanded',String(opened));
     if(opened){requestAnimationFrame(()=>{
@@ -18017,7 +18171,8 @@ if(originalDashboard){
 const colors=['#b52e8b','#de6b22','#2089b5','#6e53c7','#168b75','#cc456b'];
 function createTile(li,index,groupId){const name=li.childNodes.length?Array.from(li.childNodes).filter(n=>n.nodeType===3).map(n=>n.textContent).join(' ').trim():'';const icon=li.querySelector('i:not(.manual-submenu-chevron)');const label=name||li.textContent.trim();const btn=document.createElement('button');btn.type='button';btn.className='hmis-item';btn.innerHTML='<span class="hmis-icon" style="--hmis-icon-color:'+colors[index%colors.length]+'"><i class="'+(icon?icon.className:'fa-solid fa-file')+'"></i></span><span class="hmis-name"></span>';btn.querySelector('.hmis-name').textContent=label;const call=li.getAttribute('onclick')||'';const m=call.match(/toggleManualSubmenu\('([^']+)'/);if(m){btn.dataset.nestedId=m[1];btn.setAttribute('aria-expanded','false');btn.querySelector('.hmis-icon').insertAdjacentHTML('beforeend','<span class="hmis-child-indicator"><i class="fa-solid fa-chevron-down"></i></span>');btn.addEventListener('click',()=>{const grid=btn.closest('.hmis-grid');const old=Array.from(grid.children).find(el=>el.classList.contains('hmis-nested'));if(old){const same=old.dataset.parent===m[1];old.remove();if(same)return}const sub=source.querySelector('#'+m[1]);if(!sub)return;const nested=document.createElement('div');nested.className='hmis-nested';nested.dataset.parent=m[1];const title=document.createElement('div');title.className='hmis-nested-title';title.textContent=label+' — Select Section';nested.appendChild(title);const inner=document.createElement('div');inner.className='hmis-grid';sub.querySelectorAll(':scope > li.nav-item').forEach((child,j)=>inner.appendChild(createTile(child,j,groupId)));nested.appendChild(inner);grid.appendChild(nested);});}else{btn.addEventListener('click',()=>{const match=call.match(/switchCategory\('([^']+)'/);if(match&&typeof switchCategory==='function')switchCategory(match[1]);});}return btn;}
 source.querySelectorAll(':scope > .collapsible-group').forEach(group=>{const heading=group.querySelector(':scope > .sidebar-section-title');if(!heading)return;const card=document.createElement('section');card.className='hmis-card';card.dataset.sourceGroup=group.id;const title=document.createElement('div');title.className='hmis-title';const left=heading.querySelector('.sidebar-section-title-left');title.innerHTML=left?left.innerHTML:heading.textContent;card.appendChild(title);const ul=group.querySelector(':scope > ul.nav-list');if(ul){const grid=document.createElement('div');grid.className='hmis-grid';Array.from(ul.children).filter(el=>el.matches('li.nav-item')).forEach((li,i)=>grid.appendChild(createTile(li,i,group.id)));card.appendChild(grid);}else{card.style.cursor='pointer';card.addEventListener('click',()=>{const match=(heading.getAttribute('onclick')||'').match(/switchCategory\('([^']+)'/);if(match) switchCategory(match[1]);});}panel.appendChild(card);});
-const bottom=document.createElement('div');bottom.className='hmis-bottom';bottom.innerHTML='<button type="button" data-act="home"><i class="fa-solid fa-house"></i>HOME</button><button type="button" data-act="books"><i class="fa-solid fa-book-open"></i>BOOKS</button><button type="button" data-act="ldce"><i class="fa-solid fa-graduation-cap"></i>LDCE</button>';panel.appendChild(bottom);bottom.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;const act=btn.dataset.act;if(act==='menu'){if(typeof openSidebarDrawer==='function')openSidebarDrawer();else source.style.display='flex';return;}const target=act==='books'?'grpRefBooks':act==='ldce'?'grpLdcePapers':null;if(target){const section=panel.querySelector('[data-source-group="'+target+'"]');if(section)section.scrollIntoView({behavior:'smooth',block:'start'});}else panel.scrollTo({top:0,behavior:'smooth'});});
+// HOME / BOOKS / LDCE bottom navigation intentionally removed.
+// No bottom navigation element is created on any screen size.
 const originalHome=goHome;goHome=function(...args){const ret=originalHome.apply(this,args);document.body.classList.add('hmis-home-active');requestAnimationFrame(()=>{if(typeof updateDashboardView==='function')updateDashboardView();});return ret;};
 const originalSwitch=switchCategory;switchCategory=function(...args){document.body.classList.remove('hmis-home-active');return originalSwitch.apply(this,args);};
 function sync(){if(typeof currentCategory!=='undefined'&&currentCategory==='HOME'){document.body.classList.add('hmis-home-active');}else document.body.classList.remove('hmis-home-active');const admin=source.querySelector('#grpFilesApprovals');const card=panel.querySelector('[data-source-group="grpFilesApprovals"]');if(admin&&card)card.style.display=getComputedStyle(admin).display==='none'?'none':'';}
@@ -18050,16 +18205,18 @@ function ready(){
 </script>
 
 <style id="hmis-device-scope-v13">
-@media (min-width:1367px), (pointer: fine) {
+@media (min-width:1301px) and (pointer:fine) and (hover:hover) {
  body.hmis-home-active #hmisDashboard, #hmisDashboard {display:none!important}
  body.hmis-home-active #appSidebar {display:flex!important}
  body.hmis-home-active #dashboardView,
  body.hmis-home-active #dashboardView.hmis-original-summary,
  body.hmis-home-active #hmisDashboard #dashboardView {display:flex!important}
  body.hmis-home-active #mainContent {padding:14px 18px!important;overflow-y:auto!important}
+ body.hmis-home-active #dashboardView .process-track-container {grid-template-columns:repeat(10,minmax(0,1fr))!important}
+ body.hmis-home-active #dashboardView .dash-charts-grid {grid-template-columns:minmax(0,2fr) minmax(220px,1fr)!important}
  body.hmis-home-active .menu-toggle-btn {display:none!important}
 }
-@media (max-width:1366px) and (pointer: coarse) {
+@media (max-width:1366px) and (pointer:coarse) {
  body.hmis-home-active #hmisDashboard .hmis-name {font-size:13px!important;font-weight:900!important;line-height:1.4!important;color:#25324c!important}
  body.dark-theme.hmis-home-active #hmisDashboard .hmis-name {color:#f0f3ff!important}
 }
@@ -18071,13 +18228,17 @@ function ready(){
   const dashboard=document.getElementById('dashboardView');
   const main=document.getElementById('mainContent');
   if(!panel||!dashboard||!main)return;
-  if(window.matchMedia('(min-width:1367px), (pointer: fine)').matches){
-   if(dashboard.parentElement!==main)main.insertBefore(dashboard,panel.nextSibling);
-  }else if(dashboard.parentElement!==panel){
-   const cards=panel.querySelectorAll('.hmis-card');
-   const last=cards.length?cards[cards.length-1]:null;
-   if(last&&last.parentElement===panel)last.after(dashboard);
-   else panel.appendChild(dashboard);
+  // Match the actual active layout, not just mouse/touch capabilities.
+  // Hybrid laptops and Chrome tablet emulation may expose a fine pointer.
+  const panelIsActive = document.body.classList.contains('hmis-home-active') &&
+    getComputedStyle(panel).display !== 'none';
+  if(panelIsActive){
+   if(dashboard.parentElement!==panel){
+    const launcher=panel.querySelector('.hmis-summary-launcher');
+    if(launcher)launcher.after(dashboard);else panel.appendChild(dashboard);
+   }
+  }else if(dashboard.parentElement!==main){
+   main.insertBefore(dashboard,panel.nextSibling);
   }
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync);
@@ -18088,17 +18249,20 @@ function ready(){
 
 <style id="hmis-tablet-fix-v14">
 /* 1280px landscape tablets remain in the HMIS layout; desktop starts at 1367px. */
-@media (min-width:1025px) and (max-width:1366px) {
- body.hmis-home-active #hmisDashboard {display:flex!important;overflow-y:auto!important}
+@media (min-width:1025px) and (max-width:1300px) {
+ body.hmis-home-active #hmisDashboard {display:flex!important;overflow-y:auto!important;width:100%!important;min-width:0!important}
  body.hmis-home-active #appSidebar {display:none!important}
- body.hmis-home-active #mainContent {padding:14px!important;overflow:hidden!important}
+ body.hmis-home-active #mainContent {padding:14px!important;overflow:hidden!important;min-width:0!important}
+ body.hmis-home-active #hmisDashboard .hmis-top {width:100%;min-width:0}
+ body.hmis-home-active #hmisDashboard .process-track-container {grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body.hmis-home-active #hmisDashboard .dash-charts-grid {grid-template-columns:1fr!important}
  body.hmis-home-active #dashboardView.hmis-original-summary {display:none!important}
  body.hmis-home-active #hmisDashboard.hmis-summary-open #dashboardView.hmis-original-summary {display:flex!important}
  #hmisDashboard .hmis-grid {grid-template-columns:repeat(5,minmax(0,1fr))!important}
  #hmisDashboard .hmis-item {min-height:105px}
  #hmisDashboard .hmis-name {font-size:13px!important;font-weight:900!important}
 }
-@media (max-width:1366px) and (pointer: coarse) {
+@media (max-width:1366px) {
  #hmisDashboard .hmis-card[data-source-group="grpHqLetters"],
  #hmisDashboard .hmis-card[data-source-group="grpJpo"] {display:none!important}
 }
@@ -18113,7 +18277,7 @@ function ready(){
   if(!files)return;
   function makeTile(groupId,category,label,color,icon){
    const group=sidebar.querySelector('#'+groupId);
-   if(!group||files.querySelector('[data-hmis-added="'+groupId+'"]'))return;
+   if(files.querySelector('[data-hmis-added="'+groupId+'"]'))return;
    const tile=document.createElement('button');
    tile.type='button';tile.className='hmis-item';
    tile.dataset.hmisAdded=groupId;
@@ -18152,7 +18316,7 @@ function ready(){
 
 <!-- v15: Remove hamburger navigation button in mobile and tablet layouts only. -->
 <style id="hmis-no-hamburger-mobile-tablet-v15">
-@media screen and (max-width:1366px) and (pointer: coarse) {
+@media screen and (max-width:1366px) {
   html body #mainHeader #mobileMenuBtn,
   html body #mainHeader button.menu-toggle-btn,
   html body #mobileMenuBtn,
@@ -18166,7 +18330,7 @@ function ready(){
 <!-- v20: Rebuilt mobile/tablet fit preview. A separate, non-sticky table prevents frozen-column overlap. -->
 <style id="rails-table-v20-css">
 #railsTableModeBar{display:none}
-@media(max-width:1366px) and (pointer: coarse){
+@media(max-width:1366px){
  #railsTableModeBar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px;border:1px solid #546981;border-radius:9px;background:#17283f;color:#fff;font-size:12px;font-weight:750;flex-shrink:0}
  #railsTableModeBar button{padding:7px 9px;border-radius:6px;border:1px solid #a3b4c8;background:#f7fbff;color:#14304d;font-weight:750;cursor:pointer}
  #railsTableModeBar button[aria-pressed=true]{background:#087e98;color:white;border-color:#087e98}
@@ -18179,48 +18343,59 @@ function ready(){
  #mainTableContainer.rails-fit-mode #railsFitTable tr>:first-child{border-right:2px solid #f97316!important}
  #mainTableContainer.rails-fit-mode #railsFitTable tr>:nth-child(2){border-right:2px solid #f97316!important}
  #mainTableContainer.rails-fit-mode #railsFitTable tbody td{white-space:normal!important;overflow:visible!important}
- body.rails-table-fullscreen #mainTableContainer{position:fixed!important;inset:58px 5px 5px!important;z-index:12000!important;height:auto!important;max-height:none!important;background:#fff!important;overflow:auto!important;box-shadow:0 0 0 9999px rgba(0,0,0,.7)!important}
- body.rails-table-fullscreen #railsTableModeBar{position:fixed!important;top:0;left:0;right:0;z-index:12001!important;margin:0;border-radius:0;min-height:52px}
 }
-@media (min-width:1367px), (pointer: fine){#railsFitTable{display:none!important}}
+@media(min-width:1367px){#railsFitTable{display:none!important}}
 </style>
 <script id="rails-table-v20-js">
 (function(){
- const mq=matchMedia('(max-width:1366px) and (pointer: coarse)');
- let mode='scroll',zoomFactor=1,baseWidth=0,queued=false;
+ const mq=matchMedia('(max-width:1366px)');
+ // Show table mode controls only on mobile/tablet, never on mouse-driven laptops.
+ const isTouchDevice=()=>/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||matchMedia('(pointer: coarse)').matches;
+ let mode='scroll',zoomFactor=1,queued=false,needsRebuild=true,fitBaseScale=1;
  const get=()=>({section:document.getElementById('tableViewSection'),box:document.getElementById('mainTableContainer'),table:document.getElementById('mainRecordTable'),bar:document.getElementById('railsTableModeBar')});
  function render(){
   queued=false;
   const {section,box,table,bar}=get();if(!section||!box||!table||!bar)return;
-  const active=mq.matches&&getComputedStyle(section).display!=='none';
+  const active=mq.matches&&isTouchDevice()&&getComputedStyle(section).display!=='none';
   bar.style.display=active?'flex':'none';
-  if(!mq.matches||!active){box.classList.remove('rails-fit-mode');if(!mq.matches)document.body.classList.remove('rails-table-fullscreen');return;}
+  if(!active){box.classList.remove('rails-fit-mode');const preview=document.getElementById('railsFitTable');if(preview)preview.remove();needsRebuild=true;return;}
   if(mode==='scroll'){
    box.classList.remove('rails-fit-mode');const old=document.getElementById('railsFitTable');if(old)old.remove();
-   bar.querySelector('[data-scale]').textContent='100%';return;
+   bar.querySelector('[data-scale]').textContent='100%';needsRebuild=true;return;
   }
-  box.classList.remove('rails-fit-mode');
-  const old=document.getElementById('railsFitTable');if(old)old.remove();
-  // Measure the real table before scaling. Do not scale the sticky original.
-  const originalWidth=Math.max(table.scrollWidth,table.getBoundingClientRect().width,780);
-  const copy=table.cloneNode(true);
-  copy.id='railsFitTable';copy.removeAttribute('style');copy.classList.add('rails-fit-preview');
-  copy.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
-  copy.setAttribute('aria-label','Scaled table preview');
-  copy.style.width=originalWidth+'px';copy.style.minWidth='0';
-  copy.style.maxWidth='none';
-  // Remove the sticky offsets and any fixed-position cells inherited from original CSS.
-  copy.querySelectorAll('th,td').forEach(cell=>{
-   cell.style.position='static';cell.style.left='auto';cell.style.right='auto';cell.style.transform='none';
-  });
-  box.appendChild(copy);
-  box.classList.add('rails-fit-mode');
-  const avail=Math.max(100,box.clientWidth-5);
-  const scale=Math.max(.12,Math.min(2.5,avail/originalWidth*zoomFactor));
+  // Rebuild the preview only when its source data/layout changes, NOT on every
+  // pinch frame. Re-cloning thousands of table cells caused stutter and lost scroll.
+  let copy=document.getElementById('railsFitTable');
+  if(needsRebuild || !copy){
+   const savedTop=box.scrollTop, savedLeft=box.scrollLeft;
+   box.classList.remove('rails-fit-mode');
+   if(copy)copy.remove();
+   const originalWidth=Math.max(table.scrollWidth,table.getBoundingClientRect().width,780);
+   copy=table.cloneNode(true);
+   copy.id='railsFitTable';
+   copy.removeAttribute('style');
+   copy.classList.add('rails-fit-preview');
+   copy.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+   copy.setAttribute('aria-label','Scaled table preview');
+   copy.style.width=originalWidth+'px';
+   copy.style.minWidth='0';
+   copy.style.maxWidth='none';
+   copy.querySelectorAll('th,td').forEach(cell=>{
+    cell.style.position='static';cell.style.left='auto';
+    cell.style.right='auto';cell.style.transform='none';
+   });
+   box.appendChild(copy);
+   box.classList.add('rails-fit-mode');
+   fitBaseScale=Math.max(.12,Math.min(2.5,Math.max(100,box.clientWidth-5)/originalWidth));
+   box.scrollTop=savedTop;box.scrollLeft=savedLeft;
+   needsRebuild=false;
+  }
+  const scale=Math.max(.12,Math.min(4,fitBaseScale*zoomFactor));
   copy.style.zoom=String(scale);
-  // Some browsers restore a previous scroll offset when table content changes.
-  box.scrollLeft=0;box.scrollTop=0;
   bar.querySelector('[data-scale]').textContent=Math.round(scale*100)+'%';
+  // Keep the current scroll position while zooming; the same DOM stays mounted.
+  if(copy.dataset.railClicksAttached==='yes')return;
+  copy.dataset.railClicksAttached='yes';
   // Forward action clicks to corresponding live elements (edit, links, view, etc.).
   copy.addEventListener('click',function(e){
    const target=e.target.closest('a,button,[onclick],[role="button"]');if(!target)return;
@@ -18238,20 +18413,32 @@ function ready(){
  function init(){
   const {box,table}=get();if(!box||!table||document.getElementById('railsTableModeBar'))return;
   const bar=document.createElement('div');bar.id='railsTableModeBar';
-  bar.innerHTML='<span>Table View:</span><button type="button" data-mode="fit" aria-pressed="false">Fit Screen</button><button type="button" data-mode="scroll" aria-pressed="true">Normal Scroll</button><button type="button" data-fullscreen>⛶ Fullscreen</button>';
+  bar.innerHTML='<span>Table View:</span><button type="button" data-mode="fit" aria-pressed="false">Fit Screen</button><button type="button" data-mode="scroll" aria-pressed="true">Normal Scroll</button>';
   box.parentNode.insertBefore(bar,box);
+  // Two-finger zoom for Fit Screen, with native one-finger vertical/horizontal panning.
+  let pinchStartDistance=0, pinchStartFactor=1;
+  const distance=touches=>Math.hypot(touches[0].clientX-touches[1].clientX,touches[0].clientY-touches[1].clientY);
+  box.addEventListener('touchstart',e=>{
+   if(mode==='fit' && e.touches.length===2){pinchStartDistance=distance(e.touches);pinchStartFactor=zoomFactor;}
+  },{passive:true});
+  box.addEventListener('touchmove',e=>{
+   if(mode!=='fit'||e.touches.length!==2||!pinchStartDistance)return;
+   e.preventDefault();
+   const next=Math.max(.4,Math.min(4,pinchStartFactor*distance(e.touches)/pinchStartDistance));
+   if(Math.abs(next-zoomFactor)>.008){zoomFactor=next;schedule();}
+  },{passive:false});
+  box.addEventListener('touchend',e=>{if(e.touches.length<2)pinchStartDistance=0;},{passive:true});
   bar.addEventListener('click',e=>{
    const b=e.target.closest('button');if(!b)return;
-   if(b.dataset.mode){mode=b.dataset.mode;zoomFactor=1;bar.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.mode===mode)));}
+   if(b.dataset.mode){mode=b.dataset.mode;zoomFactor=1;needsRebuild=true;bar.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.mode===mode)));}
    if(b.dataset.zoom){mode='fit';zoomFactor=b.dataset.zoom==='in'?Math.min(4,zoomFactor*1.25):b.dataset.zoom==='out'?Math.max(.4,zoomFactor/1.25):1;bar.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.mode===mode)));}
-   if(b.hasAttribute('data-fullscreen')){const yes=document.body.classList.toggle('rails-table-fullscreen');b.textContent=yes?'✕ Close':'⛶ Fullscreen';}
    schedule();
   });
-  if(window.ResizeObserver)new ResizeObserver(schedule).observe(box);
+  if(window.ResizeObserver)new ResizeObserver(()=>{needsRebuild=true;schedule();}).observe(box);
   const body=document.getElementById('tableBody'),head=document.getElementById('tableHead');
-  if(window.MutationObserver){const observer=new MutationObserver(schedule);[body,head].filter(Boolean).forEach(el=>observer.observe(el,{childList:true,subtree:true,characterData:true}));}
-  window.addEventListener('resize',schedule,{passive:true});
-  document.addEventListener('click',()=>setTimeout(schedule,100),true);
+  if(window.MutationObserver){const observer=new MutationObserver(()=>{needsRebuild=true;schedule();});[body,head].filter(Boolean).forEach(el=>observer.observe(el,{childList:true,subtree:true,characterData:true}));}
+  window.addEventListener('resize',()=>{needsRebuild=true;schedule();},{passive:true});
+  document.addEventListener('click',e=>{if(!e.target.closest('#railsTableModeBar, #mainTableContainer'))setTimeout(()=>{needsRebuild=true;schedule();},100);},true);
   schedule();
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
@@ -18259,7 +18446,7 @@ function ready(){
 </script>
 
 <style id="rails-v21-render-tested-fixes">
-@media(max-width:1366px) and (pointer: coarse){
+@media(max-width:1366px){
  #mainTableContainer.rails-fit-mode{overflow:auto!important; overscroll-behavior:contain;}
  #mainTableContainer.rails-fit-mode #railsFitTable{border:1px solid #f97316!important;border-spacing:0!important;table-layout:fixed!important;}
  #mainTableContainer.rails-fit-mode #railsFitTable th,
@@ -18276,7 +18463,7 @@ function ready(){
 
 <!-- v22: User-approved per-category frozen columns. Applies to real table in Normal Scroll; Fit preview remains fully unfrozen. -->
 <style id="rails-freeze-rules-v22">
-@media (max-width:1366px) and (pointer: coarse){
+@media (max-width:1366px){
  #mainTableContainer:not(.rails-fit-mode) {overflow-x:auto!important;overflow-y:auto!important;}
 }
 /* Reset inherited frozen positions; apply one consistent rule to every category. */
@@ -18365,7 +18552,7 @@ html body #mainTableContainer.rails-fit-mode #railsFitTable thead th {position:s
 </script>
 
 <style id="rails-v23-freeze-stability">
-@media(max-width:1366px) and (pointer: coarse){
+@media(max-width:1366px){
  #mainTableContainer:not(.rails-fit-mode) #mainRecordTable.rails-freeze-managed{transform:none!important;zoom:1!important;}
  #mainTableContainer:not(.rails-fit-mode) #mainRecordTable.rails-freeze-managed.rails-freeze-two tr>:nth-child(2){left:var(--rails-first-width,52px)!important;}
  #mainTableContainer:not(.rails-fit-mode) #mainRecordTable.rails-freeze-managed tr>:first-child{background-clip:padding-box!important;}
@@ -18390,10 +18577,10 @@ body.dark-theme #hmisDashboard .hmis-summary-toggle > .hmis-icon {
 
 <style id="rails-premium-dashboard-2026">
 /* Visual-only enhancement: existing buttons, events, Firebase and navigation untouched. */
-@media(max-width:1366px) and (pointer: coarse){
+@media(max-width:1366px){
 body:not(.dark-theme).hmis-home-active #mainContent{background:linear-gradient(145deg,#edf6ff 0%,#f3f1ff 53%,#eaf8ff 100%)!important}
 #hmisDashboard{gap:15px!important;padding:10px 5px 115px!important;scroll-padding-bottom:115px}
-#hmisDashboard .hmis-card{border-radius:23px!important;padding:18px 13px!important;border:1px solid rgba(255,255,255,.95)!important;background:rgba(255,255,255,.91)!important;box-shadow:0 12px 28px rgba(51,72,130,.09),inset 0 1px 0 #fff!important}
+#hmisDashboard .hmis-card:not(.hmis-summary-launcher){border-radius:23px!important;padding:18px 13px!important;border:1px solid rgba(255,255,255,.95)!important;background:rgba(255,255,255,.91)!important;box-shadow:0 12px 28px rgba(51,72,130,.09),inset 0 1px 0 #fff!important}
 #hmisDashboard .hmis-title{color:#172e65!important;font-size:clamp(14px,3.8vw,19px)!important;letter-spacing:-.3px;line-height:1.3!important;padding-bottom:12px;margin-bottom:15px!important;border-bottom:2px solid #e8edfa}
 #hmisDashboard .hmis-title i{color:#f49a13!important;filter:drop-shadow(0 3px 4px #f6bb6c77)}
 #hmisDashboard .hmis-grid{gap:13px 9px!important;align-items:stretch}
@@ -18403,9 +18590,9 @@ body:not(.dark-theme).hmis-home-active #mainContent{background:linear-gradient(1
 #hmisDashboard .hmis-item>.hmis-icon>i:first-child{font-size:clamp(25px,7.5vw,37px)!important;filter:drop-shadow(1px 3px 2px #25345524)}
 #hmisDashboard .hmis-name{font-size:clamp(9px,2.7vw,13px)!important;line-height:1.28!important;letter-spacing:-.15px!important;font-weight:900!important;color:#17264d!important;overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important;text-wrap:balance!important;max-width:100%!important}
 #hmisDashboard .hmis-nested{border-radius:19px!important;background:#f5f2ff!important}
-#hmisDashboard .hmis-bottom{position:fixed!important;bottom:max(12px,env(safe-area-inset-bottom))!important;left:4%!important;width:92%!important;display:flex!important;justify-content:space-around!important;padding:12px 8px!important;border-radius:40px!important;background:rgba(255,255,255,.96)!important;border:1px solid #fff!important;box-shadow:0 12px 30px #253e7940!important;backdrop-filter:blur(18px)}
-#hmisDashboard .hmis-bottom button{color:#4c448a!important;font-weight:900!important;gap:5px!important}
-#hmisDashboard .hmis-bottom i{font-size:23px!important}
+#hmisDashboard .hmis-bottom{position:fixed!important;bottom:0!important;left:4%!important;width:92%!important;display:flex!important;justify-content:space-around!important;padding:8px 8px!important;border-radius:40px!important;background:rgba(255,255,255,.96)!important;border:1px solid #fff!important;box-shadow:0 12px 30px #253e7940!important;backdrop-filter:blur(18px)}
+#hmisDashboard .hmis-bottom button{color:#4c448a!important;font-weight:900!important;gap:3px!important;font-size:10px!important}
+#hmisDashboard .hmis-bottom i{font-size:20px!important}
 body.dark-theme.hmis-home-active #mainContent{background:linear-gradient(145deg,#0a1527,#15162d 60%,#102b3b)!important}
 body.dark-theme #hmisDashboard .hmis-card{background:#17243a!important;border-color:#314260!important;box-shadow:0 12px 28px #0005!important}
 body.dark-theme #hmisDashboard .hmis-title,body.dark-theme #hmisDashboard .hmis-name{color:#f0f4ff!important}
@@ -18517,3 +18704,20 @@ body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-it
  },false);
 })();
 </script>
+
+
+<!-- RailSNTGyan v2: final cascade correction for compact mobile tiles -->
+<style id="rails-mobile-tile-label-final-fix">
+@media (max-width:699px) {
+ #hmisDashboard .hmis-grid {grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px 6px!important;}
+ #hmisDashboard .hmis-item {box-sizing:border-box!important;min-width:0!important;max-width:100%!important;min-height:126px!important;height:auto!important;padding:9px 3px 10px!important;gap:6px!important;overflow:visible!important;align-items:center!important;justify-content:flex-start!important;}
+ #hmisDashboard .hmis-item>.hmis-icon {width:clamp(36px,11vw,47px)!important;height:clamp(36px,11vw,47px)!important;min-width:0!important;border-radius:13px!important;}
+ #hmisDashboard .hmis-item>.hmis-icon>i:first-child {font-size:clamp(18px,5.6vw,25px)!important;}
+ #hmisDashboard .hmis-item>.hmis-name {display:block!important;flex:0 0 auto!important;box-sizing:border-box!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;padding:0 1px!important;text-align:center!important;font-size:8.5px!important;line-height:1.22!important;letter-spacing:-.22px!important;font-weight:800!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important;hyphens:auto!important;text-wrap:wrap!important;overflow:visible!important;}
+}
+@media (max-width:380px) {
+ #hmisDashboard .hmis-item>.hmis-name {font-size:8px!important;line-height:1.2!important;}
+ #hmisDashboard .hmis-item {min-height:120px!important;padding:8px 2px 9px!important;gap:5px!important;}
+}
+/* Preserve larger, horizontal IRSEM/IRTEM nested selector cards. */
+</style>
