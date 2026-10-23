@@ -6590,6 +6590,42 @@ body.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-toggle>.hmis-icon i
 @media(prefers-reduced-motion:no-preference){#railProfileOverlay:not([hidden]) .rail-profile-panel{animation:railProfileEnter .2s ease-out both}
   @keyframes railProfileEnter{from{opacity:.5;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}}
 </style>
+<style id="rail-profile-admin-management-v1">
+/* Admin Management is exclusively an action inside verified Admin Profile. */
+#railProfileAdminManagement[hidden]{display:none!important}
+#railProfileOverlay .rail-profile-admin-management{
+  margin-top:16px;padding:14px 12px 12px;border-radius:14px;
+  border:1px solid rgba(79,187,249,.34);
+  background:linear-gradient(135deg,rgba(10,54,95,.77),rgba(5,26,51,.86));
+}
+#railProfileOverlay .rail-profile-admin-management h3{
+  margin:0 0 11px;font-size:12px;letter-spacing:.55px;font-weight:800;color:#9fe2ff;
+  display:flex;align-items:center;gap:8px;
+}
+#railProfileOverlay .rail-profile-master-link{
+  display:flex;width:100%;align-items:center;gap:11px;text-align:left;cursor:pointer;
+  padding:12px;border:1px solid rgba(93,200,253,.52);border-radius:11px;
+  background:linear-gradient(115deg,#11558a,#0b345b);color:#f7fbff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+#railProfileOverlay .rail-profile-master-link>i:first-child{font-size:19px;color:#81dbff}
+#railProfileOverlay .rail-profile-master-link>span{display:flex;flex:1;flex-direction:column;gap:4px;min-width:0}
+#railProfileOverlay .rail-profile-master-link strong{font-size:12px;font-weight:800;letter-spacing:.2px}
+#railProfileOverlay .rail-profile-master-link small{font-size:10px;line-height:1.4;color:#c0d9ee}
+#railProfileOverlay .rail-profile-master-link>i:last-child{font-size:12px;color:#99dfff}
+#railProfileOverlay .rail-profile-master-link:hover{border-color:#83dfff;background:linear-gradient(115deg,#166fa7,#104771)}
+#railProfileOverlay .rail-profile-master-link:focus-visible{outline:2px solid #71d7ff;outline-offset:3px}
+html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-admin-management{
+  background:linear-gradient(135deg,#edf8ff,#e1f0fe);border-color:#bad8ee;
+}
+html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-admin-management h3{color:#17618c}
+html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-master-link{
+  background:linear-gradient(110deg,#fff,#edf8ff);border-color:#a6d2ec;color:#123553;
+}
+html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-master-link small{color:#557189}
+html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-master-link>i{color:#176a9b}
+html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-master-link:hover{background:#dff1fc}
+</style>
 <style id="rail-v44-profile-light-theme">
 /* Profile only: respect the existing light-theme state without touching login,
    authentication, navigation, or the portal's shared UI components. */
@@ -6636,6 +6672,516 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-co
 html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-copy:hover {background:#cfedfc}
 html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-footer {color:#647c91}
 </style>
+
+<style id="rails-uniform-reference-library-v1">
+/* Uniform reference library: ONLY 11 approved categories, not IMP. LETTER or RDSO TAN.
+   No Firebase, modal, links, home or global theme CSS changed. */
+#mainTableContainer.rails-uniform-library-mode{
+  overflow-x:hidden!important;overflow-y:auto!important;
+  padding:clamp(9px,1.2vw,16px)!important;
+  scrollbar-gutter:stable;scroll-padding-top:8px;
+}
+#mainTableContainer.rails-uniform-library-mode #mainRecordTable,
+#mainTableContainer.rails-uniform-library-mode #railsFitTable {display:none!important}
+#mainTableContainer.rails-uniform-library-mode.chapter-gallery-mode #chapterBookGallery,
+#mainTableContainer.rails-uniform-library-mode.signal-image-gallery-mode #chapterBookGallery,
+#mainTableContainer.rails-uniform-library-mode #chapterBookGallery{
+ display:block!important;max-width:100%!important;min-width:0!important;
+ grid-template-columns:none!important;gap:0!important;padding:0!important;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-grid{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ align-items:stretch;gap:14px;width:100%;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-card{
+ display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;
+ background:#fff;color:#18314c;
+ border:1px solid #cbd9ea;border-radius:15px;
+ box-shadow:0 5px 14px rgba(21,53,81,.10);
+ transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-card:hover{transform:translateY(-2px);border-color:#73b7db;box-shadow:0 8px 21px rgba(21,53,81,.16)}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-cover{
+ position:relative;width:100%;aspect-ratio:3/2;overflow:hidden;flex-shrink:0;
+ background:linear-gradient(145deg,#153a61,#0b1a36);
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-cover img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-info{
+ display:flex;align-items:center;gap:8px;padding:10px 10px 5px;min-height:54px;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-code{
+ flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+ max-width:84px;min-width:43px;padding:6px 8px;border-radius:8px;
+ color:white;background:var(--rail-lib-accent,#0b89a7);
+ font-weight:800;font-size:12px;line-height:1.15;letter-spacing:.05px;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-title{
+ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+ line-clamp:2;overflow:hidden;text-overflow:ellipsis;overflow-wrap:anywhere;
+ font-weight:800;line-height:1.27;font-size:12.5px;color:#172d48;
+}
+/* IRSEM and IRTEM now match IRISET E-Book: code + compact two-line title. */
+#mainTableContainer.rails-uniform-library-mode .rails-lib-card.rails-lib-chapter .rails-lib-info{min-height:54px;justify-content:flex-start}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-card.rails-lib-chapter .rails-lib-title{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2;overflow:hidden!important}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-actions{
+ margin-top:auto;padding:8px 10px 10px;display:flex;align-items:center;gap:7px;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-read{
+ flex:1;min-width:0;min-height:35px;display:flex;align-items:center;justify-content:center;gap:6px;
+ border-radius:8px;cursor:pointer;font-size:12px;font-weight:800;white-space:nowrap;
+ color:#0b5484;background:#dceeff;border:1px solid #74b9e4;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-admin{
+ flex:0 0 auto;width:34px;height:35px;padding:0;border:1px solid #9fb2cc;
+ border-radius:8px;display:flex;align-items:center;justify-content:center;
+ cursor:pointer;color:#34506b;background:transparent;font-size:13px;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-read:hover,
+#mainTableContainer.rails-uniform-library-mode .rails-lib-admin:hover{filter:brightness(.95)}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-empty{padding:22px;text-align:center;color:#64748b;font-size:13px}
+/* Dark palette only; the existing light theme is otherwise unchanged. */
+body.dark-theme #mainTableContainer.rails-uniform-library-mode{background:#0b1424!important}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-card{
+ background:linear-gradient(154deg,#1a2a43,#111e33)!important;
+ color:#f4f8ff!important;border:1px solid #385778!important;
+ box-shadow:0 5px 16px rgba(0,0,0,.20)!important;
+}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-card:hover{border-color:#6cc7ef!important;box-shadow:0 8px 22px rgba(0,160,240,.16)!important}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-title{color:#f1f7ff!important;-webkit-text-fill-color:#f1f7ff!important}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-read{color:#e6f5ff!important;background:linear-gradient(140deg,#175082,#123a65)!important;border-color:#4a9cc8!important}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-admin{color:#dceafd!important;border-color:#557492!important}
+@media(min-width:1500px){#mainTableContainer.rails-uniform-library-mode .rails-lib-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}}
+@media(min-width:700px) and (max-width:1099px){#mainTableContainer.rails-uniform-library-mode .rails-lib-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:11px}}
+@media(max-width:699px){
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px}
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-info{gap:6px;padding:7px 7px 3px;min-height:47px}
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-code{min-width:36px;max-width:66px;padding:5px 6px;font-size:10.5px;border-radius:6px}
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-title{font-size:11px;line-height:1.23}
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-actions{gap:4px;padding:6px 6px 8px}
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-read{min-height:32px;font-size:10px;gap:4px}
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-admin{width:27px;height:32px;font-size:11px}
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-card{border-radius:12px}
+}
+@media(max-width:360px){#mainTableContainer.rails-uniform-library-mode .rails-lib-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px}}
+@media(prefers-reduced-motion:reduce){#mainTableContainer.rails-uniform-library-mode .rails-lib-card{transition:none!important;transform:none!important}}
+</style>
+
+<style id="v70-action-border-slider-fix">
+/* v70: Improve action icon visibility, give full table grid borders, and update
+   scrollbar/slider colors to the 3CX-inspired blue palette. Dark theme only. */
+html body.dark-theme #mainRecordTable .actions-cell,
+html body.dark-theme #railsFitTable .actions-cell{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:6px !important;
+  min-width:148px !important;
+}
+
+/* Base action buttons */
+html body.dark-theme #mainRecordTable .actions-cell .action-icon-btn,
+html body.dark-theme #railsFitTable .actions-cell .action-icon-btn{
+  width:26px !important;
+  height:26px !important;
+  min-width:26px !important;
+  min-height:26px !important;
+  padding:0 !important;
+  border-radius:6px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  border:1px solid rgba(92,185,246,.70) !important;
+  background:linear-gradient(180deg,#154F87 0%,#0B3764 100%) !important;
+  color:#F8FCFF !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 1px 4px rgba(0,0,0,.28) !important;
+}
+html body.dark-theme #mainRecordTable .actions-cell .action-icon-btn i,
+html body.dark-theme #railsFitTable .actions-cell .action-icon-btn i{
+  color:#F8FCFF !important;
+  font-size:12px !important;
+  line-height:1 !important;
+  opacity:1 !important;
+  text-shadow:0 1px 1px rgba(0,8,20,.55) !important;
+}
+html body.dark-theme #mainRecordTable .actions-cell .action-icon-btn:hover,
+html body.dark-theme #railsFitTable .actions-cell .action-icon-btn:hover{
+  background:linear-gradient(180deg,#1A679F 0%,#0E4678 100%) !important;
+  border-color:#7FDBFF !important;
+}
+/* Distinct action meanings */
+html body.dark-theme #mainRecordTable .actions-cell .attachment-chain-btn,
+html body.dark-theme #railsFitTable .actions-cell .attachment-chain-btn{
+  background:linear-gradient(180deg,#178B4E 0%,#106C3D 100%) !important;
+  border-color:rgba(122,241,172,.75) !important;
+}
+html body.dark-theme #mainRecordTable .actions-cell .attachment-chain-btn i,
+html body.dark-theme #railsFitTable .actions-cell .attachment-chain-btn i{color:#F4FFF9 !important;}
+html body.dark-theme #mainRecordTable .actions-cell .attachment-chain-btn.broken,
+html body.dark-theme #railsFitTable .actions-cell .attachment-chain-btn.broken,
+html body.dark-theme #mainRecordTable .actions-cell .action-icon-btn:disabled,
+html body.dark-theme #railsFitTable .actions-cell .action-icon-btn:disabled{
+  background:linear-gradient(180deg,#4A627A 0%,#304557 100%) !important;
+  border-color:rgba(160,184,206,.65) !important;
+  color:#E8F1FA !important;
+  opacity:1 !important;
+}
+html body.dark-theme #mainRecordTable .actions-cell .edit-btn,
+html body.dark-theme #railsFitTable .actions-cell .edit-btn{
+  background:linear-gradient(180deg,#1F7CB2 0%,#125F8F 100%) !important;
+  border-color:rgba(128,219,255,.78) !important;
+}
+html body.dark-theme #mainRecordTable .actions-cell .delete-btn,
+html body.dark-theme #railsFitTable .actions-cell .delete-btn{
+  background:linear-gradient(180deg,#A23B4B 0%,#7A2232 100%) !important;
+  border-color:rgba(255,164,182,.68) !important;
+}
+
+/* Full visible borders on every table cell */
+html body.dark-theme #mainRecordTable,
+html body.dark-theme #railsFitTable{
+  border:1px solid rgba(58,175,240,.80) !important;
+}
+html body.dark-theme #mainRecordTable thead th,
+html body.dark-theme #mainRecordTable tbody td,
+html body.dark-theme #railsFitTable thead th,
+html body.dark-theme #railsFitTable tbody td{
+  border-right:1px solid rgba(76,180,240,.42) !important;
+  border-left:1px solid rgba(76,180,240,.22) !important;
+  border-bottom:1px solid rgba(76,180,240,.34) !important;
+}
+html body.dark-theme #mainRecordTable thead th,
+html body.dark-theme #railsFitTable thead th{
+  border-top:1px solid rgba(94,205,255,.72) !important;
+}
+html body.dark-theme #mainRecordTable tbody tr:first-child td,
+html body.dark-theme #railsFitTable tbody tr:first-child td{
+  border-top:1px solid rgba(76,180,240,.30) !important;
+}
+html body.dark-theme #mainRecordTable tr > *:first-child,
+html body.dark-theme #railsFitTable tr > *:first-child{
+  border-left:1px solid rgba(94,205,255,.42) !important;
+}
+html body.dark-theme #mainRecordTable tr > *:last-child,
+html body.dark-theme #railsFitTable tr > *:last-child{
+  border-right:1px solid rgba(94,205,255,.52) !important;
+}
+/* Keep frozen separators slightly stronger */
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable thead th:nth-child(2),
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable tbody td:nth-child(2),
+html body.dark-theme #mainTableContainer.rails-fit-mode #railsFitTable tr > :nth-child(2){
+  border-right:2px solid #53C8FF !important;
+}
+
+/* Blue slider / scrollbar styling */
+html body.dark-theme,
+html body.dark-theme .table-container,
+html body.dark-theme .top-scrollbar-wrapper,
+html body.dark-theme main{
+  scrollbar-color:#38BDF8 #0B2340;
+}
+html body.dark-theme ::-webkit-scrollbar-track{
+  background:#0B2340 !important;
+}
+html body.dark-theme ::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#1DB7F1 0%,#0E77B7 100%) !important;
+  border-radius:8px !important;
+  border:1px solid rgba(168,233,255,.18) !important;
+}
+html body.dark-theme ::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,#48CCFF 0%,#1592D2 100%) !important;
+}
+html body.dark-theme .top-scrollbar-wrapper{
+  background:#08203B !important;
+  border:1px solid rgba(59,171,234,.55) !important;
+  border-bottom:1px solid #2AB6F1 !important;
+}
+html body.dark-theme .top-scrollbar-wrapper::-webkit-scrollbar-track{
+  background:#0A2440 !important;
+}
+html body.dark-theme .top-scrollbar-wrapper::-webkit-scrollbar-thumb{
+  background:linear-gradient(90deg,#1FC3FF 0%,#0B84CC 100%) !important;
+  border-radius:8px !important;
+  border:1px solid rgba(193,239,255,.22) !important;
+}
+html body.dark-theme .top-scrollbar-wrapper::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(90deg,#4BD3FF 0%,#14A0EA 100%) !important;
+}
+</style>
+
+<!-- RailSNTGyan top scrollbar sizing fix: eliminate tall empty track above thin
+     native Android overlay thumb; preserve existing two-way horizontal sync. -->
+<style id="rails-top-scrollbar-height-alignment-v71">
+html body.dark-theme #topScrollbarWrapper {
+  height:12px !important;
+  min-height:12px !important;
+  max-height:12px !important;
+  box-sizing:border-box !important;
+  flex:0 0 12px !important;
+  padding:0 !important;
+  margin:0 !important;
+  position:relative !important;
+  overflow-x:scroll !important;
+  overflow-y:hidden !important;
+  border:1px solid rgba(73,179,249,.72) !important;
+  border-radius:7px !important;
+  background-color:#061B33 !important;
+  background-image:linear-gradient(90deg,#34C9FF 0%,#138BCF 100%) !important;
+  background-repeat:no-repeat !important;
+  /* The visible cyan thumb is 8px high, centered in the 12px slider row. */
+  background-size:var(--rail-slider-thumb-width,28%) 8px !important;
+  background-position:var(--rail-slider-thumb-left,2px) center !important;
+  scrollbar-width:none !important;
+  scrollbar-color:auto !important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-x;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.45) !important;
+}
+html body.dark-theme #topScrollbarWrapper::-webkit-scrollbar {
+  width:0 !important;
+  height:0 !important;
+  display:none !important;
+}
+html body.dark-theme #topScrollbarWrapper::-webkit-scrollbar-track,
+html body.dark-theme #topScrollbarWrapper::-webkit-scrollbar-thumb {
+  display:none !important;
+  height:0 !important;
+  border:0 !important;
+}
+html body.dark-theme #topScrollbarContent {
+  height:1px !important;
+  min-height:1px !important;
+  pointer-events:none !important;
+}
+/* Preserve the existing light-theme scrollbar's look and behavior. */
+</style>
+<script id="rails-top-scrollbar-height-alignment-v71-script">
+(function(){
+  'use strict';
+  function init(){
+    const bar=document.getElementById('topScrollbarWrapper');
+    const content=document.getElementById('topScrollbarContent');
+    const tableViewport=document.getElementById('mainTableContainer');
+    const table=document.getElementById('mainRecordTable');
+    if(!bar || !content || !tableViewport || !table || bar.dataset.railSlider71==='yes') return;
+    bar.dataset.railSlider71='yes';
+    let raf=0;
+    let thumbWidth=0;
+    let travel=0;
+    let maxScroll=0;
+    function dark(){return document.body.classList.contains('dark-theme');}
+    function paint(){
+      raf=0;
+      if(!dark() || getComputedStyle(bar).display==='none') return;
+      const w=bar.clientWidth;
+      const full=Math.max(bar.scrollWidth,w);
+      if(w<30 || full<=w){
+        bar.style.setProperty('--rail-slider-thumb-width',Math.max(0,w-4)+'px');
+        bar.style.setProperty('--rail-slider-thumb-left','2px');
+        return;
+      }
+      maxScroll=full-w;
+      const inner=Math.max(1,w-4);
+      thumbWidth=Math.max(Math.min(40,inner), Math.min(inner,inner*w/full));
+      travel=Math.max(0,inner-thumbWidth);
+      const ratio=Math.max(0,Math.min(1,bar.scrollLeft/maxScroll));
+      bar.style.setProperty('--rail-slider-thumb-width',thumbWidth.toFixed(2)+'px');
+      bar.style.setProperty('--rail-slider-thumb-left',(2+ratio*travel).toFixed(2)+'px');
+    }
+    function schedule(){if(!raf) raf=requestAnimationFrame(paint);}
+    bar.addEventListener('scroll',schedule,{passive:true});
+    tableViewport.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('resize',schedule,{passive:true});
+    // Native scrollbar is hidden for a consistently-sized Android slider thumb.
+    // Desktop users can click or drag the track, while existing mobile touch-swipe
+    // and the original top/bottom scroll synchronization remain intact.
+    let activePointer=null;
+    function seek(e){
+      const rect=bar.getBoundingClientRect();
+      if(!rect.width) return;
+      const x=Math.max(0,Math.min(rect.width-4,e.clientX-rect.left-2-thumbWidth/2));
+      const ratio=travel>0 ? Math.max(0,Math.min(1,x/travel)) : 0;
+      bar.scrollLeft=ratio*maxScroll;
+      tableViewport.scrollLeft=bar.scrollLeft;
+      schedule();
+    }
+    bar.addEventListener('pointerdown',function(e){
+      if(!dark() || e.pointerType==='touch' || e.button!==0) return;
+      paint();
+      activePointer=e.pointerId;
+      try{bar.setPointerCapture(e.pointerId);}catch(err){}
+      seek(e);
+      e.preventDefault();
+    });
+    bar.addEventListener('pointermove',function(e){
+      if(activePointer!==e.pointerId) return;
+      seek(e);
+    });
+    function done(e){if(activePointer===e.pointerId)activePointer=null;}
+    bar.addEventListener('pointerup',done);
+    bar.addEventListener('pointercancel',done);
+    if(typeof ResizeObserver==='function'){
+      const observer=new ResizeObserver(schedule);
+      observer.observe(bar); observer.observe(content); observer.observe(tableViewport);
+    }
+    const mo=new MutationObserver(schedule);
+    mo.observe(table,{childList:true,subtree:true});
+    schedule();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
+
+
+<style id="rails-chapter-ebook-uniform-v2">
+/* Uniform IRISET / IRSEM / IRTEM chapter cards; images and actual DB titles are untouched. */
+#mainTableContainer.rails-uniform-library-mode .rails-lib-card.rails-lib-chapter .rails-lib-info {
+  align-items:center!important; min-height:54px!important;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-card.rails-lib-chapter .rails-lib-title {
+  display:-webkit-box!important; -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important; line-clamp:2;
+  max-height:2.55em!important; overflow:hidden!important;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-code {
+  white-space:nowrap!important; word-break:keep-all!important;
+}
+/* If an HTML file is opened without its adjacent images/ folder, show an intentional
+   cover placeholder rather than the browser's broken-image icon and alt text. */
+#mainTableContainer.rails-uniform-library-mode .rails-lib-cover.rails-lib-cover-missing {
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  background:linear-gradient(150deg,#15497b 0%,#0d2b50 52%,#061a34 100%)!important;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-cover.rails-lib-cover-missing::after{
+  content:"📘";font-size:clamp(22px,4vw,44px);opacity:.75;
+  filter:drop-shadow(0 4px 7px rgba(0,0,0,.25));
+}
+@media(max-width:699px){
+ #mainTableContainer.rails-uniform-library-mode .rails-lib-card.rails-lib-chapter .rails-lib-info{
+   min-height:47px!important;
+ }
+}
+</style>
+
+
+<style id="rails-db-exact-titles-two-line-ellipsis">
+/* Book/chapter text is populated from Firestore records, never a JS title dictionary.
+   Only the visible text is clipped; the title attribute retains the complete text. */
+#mainTableContainer.rails-uniform-library-mode .rails-lib-info {
+  min-width:0 !important;
+}
+#mainTableContainer.rails-uniform-library-mode .rails-lib-title,
+#mainTableContainer.rails-uniform-library-mode .rails-lib-card.rails-lib-chapter .rails-lib-title {
+  flex:1 1 0% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  display:-webkit-box !important;
+  -webkit-box-orient:vertical !important;
+  -webkit-line-clamp:2 !important;
+  line-clamp:2;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  overflow-wrap:anywhere !important;
+  white-space:normal !important;
+  line-height:1.27 !important;
+  max-height:2.54em !important;
+}
+@media(max-width:699px){
+  #mainTableContainer.rails-uniform-library-mode .rails-lib-title,
+  #mainTableContainer.rails-uniform-library-mode .rails-lib-card.rails-lib-chapter .rails-lib-title{
+    line-height:1.23 !important;
+    max-height:2.46em !important;
+  }
+}
+</style>
+
+<style id="v75-chapter-serial-entry-style">
+  #formSerialNoContainer .chapter-order-help,
+  #formChapterNoContainer .chapter-order-help {
+    display:block; margin-top:5px; font-size:11px; line-height:1.35;
+    font-weight:500; color:#64748b;
+  }
+  body.dark-theme #formSerialNoContainer .chapter-order-help,
+  body.dark-theme #formChapterNoContainer .chapter-order-help {color:#B5CDE5;}
+</style>
+<style id="rm-admin-home-mobile-visible-v2">
+/* Admin-only Home shortcut. Non-admin users never see this card. */
+#rmAdminHomeCard[hidden]{display:none!important}
+#hmisDashboard #rmAdminHomeCard{border-left:3px solid #38bdf8!important}
+#hmisDashboard #rmAdminHomeCard .hmis-title{display:flex!important;align-items:center;gap:7px}
+#hmisDashboard #rmAdminHomeCard .hmis-title>i{color:#38bdf8}
+#hmisDashboard #rmAdminHomeCard .hmis-grid{display:flex!important;gap:10px!important}
+#hmisDashboard #rmAdminHomeCard .rm-admin-launch{width:min(190px,100%)!important;min-width:0!important;flex:0 0 auto!important}
+#hmisDashboard #rmAdminHomeCard .rm-admin-launch:focus-visible{outline:2px solid #4dc8ff!important;outline-offset:2px}
+body.dark-theme #hmisDashboard #rmAdminHomeCard{background:linear-gradient(105deg,#071a30,#0b3156)!important;border-color:rgba(56,189,248,.55)!important}
+</style>
+
+<style id="rails-bulk-excel-import-styles">
+/* Excel Bulk Import panel is scoped to the existing Admin-only Master dialog. */
+#rmModal .rm-excel-panel {width:100%;min-width:0;max-width:100%;margin:0 0 15px;box-sizing:border-box;border-radius:12px;overflow:hidden;border:1px solid #388ac2;background:linear-gradient(130deg,#102c4e,#07213c);color:#e9f7ff;}
+#rmModal .rm-excel-panel summary {list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding:12px 14px;cursor:pointer;font-weight:800;font-size:13px;color:#effaff;user-select:none;}
+#rmModal .rm-excel-panel summary::-webkit-details-marker {display:none;}
+#rmModal .rm-excel-panel summary::after {content:'▾';margin-left:auto;color:#84dcff;font-size:15px;}
+#rmModal .rm-excel-panel[open] summary::after {content:'▴';}
+#rmModal .rm-excel-panel summary i {color:#59d2ff;font-size:16px;}
+#rmModal .rm-excel-hint {color:#9fd3ee;font-weight:500;font-size:11px;}
+#rmModal .rm-excel-inside {padding:12px 14px 14px;border-top:1px solid rgba(97,182,237,.38);min-width:0;max-width:100%;overflow:hidden;}
+#rmModal .rm-excel-inside p,#rmModal .rm-excel-inside small{display:block;font-size:11px;line-height:1.55;color:#b3d3e9;overflow-wrap:anywhere;}
+#rmModal .rm-excel-file-label{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:12px;font-weight:750;margin:11px 0;color:#f2fbff;}
+#rmModal #rmExcelFile{display:block;flex:1 1 280px;width:100%;max-width:100%;min-width:0;box-sizing:border-box;padding:7px;color:#e9f6ff;background:#0a2644;border:1px solid #3274a0;border-radius:8px;font-size:12px;}
+#rmModal #rmExcelFile::file-selector-button{color:#fff;background:#12699d;padding:7px 10px;border:0;border-radius:6px;margin-right:10px;cursor:pointer;}
+#rmModal .rm-excel-buttons{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:10px 0;}
+#rmModal .rm-excel-buttons button,#rmModal .rm-excel-template {appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;max-width:100%;min-height:37px;min-width:0;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;background:linear-gradient(135deg,#087bae,#075384);border:1px solid #45bbe9;color:#f7fdff;}
+#rmModal #rmExcelSave:not(:disabled){background:linear-gradient(135deg,#168858,#086044);border-color:#69dbad;}
+#rmModal .rm-excel-buttons button:disabled {opacity:.48;cursor:not-allowed;}
+#rmModal .rm-excel-template{background:#112b48;border-color:#43789c;}
+#rmModal .rm-excel-message {font-size:12px;color:#d5edff;padding:8px 10px;background:#0a2542;border:1px solid rgba(67,143,197,.42);border-radius:7px;line-height:1.55;overflow-wrap:anywhere;}
+#rmModal .rm-excel-message.bad {border-color:#e49689;color:#ffd8d1;}
+#rmModal .rm-excel-results{max-width:100%;margin:12px 0 8px;overflow:hidden;}
+#rmModal .rm-excel-summary{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;}
+#rmModal .rm-excel-stat{background:#0b385a;border:1px solid #3e7aa5;border-radius:8px;padding:7px 10px;min-width:95px;font-size:11px;color:#c9e7fa;}
+#rmModal .rm-excel-stat strong{display:block;font-size:19px;line-height:1.3;color:#fff;}
+#rmModal .rm-excel-preview-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:7px;margin:7px 0;max-height:270px;overflow:auto;}
+#rmModal .rm-excel-preview-item{border:1px solid #37648a;background:#0d304e;border-radius:8px;padding:8px;min-width:0;font-size:11px;line-height:1.45;overflow-wrap:anywhere;}
+#rmModal .rm-excel-preview-item b{display:block;color:#f2faff;}
+#rmModal .rm-excel-preview-item span{color:#a9cde6;}
+#rmModal .rm-excel-issues{font-size:11px;color:#ffcbb6;background:rgba(103,45,30,.25);border:1px solid #795b56;border-radius:8px;padding:8px;max-height:145px;overflow:auto;margin-top:8px;overflow-wrap:anywhere;}
+body:not(.dark-theme) #rmModal .rm-excel-panel{background:#f6fbff;color:#173451;border-color:#a6c7da;}
+body:not(.dark-theme) #rmModal .rm-excel-panel summary{color:#163c5a;}
+body:not(.dark-theme) #rmModal .rm-excel-hint{color:#496782;}
+body:not(.dark-theme) #rmModal .rm-excel-inside p,body:not(.dark-theme) #rmModal .rm-excel-inside small,body:not(.dark-theme) #rmModal .rm-excel-file-label{color:#35546e;}
+body:not(.dark-theme) #rmModal #rmExcelFile{background:#fff;color:#193953;}
+body:not(.dark-theme) #rmModal .rm-excel-message,body:not(.dark-theme) #rmModal .rm-excel-preview-item,body:not(.dark-theme) #rmModal .rm-excel-stat{background:#edf6fc;color:#264862;}
+body:not(.dark-theme) #rmModal .rm-excel-preview-item b{color:#163752;}
+body:not(.dark-theme) #rmModal .rm-excel-preview-item span{color:#4a6881;}
+body:not(.dark-theme) #rmModal .rm-excel-stat strong{color:#143f64;}
+@media(max-width:650px){#rmModal .rm-excel-panel summary{padding:10px;gap:6px;font-size:12px}#rmModal .rm-excel-hint{width:100%;padding-left:21px}#rmModal .rm-excel-inside{padding:9px}#rmModal .rm-excel-buttons{display:grid;grid-template-columns:minmax(0,1fr)}#rmModal .rm-excel-buttons > *{width:100%;}#rmModal #rmExcelFile{flex-basis:100%;}#rmModal .rm-excel-stat{min-width:0;flex:1 1 70px}}
+</style>
+
+
+<style id="rm-smart-upsert-excel-css">
+#rmModal .rm-excel-mode-label{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:10px 0 2px;font-size:12px;font-weight:800;color:#e8f7ff}
+#rmModal #rmExcelMode{flex:1 1 270px;min-width:0;max-width:100%;width:100%;border:1px solid #4a98c7;border-radius:8px;background:#102944;color:#f4fbff;padding:9px 10px;font-size:13px}
+#rmModal .rm-excel-preview-item.rm-excel-updated{border-color:#49c7f8;background:#103b61}
+#rmModal .rm-excel-preview-item.rm-excel-new{border-color:#36a978;background:#0b334c}
+#rmModal .rm-excel-preview-item .rm-change-line{color:#cff5ff;font-size:12px;display:block;padding-top:5px;font-weight:750;overflow-wrap:anywhere}
+#rmModal .rm-excel-preview-item .rm-change-old{color:#ffcca7}
+#rmModal .rm-excel-preview-item .rm-change-new{color:#8affd7}
+#rmModal .rm-excel-preview-status{font-size:10px;font-weight:900;letter-spacing:.02em;text-transform:uppercase;display:inline-block;color:#9fe8ff;margin-bottom:3px}
+#rmModal .rm-excel-warning-line{white-space:pre-line;font-size:11px}
+#rmModal .rm-excel-conflict{color:#ffd6c8;border:1px solid #b26259;background:rgba(125,36,43,.20);border-radius:7px;padding:9px;margin:8px 0;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+body:not(.dark-theme) #rmModal .rm-excel-mode-label{color:#25425b}
+body:not(.dark-theme) #rmModal #rmExcelMode{background:#fff;color:#18314e;border-color:#9ec4da}
+body:not(.dark-theme) #rmModal .rm-excel-preview-item .rm-change-line{color:#18426b}
+body:not(.dark-theme) #rmModal .rm-excel-preview-item .rm-change-old{color:#a44928}
+body:not(.dark-theme) #rmModal .rm-excel-preview-item .rm-change-new{color:#176946}
+body:not(.dark-theme) #rmModal .rm-excel-preview-item.rm-excel-updated{background:#eaf7ff}
+body:not(.dark-theme) #rmModal .rm-excel-preview-item.rm-excel-new{background:#ebfaf4}
+@media(max-width:650px){#rmModal #rmExcelMode{flex-basis:100%;font-size:15px;min-height:42px}}
+</style>
+
 </head>
 <script id="rn-theme-prebody-v33">
 (function(){
@@ -7960,9 +8506,16 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
           <input type="text" id="formWorkName" placeholder="Enter details / work description">
         </div>
 
+        <div class="form-group" id="formSerialNoContainer" style="display:none;">
+          <label for="formSerialNo">Sr. No. (Sorting Order)</label>
+          <input type="number" id="formSerialNo" min="1" step="1" inputmode="numeric" placeholder="e.g. 1, 2, 3" autocomplete="off">
+          <small class="chapter-order-help">Choose the order of books/cards within this subsection. Chapter No., Book Code and titles are unchanged.</small>
+        </div>
+
         <div class="form-group" id="formChapterNoContainer" style="display:none;">
-          <label>Chapter No.</label>
-          <input type="text" id="formChapterNo" placeholder="Enter chapter no.">
+          <label for="formChapterNo">Chapter No. (Display on Card)</label>
+          <input type="text" id="formChapterNo" placeholder="e.g. CH-01, IV, or -" autocomplete="off">
+          <small class="chapter-order-help">Exactly what you enter is shown on the card, including "-".</small>
         </div>
 
         <div class="form-group" id="formCorrectionSlipNoContainer" style="display:none;">
@@ -8001,31 +8554,22 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
 
         <div class="form-group" id="formDepartmentContainer" style="display:none;">
           <label>Department</label>
-          <input type="text" id="formDepartment" placeholder="e.g. S&T, Mechanical, Civil, Operating">
+          <select id="formDepartment"><option value="">-- Select --</option></select>
         </div>
 
         <div class="form-group" id="formInspectionByContainer" style="display:none;">
           <label>Inspection Done by</label>
-          <input type="text" id="formInspectionBy" placeholder="e.g. PCSTE, CSE, CSTE(Plg)">
+          <select id="formInspectionBy"><option value="">-- Select --</option></select>
         </div>
 
         <div class="form-group" id="formEquipmentContainer" style="display:none;">
           <label>Equipment</label>
-          <input type="text" id="formEquipment" placeholder="e.g. Electric Point Machine, IPS, HASSDAC, EI">
+          <select id="formEquipment"><option value="">-- Select --</option></select>
         </div>
 
         <div class="form-group" id="formEiOemContainer" style="display:none;">
-          <label>OEM Make</label>
-          <select id="formEiOem">
-            <option value="HITACHI">HITACHI</option>
-            <option value="MEDHA">MEDHA</option>
-            <option value="KYOSON">KYOSON</option>
-            <option value="NIPPON">NIPPON</option>
-            <option value="SAFECONNECT">SAFECONNECT</option>
-            <option value="SIEMENS">SIEMENS</option>
-            <option value="WESTRES">WESTRES</option>
-            <option value="OTHER">OTHER</option>
-          </select>
+          <label>EI OEM Make</label>
+          <select id="formEiOem"><option value="">-- Select EI OEM --</option></select>
         </div>
 
         <div class="form-group" id="formEiSanctionByContainer" style="display:none;">
@@ -8042,8 +8586,8 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
         </div>
 
         <div class="form-group" id="formOemContainer" style="display:none;">
-          <label id="formOemLabel">OEM Make</label>
-          <input type="text" id="formOem" placeholder="e.g. Frauscher / CEL / Siemens / GG Tronics">
+          <label id="formOemLabel">MSDAC OEM Make</label>
+          <select id="formOem"><option value="">-- Select --</option></select>
         </div>
 
         <div class="form-group" id="formWagonContainer" style="display:none;">
@@ -8154,6 +8698,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       railAuthReady = true;
       if (!user) {
         railAdmin = false;
+        if (window.railMasterRoleUpdated) window.railMasterRoleUpdated();
         sessionStorage.removeItem('secr_portal_authorized');
         if (railRecordsUnsubscribe) { railRecordsUnsubscribe(); railRecordsUnsubscribe = null; }
         if (typeof records !== 'undefined') {
@@ -8168,6 +8713,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
         // Ignore an obsolete async result if sign-out occurred in the meantime.
         if (auth.currentUser !== user) return;
         railAdmin = token.claims.admin === true;
+        if (window.railMasterRoleUpdated) window.railMasterRoleUpdated();
         sessionStorage.setItem('secr_portal_authorized', 'true');
         sessionStorage.removeItem('railsntgyan_allow_exit');
         railSetLoginVisible(false);
@@ -8815,6 +9361,16 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       'IRSEM CHAPTER WISE', 'IRSEM CORRECTION SLIP',
       'IRTEM CHAPTER WISE', 'IRTEM CORRECTION SLIP'
     ];
+    // All Reference Books & Docs subsections rendered as image/book cards.
+    // IMP. LETTER and RDSO TAN keep their normal table behavior.
+    const railBookCardCategories = [
+      'IRSEM CHAPTER WISE', 'IRSEM CORRECTION SLIP',
+      'IRTEM CHAPTER WISE', 'IRTEM CORRECTION SLIP',
+      'GCC', 'IRSOD & CORRECTION SLIP', 'LINE OPENING (MANUAL)',
+      'SOP (SCHEDULE OF POWER)', 'OTHER MANUALS',
+      'IRISET E-BOOK (SIGNAL)', 'IRISET E-BOOK (TELECOM)'
+    ];
+
     const standardManualCategories = [
       'GCC', 'IRSOD & CORRECTION SLIP',
       'LINE OPENING (MANUAL)', 'SOP (SCHEDULE OF POWER)', 'OTHER MANUALS'
@@ -9291,15 +9847,27 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       const tableElem = document.getElementById('mainRecordTable');
       if (!thead || !tbody || !tableElem) return;
 
+      const railLibraryFolders = {
+        'IRSEM CHAPTER WISE':'irsem-chapter-wise', 'IRSEM CORRECTION SLIP':'irsem-correction-slip',
+        'IRTEM CHAPTER WISE':'irtem-chapter-wise', 'IRTEM CORRECTION SLIP':'irtem-correction-slip',
+        'GCC':'gcc', 'IRSOD & CORRECTION SLIP':'irsod-correction-slip',
+        'LINE OPENING (MANUAL)':'line-opening', 'SOP (SCHEDULE OF POWER)':'sop',
+        'OTHER MANUALS':'other-manuals',
+        'IRISET E-BOOK (SIGNAL)':'iriset-signal', 'IRISET E-BOOK (TELECOM)':'iriset-telecom'
+      };
+      const railLibraryMode = Object.prototype.hasOwnProperty.call(railLibraryFolders, currentCategory);
       const chapterGalleryMode = currentCategory === 'IRSEM CHAPTER WISE' || currentCategory === 'IRTEM CHAPTER WISE';
       const signalGalleryMode = currentCategory === 'IRISET E-BOOK (SIGNAL)' || currentCategory === 'IRISET E-BOOK (TELECOM)';
       const galleryContainer = document.getElementById('mainTableContainer');
+      if (galleryContainer) galleryContainer.classList.toggle('rails-uniform-library-mode', railLibraryMode);
       if (galleryContainer) galleryContainer.classList.toggle('chapter-gallery-mode', chapterGalleryMode || signalGalleryMode);
       if (galleryContainer) galleryContainer.classList.toggle('signal-image-gallery-mode', signalGalleryMode);
       const topScrollbar = document.getElementById('topScrollbarWrapper');
+      if (topScrollbar && railLibraryMode) topScrollbar.style.display = 'none';
       if (topScrollbar && (chapterGalleryMode || signalGalleryMode)) topScrollbar.style.display = 'none';
       const chapterGallery = document.getElementById('chapterBookGallery');
       if (chapterGallery && !chapterGalleryMode && !signalGalleryMode) chapterGallery.innerHTML = '';
+      if (chapterGallery && !railLibraryMode) chapterGallery.onclick = null;
 
       const filterYear = document.getElementById('filterYear').value;
       const filterDiv = document.getElementById('filterDivision').value;
@@ -9595,6 +10163,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
         if (searchTxt) {
           const matchStation = item.station && item.station.toLowerCase().includes(searchTxt);
           const matchWork = item.work && item.work.toLowerCase().includes(searchTxt);
+          const matchDescription = item.description && item.description.toLowerCase().includes(searchTxt);
           const matchDiv = item.division && item.division.toLowerCase().includes(searchTxt);
           const matchAgency = item.agency && item.agency.toLowerCase().includes(searchTxt);
           const matchDept = item.department && item.department.toLowerCase().includes(searchTxt);
@@ -9617,7 +10186,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
           const matchAddressedTo = item.addressedTo && item.addressedTo.toLowerCase().includes(searchTxt);
           const matchJpoNo = item.jpoNo && item.jpoNo.toLowerCase().includes(searchTxt);
 
-          if (!matchStation && !matchWork && !matchDiv && !matchAgency && !matchDept && !matchOem && 
+          if (!matchStation && !matchWork && !matchDescription && !matchDiv && !matchAgency && !matchDept && !matchOem && 
               !matchEquip && !matchWagon && !matchDocNo && !matchIssuedBy && !matchInspection && 
               !matchBook && !matchType && !matchTan && !matchRelTo && !matchDirLink && !matchGivenBy &&
               !matchChapterNo && !matchCorrectionSlipNo && !matchParaChapter && !matchAddressedTo && !matchJpoNo) {
@@ -9644,15 +10213,28 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
           });
         });
       } else if (currentCategory === 'IRSEM CHAPTER WISE' || currentCategory === 'IRTEM CHAPTER WISE') {
-        // IRSEM/IRTEM Chapter Wise: always display in natural Chapter No. sequence,
-        // irrespective of entry/sanction date or the order in which records were added.
+        // Sr. No. is the manually entered numeric Firestore field "serialNo".
+        // Chapter No. is a separate DISPLAY field; never invent or rewrite it.
+        // Legacy records without serialNo follow the manually ordered records,
+        // retaining natural chapter-number order until the admin assigns a Sr. No.
+        const chapterSerialNumber = rec => {
+          const value = rec.serialNo;
+          if (value === null || value === undefined || String(value).trim() === '') return null;
+          const n = Number(value);
+          return Number.isSafeInteger(n) && n > 0 ? n : null;
+        };
         filtered.sort((a, b) => {
-          const chapterA = String(a.chapterNo || '').trim();
-          const chapterB = String(b.chapterNo || '').trim();
-          return chapterA.localeCompare(chapterB, undefined, {
-            numeric: true,
-            sensitivity: 'base'
-          });
+          const sa = chapterSerialNumber(a);
+          const sb = chapterSerialNumber(b);
+          if (sa !== null && sb !== null && sa !== sb) return sa - sb;
+          if (sa !== null && sb === null) return -1;
+          if (sa === null && sb !== null) return 1;
+          const chapterA = String(a.chapterNo ?? '').trim();
+          const chapterB = String(b.chapterNo ?? '').trim();
+          const fallback = chapterA.localeCompare(chapterB, undefined, {numeric:true, sensitivity:'base'});
+          return fallback || String(a.work || a.description || a.id || '').localeCompare(
+            String(b.work || b.description || b.id || ''), undefined, {numeric:true, sensitivity:'base'}
+          );
         });
       } else if (currentCategory === 'IRSEM CORRECTION SLIP' || currentCategory === 'IRTEM CORRECTION SLIP') {
         // IRSEM/IRTEM Correction Slip: always display in natural Correction Slip No. sequence,
@@ -9678,6 +10260,110 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
             return (a.year || 0) - (b.year || 0);
           });
         }
+      }
+
+
+      // Across all 11 image-card subsections, manually entered Firestore serialNo
+      // overrides each subsection's existing natural/date ordering. Old records
+      // with no manual number keep their previous relative order and follow those
+      // explicitly numbered. Never derive a Sr. No. from title, chapterNo or index.
+      if (railLibraryMode) {
+        const manualSerial = rec => {
+          const raw = rec.serialNo;
+          if (raw === undefined || raw === null || String(raw).trim() === '') return null;
+          const n = Number(raw);
+          return Number.isSafeInteger(n) && n > 0 ? n : null;
+        };
+        filtered.sort((a,b) => {
+          const sa = manualSerial(a), sb = manualSerial(b);
+          if (sa !== null && sb !== null) return sa - sb;
+          if (sa !== null) return -1;
+          if (sb !== null) return 1;
+          return 0;  // Keep each subsection's pre-existing fallback order.
+        });
+      }
+
+      // Premium uniform BOOK LIBRARY: all Reference Books & Docs other than IMP. LETTER / RDSO TAN.
+      // v74: chapter badges display the exact saved Firestore chapterNo only.
+      // Titles and codes are always taken from Firestore; CSS clamps long titles to two lines.
+      if (railLibraryMode && chapterGallery) {
+        const escLib = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        const slugLib = v => String(v || '').toLowerCase().normalize('NFKD')
+          .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,90);
+        const chapterFolder = currentCategory === 'IRSEM CHAPTER WISE' || currentCategory === 'IRTEM CHAPTER WISE';
+        const slipFolder = currentCategory === 'IRSEM CORRECTION SLIP' || currentCategory === 'IRTEM CORRECTION SLIP';
+        const ebookFolder = currentCategory === 'IRISET E-BOOK (SIGNAL)' || currentCategory === 'IRISET E-BOOK (TELECOM)';
+        const chapterRoman = {i:1,ii:2,iii:3,iv:4,v:5,vi:6,vii:7,viii:8,ix:9,x:10,xi:11,xii:12,xiii:13,xiv:14,xv:15,xvi:16,xvii:17,xviii:18,xix:19,xx:20,xxi:21,xxii:22,xxiii:23,xxiv:24,xxv:25,xxvi:26,xxvii:27,xxviii:28,xxix:29,xxx:30,xxxi:31,xxxii:32};
+        const numberLib = v => {
+          const raw=String(v||'').trim().toLowerCase();
+          const numeric=raw.match(/\d+/);
+          if(numeric) return Number(numeric[0]);
+          const roman=raw.replace(/^(?:chapter|ch|no)[\s.:-]*/,'').replace(/[^ivxlcdm]/g,'');
+          return chapterRoman[roman]||0;
+        };
+        // Card titles come directly from Firestore records; no title aliases or abbreviations.
+        const imageLib = (r, idx, code, title) => {
+          const folder=railLibraryFolders[currentCategory];
+          const srcBase='images/'+folder+'/';
+          let stem='';
+          if(chapterFolder){
+            const ch=numberLib(r.chapterNo);
+            stem=ch ? 'ch-'+String(ch).padStart(2,'0') : (/maintenance.*schedul/i.test(title) ? 'maintenance-schedules' : /drawing.*guidance/i.test(title) ? 'drawings-for-guidance' : 'main-book');
+          } else if(slipFolder){
+            const n=numberLib(r.correctionSlipNo);
+            stem=n ? 'acs-'+String(n).padStart(2,'0') : slugLib(r.correctionSlipNo||title);
+          } else if(ebookFolder){
+            stem=slugLib(r.bookName||code).replace(/-/g,'');
+            if(stem==='s18a'){
+              const low=title.toLowerCase();
+              stem=low.includes('microlok') ? 's18a_microlok' : low.includes('westrace') ? 's18a_westrace' : low.includes('k5b') ? 's18a_k5bmc' : 's18a_medha';
+            }
+          } else {
+            stem=slugLib(title)||'default';
+          }
+          return {src:srcBase+stem+'.webp',fallback:srcBase+'default.webp'};
+        };
+        const palette=['#c89137','#0e9b9a','#b34883','#587cc6','#8159c1','#168b7b','#c66b3a','#2783aa'];
+        chapterGallery.innerHTML = filtered.length ? '<div class="rails-lib-grid">' + filtered.map((r,i)=>{
+          // DISPLAY CODE IS DATABASE-ONLY. Never derive a chapter/appendix number
+          // from title text, record index, or local defaults. Preserve the exact
+          // chapterNo string entered by the admin in Firestore (e.g. "I", "01", "CH-01").
+          // For other library collections, likewise use their existing saved field.
+          const code = String(chapterFolder ? (r.chapterNo ?? '') :
+            slipFolder ? (r.correctionSlipNo ?? '') :
+            ebookFolder ? (r.bookName ?? '') :
+            (r.bookName ?? r.docNo ?? '')).trim();
+          // Use the original record title exactly as saved in Firestore.
+          const title = String((slipFolder ? (r.paraChapter || r.work) : (r.work || r.description || r.bookName)) || '').trim();
+          const image=imageLib(r,i,code,title);
+          const color=palette[i%palette.length];
+          const extraSlip=chapterFolder&&r.correctionSlipNo?' · '+r.correctionSlipNo:'';
+          // Controls are displayed only to administrators. The original secured handlers still validate permissions.
+          const admin=railAdmin===true;
+          return `<article class="rails-lib-card ${chapterFolder ? 'rails-lib-chapter' : ''}" title="${escLib(title)}" style="--rail-lib-accent:${color}">
+            <div class="rails-lib-cover"><img src="${escLib(image.src)}" alt="${escLib(title)}" title="${escLib(title)}" loading="lazy" onerror="if(!this.dataset.railFallback){this.dataset.railFallback='1';this.src='${escLib(image.fallback)}'}else{this.onerror=null;this.style.display='none';this.parentNode.classList.add('rails-lib-cover-missing')}"></div>
+            <div class="rails-lib-info">${code ? `<span class="rails-lib-code" title="${escLib(code)}">${escLib(code)}</span>` : ''}
+              <span class="rails-lib-title" title="${escLib(title+extraSlip)}">${escLib(title)}</span></div>
+            <div class="rails-lib-actions"><button type="button" class="rails-lib-read" data-rail-lib-action="read" data-rail-lib-index="${i}" aria-label="Read PDF: ${escLib(title)}"><i class="fa-solid fa-book-open"></i> Read PDF</button>
+              ${admin?`<button type="button" class="rails-lib-admin edit-btn" data-rail-lib-action="edit" data-rail-lib-index="${i}" title="Edit Record" aria-label="Edit ${escLib(title)}"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button type="button" class="rails-lib-admin delete-btn" data-rail-lib-action="delete" data-rail-lib-index="${i}" title="Delete Record" aria-label="Delete ${escLib(title)}"><i class="fa-solid fa-trash-can"></i></button>`:''}</div>
+          </article>`;
+        }).join('')+'</div>' : '<p class="rails-lib-empty">No books match the current filters.</p>';
+        tbody.innerHTML='';
+        chapterGallery.onclick=event=>{
+          const btn=event.target.closest('[data-rail-lib-action]');
+          if(!btn)return;
+          const rec=filtered[Number(btn.dataset.railLibIndex)];
+          if(!rec)return;
+          const act=btn.dataset.railLibAction;
+          if(act==='read'){
+            const link=rec.driveLink||rec.directLink||rec.link||rec.pdfLink||rec.url||'';
+            if(link)openPreview(String(rec.work||rec.description||rec.bookName||'Book'),String(link));
+            else alert('PDF link is not available for this book.');
+          } else if(railAdmin===true&&act==='edit') openEditModal(rec.id);
+          else if(railAdmin===true&&act==='delete') deleteRecord(rec.id);
+        };
+        return;
       }
 
       if (signalGalleryMode && chapterGallery) {
@@ -11483,7 +12169,8 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       document.getElementById('formBookName').value = rec.bookName || '';
       document.getElementById('formLdceType').value = rec.ldceType || '';
       document.getElementById('formWorkName').value = rec.work || '';
-      document.getElementById('formChapterNo').value = rec.chapterNo || '';
+      document.getElementById('formChapterNo').value = rec.chapterNo ?? '';
+      document.getElementById('formSerialNo').value = (rec.serialNo === undefined || rec.serialNo === null) ? '' : String(rec.serialNo);
       document.getElementById('formCorrectionSlipNo').value = rec.correctionSlipNo || '';
       document.getElementById('formParaChapter').value = rec.paraChapter || '';
       setAgencyValue(rec.agency || '');
@@ -11504,6 +12191,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       document.getElementById('formSecondaryDate').value = formatDateToYYYYMMDD(rec.sanctionDate);
       document.getElementById('formDriveLink').value = rec.driveLink || '';
       document.getElementById('formPracticeLink').value = rec.practiceLink || '';
+      if (window.railPreserveMasterRecordValues) window.railPreserveMasterRecordValues(rec);
 
       document.getElementById('addRecordModal').style.display = 'flex';
       history.pushState({ view: 'modal', modal: 'editForm' }, '', '');
@@ -11527,6 +12215,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       document.getElementById('formBookName').value = '';
       document.getElementById('formWorkName').value = '';
       document.getElementById('formChapterNo').value = '';
+      document.getElementById('formSerialNo').value = '';
       document.getElementById('formCorrectionSlipNo').value = '';
       document.getElementById('formParaChapter').value = '';
       document.getElementById('formDepartment').value = '';
@@ -11564,7 +12253,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       const select = document.getElementById('formAgency');
       const input = document.getElementById('formAgencyOther');
       if (!select || !input) return;
-      const known = ['Project', 'Construction', 'Division'];
+      const known = Array.from(select.options).map(o=>o.value).filter(v=>v && v !== 'Other');
       select.value = known.includes(value) ? value : (value ? 'Other' : '');
       input.value = value && !known.includes(value) && value !== 'Other' ? value : '';
       toggleAgencyOther();
@@ -11588,7 +12277,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
     }
 
     function setSelectedJpoDepartments(value) {
-      const known = ['S&T','Electrical','Engineering','Operating','Mechanical','Commercial','Security'];
+      const known = Array.from(document.querySelectorAll('.jpo-dept-checkbox')).map(cb=>cb.value).filter(v=>v!=='Other');
       const vals = String(value || '').split(',').map(v => v.trim()).filter(Boolean);
       document.querySelectorAll('.jpo-dept-checkbox').forEach(cb => cb.checked = false);
       const others = [];
@@ -11656,6 +12345,8 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       // INSPECTION NOTE uses Station/Section + Division + Inspection Done by; it has no Work Description column.
       document.getElementById('formWorkContainer').style.display = (isLinks || isInspection || isIrsemIrtemCorrection) ? 'none' : 'flex';
       document.getElementById('formChapterNoContainer').style.display = isIrsemIrtemChapter ? 'flex' : 'none';
+      // Manual Sr. No. is available in every book/card subsection, not only IRSEM/IRTEM chapters.
+      document.getElementById('formSerialNoContainer').style.display = railBookCardCategories.includes(cat) ? 'flex' : 'none';
       document.getElementById('formCorrectionSlipNoContainer').style.display = isIrsemIrtem ? 'flex' : 'none';
       document.getElementById('formParaChapterContainer').style.display = isIrsemIrtemCorrection ? 'flex' : 'none';
       document.getElementById('formAgencyContainer').style.display = 
@@ -11743,7 +12434,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       const routesLbl = document.getElementById('formRoutesLabel');
       if (routesLbl) routesLbl.innerText = "Routes";
       const oemLbl = document.getElementById('formOemLabel');
-      if (oemLbl) oemLbl.innerText = "OEM Make";
+      if (oemLbl) oemLbl.innerText = "MSDAC OEM Make";
       const wagonLbl = document.getElementById('formWagonLabel');
       if (wagonLbl) wagonLbl.innerText = "Wagon Name";
       const docNoLbl = document.getElementById('formDocNoLabel');
@@ -11787,6 +12478,34 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
       const isImpLetter = (cat === 'IMP. LETTER');
       const isPolicyOrTypical = (cat === 'SECR POLICY' || cat === 'SECR TYPICAL');
 
+      // Independent manually assigned Sr. No. for ALL book/card categories.
+      // Chapter No. (where applicable) and existing book/correction-slip codes
+      // remain separate display fields stored in Firestore.
+      const isBookCardCategory = railBookCardCategories.includes(cat);
+      const rawSerialNo = isBookCardCategory ? document.getElementById('formSerialNo').value.trim() : '';
+      let savedSerialNo = null;
+      if (rawSerialNo) {
+        const candidate = Number(rawSerialNo);
+        if (!/^[1-9]\d*$/.test(rawSerialNo) || !Number.isSafeInteger(candidate)) {
+          alert('Sr. No. must be a positive whole number (1, 2, 3...).');
+          document.getElementById('formSerialNo').focus();
+          return;
+        }
+        const duplicate = records.some(r => {
+          const recordCategory = r.category === 'IRSEM & CORRECTION SLIP' ? 'IRSEM CHAPTER WISE'
+            : r.category === 'IRTEM' ? 'IRTEM CHAPTER WISE' : r.category;
+          return r.id !== editId && recordCategory === cat &&
+            r.serialNo !== undefined && r.serialNo !== null && String(r.serialNo).trim() !== '' &&
+            Number(r.serialNo) === candidate;
+        });
+        if (duplicate) {
+          alert('Sr. No. ' + candidate + ' is already used in this subsection. Please enter another number.');
+          document.getElementById('formSerialNo').focus();
+          return;
+        }
+        savedSerialNo = candidate;
+      }
+
       if (document.getElementById('formAgencyContainer').style.display !== 'none' && document.getElementById('formAgency').value === 'Other' && !document.getElementById('formAgencyOther').value.trim()) {
         alert('Please enter the agency name.');
         document.getElementById('formAgencyOther').focus();
@@ -11808,6 +12527,7 @@ html.rail-saved-light body:not(.dark-theme) #railProfileOverlay .rail-profile-fo
         ldceType: isLdce ? document.getElementById('formLdceType').value : '',
         work: (isLinks || isInspection || isIrsemIrtemCorrection) ? '' : document.getElementById('formWorkName').value.trim(),
         chapterNo: isIrsemIrtemChapter ? document.getElementById('formChapterNo').value.trim() : '',
+        ...(isBookCardCategory ? {serialNo: savedSerialNo} : {}),
         correctionSlipNo: isIrsemIrtem ? document.getElementById('formCorrectionSlipNo').value.trim() : '',
         paraChapter: isIrsemIrtemCorrection ? document.getElementById('formParaChapter').value.trim() : '',
         agency: (isPcste || isDispensation || isEi || isMsdac || isGm || isGradeOrLine || isSpeedRaising)
@@ -15692,7 +16412,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script id="station-smart-script">
 (function(){
 'use strict';
-const MASTER={"Bilaspur": [{"id": "B001", "name": "IB", "code": "IB"}, {"id": "B002", "name": "BRAJRAJNAGAR", "code": "BRJN"}, {"id": "B003", "name": "LAJKURA", "code": "LJKR"}, {"id": "B004", "name": "BELPAHAR", "code": "BPH"}, {"id": "B005", "name": "HIMGIR", "code": "HGR"}, {"id": "B006", "name": "BSMA (ACBPL)", "code": "BSMA"}, {"id": "B007", "name": "DAGHORA", "code": "DAO"}, {"id": "B008", "name": "JAMGA", "code": "JMG"}, {"id": "B009", "name": "KOTARLIA", "code": "KRL"}, {"id": "B010", "name": "CHAKARTHARNAGAR", "code": "CKR"}, {"id": "B011", "name": "RAIGARH", "code": "RIG"}, {"id": "B012", "name": "JSPL", "code": "JSPL"}, {"id": "B013", "name": "KIRODIMAL NAGAR", "code": "KDTR"}, {"id": "B014", "name": "BHUPDEOPUR", "code": "BEF"}, {"id": "B015", "name": "SPGCL", "code": "SPGCL"}, {"id": "B016", "name": "ROBERTSON", "code": "ROB"}, {"id": "B017", "name": "KHARSIA", "code": "KHS"}, {"id": "B018", "name": "JHARRADIH", "code": "JDI"}, {"id": "B019", "name": "SAKTI", "code": "SKT"}, {"id": "B020", "name": "BARADUAR", "code": "BUA"}, {"id": "B021", "name": "SARAGAON DEORI", "code": "SRGD"}, {"id": "B022", "name": "CHAMPA", "code": "CPH"}, {"id": "B023", "name": "NAILA", "code": "NIA"}, {"id": "B024", "name": "AKALTARA", "code": "AKT"}, {"id": "B025", "name": "LATIA", "code": "LATIA"}, {"id": "B026", "name": "JAIRAMNAGAR", "code": "JRMG"}, {"id": "B027", "name": "GATORA", "code": "GTW"}, {"id": "B028", "name": "BILASPUR JUNCTION CABIN", "code": "BSP JN. CABIN"}, {"id": "B029", "name": "BILASPUR", "code": "BSP"}, {"id": "B030", "name": "SIVINI", "code": "SIVINI"}, {"id": "B031", "name": "BALPUR ROAD", "code": "BPRH"}, {"id": "B032", "name": "KOTHARI RD.", "code": "KTHD"}, {"id": "B033", "name": "MADWARANI", "code": "MWRN"}, {"id": "B034", "name": "SARAGBUNDIA", "code": "SRBA"}, {"id": "B035", "name": "LANCO POWER JUNCTION CABIN (PLAU)", "code": "PLAU"}, {"id": "B036", "name": "URGA", "code": "URGA"}, {"id": "B037", "name": "KORBA", "code": "KRBA"}, {"id": "B038", "name": "KUSMUNDA", "code": "KBS"}, {"id": "B039", "name": "GEVRA RD", "code": "GAD"}, {"id": "B040", "name": "USLAPUR", "code": "USL"}, {"id": "B041", "name": "GHUTKU", "code": "GTK"}, {"id": "B042", "name": "KALMITAR", "code": "KLTR"}, {"id": "B043", "name": "KARGI ROAD", "code": "KGB"}, {"id": "B044", "name": "SALKA ROAD", "code": "SLKR"}, {"id": "B045", "name": "BELGHANA", "code": "BIG"}, {"id": "B046", "name": "TENGANMUDA", "code": "TGQ"}, {"id": "B047", "name": "KHONGSARA", "code": "KGS"}, {"id": "B048", "name": "BHANWAR TONK", "code": "BHTK"}, {"id": "B049", "name": "KHODRI", "code": "KOI"}, {"id": "B050", "name": "SARBAHARA", "code": "SBRA"}, {"id": "B051", "name": "PENDRA ROAD", "code": "PND"}, {"id": "B052", "name": "HARRI", "code": "HRB"}, {"id": "B053", "name": "VENKATNAGAR", "code": "VKR"}, {"id": "B054", "name": "NIGAURA", "code": "NIQ"}, {"id": "B055", "name": "JAITHARI", "code": "JTI"}, {"id": "B056", "name": "CHHULHA", "code": "CLF"}, {"id": "B057", "name": "ANUPPUR", "code": "APR"}, {"id": "B058", "name": "AMLAI", "code": "AAL"}, {"id": "B059", "name": "BURHAR", "code": "BUH"}, {"id": "B060", "name": "SINGHPUR", "code": "SNGP"}, {"id": "B061", "name": "SHAHDOL", "code": "SDL"}, {"id": "B062", "name": "BADHWABARA", "code": "BDWA"}, {"id": "B063", "name": "GHUNGHUTI", "code": "GGT"}, {"id": "B064", "name": "MUDARIA", "code": "MDXR"}, {"id": "B065", "name": "BIRSINGHPUR", "code": "BRS"}, {"id": "B066", "name": "NOW ROZABAD", "code": "NRZB"}, {"id": "B067", "name": "KARKELI", "code": "KKI"}, {"id": "B068", "name": "UMARIA", "code": "UMR"}, {"id": "B069", "name": "LORHA", "code": "LOA"}, {"id": "B070", "name": "CHANDIA RD.", "code": "CHD"}, {"id": "B071", "name": "VILAYATKALAN RD.", "code": "VYK"}, {"id": "B072", "name": "RUPAUND", "code": "RPD"}, {"id": "B073", "name": "JHALWARA", "code": "JLW"}, {"id": "B074", "name": "MAUHARI", "code": "MZH"}, {"id": "B075", "name": "HARRAD", "code": "HRV"}, {"id": "B076", "name": "KOTMA", "code": "KTMA"}, {"id": "B077", "name": "BHAITOLA", "code": "BATL"}, {"id": "B078", "name": "BIJURI", "code": "BJRI"}, {"id": "B079", "name": "BORIDAND", "code": "BRND"}, {"id": "B080", "name": "UDALKACHHAR", "code": "UKR"}, {"id": "B081", "name": "DARRITOLA", "code": "DTL"}, {"id": "B082", "name": "NAGAR", "code": "NGE"}, {"id": "B083", "name": "BAIKUNTH PUR RD.", "code": "BRH"}, {"id": "B084", "name": "KATORA", "code": "KTO"}, {"id": "B085", "name": "SHEOPRASAD NAGAR", "code": "SPDR"}, {"id": "B086", "name": "SURAJPUR", "code": "SJQ"}, {"id": "B087", "name": "KARONJI", "code": "KJZ"}, {"id": "B088", "name": "BISHRAMPUR", "code": "BSPR"}, {"id": "B089", "name": "KAMALPUR", "code": "KLPG"}, {"id": "B090", "name": "AMBIKAPUR", "code": "ABKP"}, {"id": "B091", "name": "MANENDRAGARH", "code": "MDGR"}, {"id": "B092", "name": "PARADOL", "code": "PRDL"}, {"id": "B093", "name": "CHRIMIRI", "code": "CHRM"}, {"id": "B094", "name": "GURDA", "code": "GURDA"}, {"id": "B095", "name": "CHHAL", "code": "CHHL"}, {"id": "B096", "name": "GHARGHODA", "code": "GGDA"}, {"id": "B097", "name": "KORICHHAPAR", "code": "KCHP"}, {"id": "B098", "name": "PUTI PAKHANA", "code": ""}, {"id": "B099", "name": "SENDURGARH", "code": ""}, {"id": "B100", "name": "MATIN", "code": ""}, {"id": "B101", "name": "PUTUWA", "code": ""}, {"id": "B102", "name": "BHINGRA", "code": ""}, {"id": "B103", "name": "KATGHORA", "code": ""}, {"id": "B104", "name": "SURKACHHAR", "code": ""}, {"id": "B105", "name": "BHAISAMA", "code": ""}, {"id": "B106", "name": "DONGAAMA", "code": ""}, {"id": "B107", "name": "DHINARA", "code": ""}, {"id": "B108", "name": "DHASKAMUND", "code": ""}, {"id": "B109", "name": "HATI", "code": ""}, {"id": "B110", "name": "KHADGAON", "code": ""}, {"id": "B111", "name": "BHALUMUDA", "code": "BUMA"}, {"id": "B112", "name": "DHOURBHANTTHA", "code": ""}, {"id": "B113", "name": "THANGARGHAT", "code": ""}, {"id": "B114", "name": "MUNDHARKHET", "code": ""}, {"id": "B115", "name": "SARDEGA", "code": ""}, {"id": "B116", "name": "DHARMJAIGARH ROAD", "code": "DMJG"}, {"id": "B117", "name": "KURUMKELA", "code": ""}, {"id": "B118", "name": "KORICHHAPAR", "code": ""}], "Raipur": [{"id": "R001", "name": "DADHAPARA", "code": "DPH"}, {"id": "R002", "name": "BELHA", "code": "BYL"}, {"id": "R003", "name": "DAGORI", "code": "DGS"}, {"id": "R004", "name": "NIPANIA", "code": "NPI"}, {"id": "R005", "name": "BHATAPARA", "code": "BYT"}, {"id": "R006", "name": "HATHBANDH", "code": "HN"}, {"id": "R007", "name": "TILDA", "code": "TLD"}, {"id": "R008", "name": "BAIKUNTH", "code": "BKTH"}, {"id": "R009", "name": "SILYARI", "code": "SLH"}, {"id": "R010", "name": "MANDHAR", "code": "MDH"}, {"id": "R011", "name": "URKURA", "code": "URK"}, {"id": "R012", "name": "RAIPUR", "code": "R"}, {"id": "R013", "name": "SARONA", "code": "SZB"}, {"id": "R014", "name": "KUMHARI", "code": "KMI"}, {"id": "R015", "name": "C-CABIN", "code": ""}, {"id": "R016", "name": "G-CABIN", "code": ""}, {"id": "R017", "name": "A-CABIN", "code": ""}, {"id": "R018", "name": "D-CABIN", "code": ""}, {"id": "R019", "name": "H-CABIN", "code": ""}, {"id": "R020", "name": "BHILAI", "code": "BIA"}, {"id": "R021", "name": "BHILAI NAGAR", "code": "BQR"}, {"id": "R022", "name": "DURG LINK BLOCK CABIN", "code": "DLBS"}, {"id": "R023", "name": "DURG", "code": "DUG"}, {"id": "R024", "name": "RAIPUR STORE DEPOT", "code": "RSD"}, {"id": "R025", "name": "RAIPUR VIJYANAGARAM HUT", "code": "RVH"}, {"id": "R026", "name": "MANDIRHASAUD", "code": "MNDH"}, {"id": "R027", "name": "LAKHOLI", "code": "LAE"}, {"id": "R028", "name": "NAYA RAIPUR", "code": "NAYA RAIPUR"}, {"id": "R029", "name": "KENDRI", "code": "KDRI"}, {"id": "R030", "name": "ABHANPUR", "code": "AVP"}, {"id": "R031", "name": "KURUD", "code": "KRX"}, {"id": "R032", "name": "RAJIM", "code": "RIM"}, {"id": "R033", "name": "E-CABIN", "code": "E/CAB"}, {"id": "R034", "name": "BHILAI MARSHALLING YARD", "code": "BMY(CENTRAL)"}, {"id": "R035", "name": "BHILAI EXCHANGE YARD", "code": "BIA EX YD"}, {"id": "R036", "name": "P-CABIN", "code": "P-CAB"}, {"id": "R037", "name": "ORE LOAD YARD", "code": "OLY"}, {"id": "R038", "name": "COAL LOAD YARD (EAST)", "code": "CLY/E"}, {"id": "R039", "name": "COAL LOAD YARD (WEST)", "code": "CLY/W"}, {"id": "R040", "name": "COAL EMPTY YARD (EAST)", "code": "CEY/E"}, {"id": "R041", "name": "COALEMPTY YARD (WEST)", "code": "CEY/W"}, {"id": "R042", "name": "FREIGHT MAINTENANCE YARD (FMY)", "code": "FMY"}, {"id": "R043", "name": "MARAUDA", "code": "MXA"}, {"id": "R044", "name": "RISAMA", "code": "RSA"}, {"id": "R045", "name": "GUNDERDEHI", "code": "GDZ"}, {"id": "R046", "name": "LATABOR", "code": "LBO"}, {"id": "R047", "name": "BALOD", "code": "BXA"}, {"id": "R048", "name": "KUSUMKASA", "code": "KYS"}, {"id": "R049", "name": "DALLI RAJHARA", "code": "DRZ"}, {"id": "R050", "name": "GUDUM", "code": "GUDM"}, {"id": "R051", "name": "BHANUPRATAPPUR", "code": "BPTP"}, {"id": "R052", "name": "KEOTI", "code": "KEOTI"}, {"id": "R053", "name": "ANTAGARH", "code": "AAGH"}, {"id": "R054", "name": "TAROKI", "code": "TAROKI"}, {"id": "R055", "name": "ROWGHAT", "code": "RWT"}, {"id": "R056", "name": "KENDRI", "code": ""}, {"id": "R057", "name": "ABHANPUR", "code": "AVP"}, {"id": "R058", "name": "JAMUL CEMENT WORKS", "code": "JCW"}], "Nagpur": [{"id": "N001", "name": "RASMARA", "code": "RSM"}, {"id": "N002", "name": "MURHIPAR", "code": "MUP"}, {"id": "N003", "name": "PARMALKASA", "code": "PMS"}, {"id": "N004", "name": "RAJNANDGAON", "code": "RJN"}, {"id": "N005", "name": "BAKAL", "code": "BAKL"}, {"id": "N006", "name": "MUSRA", "code": "MUA"}, {"id": "N007", "name": "JATKANHAR", "code": "JTR"}, {"id": "N008", "name": "DONGARGARH", "code": "DGG"}, {"id": "N009", "name": "PANIAJOB", "code": "PJB"}, {"id": "N010", "name": "BORTALAO", "code": "BTL"}, {"id": "N011", "name": "DAREKASA", "code": "DKS"}, {"id": "N012", "name": "SALEKASA", "code": "SKS"}, {"id": "N013", "name": "DHANOLI", "code": "DNL"}, {"id": "N014", "name": "AMGAON", "code": "AGN"}, {"id": "N015", "name": "GUDMA", "code": "GDM"}, {"id": "N016", "name": "GONDIA", "code": "G"}, {"id": "N017", "name": "GANGAJHARI", "code": "GJ"}, {"id": "N018", "name": "KACHEWANI", "code": "KWN"}, {"id": "N019", "name": "TIRORA", "code": "TRO"}, {"id": "N020", "name": "MUNDIKOTA", "code": "MNU"}, {"id": "N021", "name": "TUMSAR ROAD", "code": "TMR"}, {"id": "N022", "name": "KOKA", "code": "K"}, {"id": "N023", "name": "BHANDARA ROAD", "code": "BRD"}, {"id": "N024", "name": "KHAT", "code": "KT"}, {"id": "N025", "name": "REWRAL", "code": "RRL"}, {"id": "N026", "name": "THARSA", "code": "TAR"}, {"id": "N027", "name": "CHACHER", "code": "CHCR"}, {"id": "N028", "name": "SALWA", "code": "SAL"}, {"id": "N029", "name": "KANHAN", "code": "KNHN"}, {"id": "N030", "name": "KAMPTEE", "code": "KP"}, {"id": "N031", "name": "KALUMNA", "code": "KAV"}, {"id": "N032", "name": "KAV- JN CABIN", "code": ""}, {"id": "N033", "name": "ITWARI", "code": "ITR"}, {"id": "N034", "name": "G- JN CABIN", "code": ""}, {"id": "N035", "name": "HIRDAMALI", "code": "HDM"}, {"id": "N036", "name": "GONGLE", "code": "GNL"}, {"id": "N037", "name": "SONDAD", "code": "SNV"}, {"id": "N038", "name": "DEWALGAON", "code": "DEW"}, {"id": "N039", "name": "WADEGAON", "code": "WDG"}, {"id": "N040", "name": "ARJUNI", "code": "AJU"}, {"id": "N041", "name": "WADSA", "code": "WSA"}, {"id": "N042", "name": "BRAHMAPURI", "code": "BMP"}, {"id": "N043", "name": "NAGBHIR", "code": "NAB"}, {"id": "N044", "name": "TALODHI ROAD", "code": "TUD"}, {"id": "N045", "name": "ALEWAHI", "code": "AWH"}, {"id": "N046", "name": "SINDEWAHI", "code": "SYE"}, {"id": "N047", "name": "RAJOLI", "code": "ROL"}, {"id": "N048", "name": "MUL-MARORA", "code": "MME"}, {"id": "N049", "name": "KELZER", "code": "KEZ"}, {"id": "N050", "name": "CHANDA FORT", "code": "CAF"}, {"id": "N051", "name": "DHUMURIKHURUD", "code": "DKU"}, {"id": "N052", "name": "RAMTEK", "code": "RTK"}, {"id": "N053", "name": "GOBERWAHI", "code": "GBRI"}, {"id": "N054", "name": "DONGRIBUZURG", "code": "DGBZ"}, {"id": "N055", "name": "TIRODI", "code": "TRDI"}, {"id": "N056", "name": "BIRSOLA", "code": "BRA"}, {"id": "N057", "name": "HATTA ROAD", "code": "HTT"}, {"id": "N058", "name": "BALAGHAT", "code": "BTC"}, {"id": "N059", "name": "WARASEONI", "code": "WRI"}, {"id": "N060", "name": "KATANGI", "code": "KGE"}, {"id": "N061", "name": "GRAHA", "code": "GGGS"}, {"id": "N062", "name": "GOWARIGHAT", "code": "GRG"}, {"id": "N063", "name": "BARGI", "code": "BUQ"}, {"id": "N064", "name": "SUKRI MANGELA", "code": "SOY"}, {"id": "N065", "name": "SHIKARA", "code": "SKY"}, {"id": "N066", "name": "BINAIKI", "code": "VNK"}, {"id": "N067", "name": "GHUNSUR", "code": "GNS"}, {"id": "N068", "name": "NITHANI", "code": "NDI"}, {"id": "N069", "name": "PINDRAI", "code": "PDE"}, {"id": "N070", "name": "NAINPUR", "code": "NIR"}, {"id": "N071", "name": "PADRIGANJ", "code": "PNJ"}, {"id": "N072", "name": "NAGARWARA", "code": "NWA"}, {"id": "N073", "name": "LAMTA", "code": "LTA"}, {"id": "N074", "name": "SAMNAPUR", "code": "SMC"}, {"id": "N075", "name": "CHAREGAON", "code": "CRN"}, {"id": "N076", "name": "CHIRAIDONGRI", "code": "CID"}, {"id": "N077", "name": "MANDLA FORT", "code": "MFR"}, {"id": "N078", "name": "KHAPRIKHEDA", "code": "KPKD"}, {"id": "N079", "name": "PATANSAONGI", "code": "PTS"}, {"id": "N080", "name": "SAONER", "code": "SONR"}, {"id": "N081", "name": "KELOD", "code": "KELOD"}, {"id": "N082", "name": "SAUSAR", "code": "SASR"}, {"id": "N083", "name": "RAMAKONA", "code": "RMO"}, {"id": "N084", "name": "LODHIKHERA", "code": "LDE"}, {"id": "N085", "name": "BHIMALGONDI", "code": "BMC"}, {"id": "N086", "name": "BHANDARKUND", "code": "BDKD"}, {"id": "N087", "name": "UMRANALLA", "code": "ULA"}, {"id": "N088", "name": "LINGA", "code": "LIG"}, {"id": "N089", "name": "CHHINDWARA", "code": "CWA"}, {"id": "N090", "name": "KEOLARI", "code": "KLZ"}, {"id": "N091", "name": "PALARI", "code": "PUE"}, {"id": "N092", "name": "BHOMA", "code": "BHV"}, {"id": "N093", "name": "CHAURAI", "code": "CHUA"}, {"id": "N094", "name": "JHILIMILI", "code": "JLY"}, {"id": "N095", "name": "SEONI", "code": "SEY"}, {"id": "N096", "name": "PIPARDAHI", "code": "PED"}]};
+const MASTER={"Bilaspur": [], "Raipur": [], "Nagpur": []};
+window.railSetStationCatalog=function(catalog){
+  if(!catalog||typeof catalog!=='object')return;
+  Object.keys(MASTER).forEach(key=>delete MASTER[key]);
+  Object.entries(catalog).forEach(([key,list])=>{MASTER[key]=Array.isArray(list)?list.slice():[]});
+  document.dispatchEvent(new Event('rail-master-stations-changed'));
+};
+
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function init(inputId,divisionId){
  const input=document.getElementById(inputId),division=document.getElementById(divisionId);
@@ -15725,6 +16452,11 @@ function init(inputId,divisionId){
   return close;
  }
  const closeFrom=autocomplete('search1','from','suggest1');const closeTo=autocomplete('search2','to','suggest2');
+ document.addEventListener('rail-master-stations-changed',()=>{
+   options('from','search1');options('to','search2');
+   const chosen = el('from').value || el('to').value;
+   if(chosen) update();
+ });
  document.addEventListener('click',e=>{if(!panel.contains(e.target)){closeFrom();closeTo();}});
  input.addEventListener('input',()=>{el('preview').textContent=input.value||'Manual entry';});
  function reset(mode='station'){el('type').value=mode;el('format').value='both';el('search1').value='';el('search2').value='';options('from','search1');options('to','search2');closeFrom();closeTo();update();}
@@ -16432,6 +17164,16 @@ window.railV44ShowWelcome = function(){
       <div><dt>Last Sign-in</dt><dd id="railProfileLastLogin">—</dd></div>
       <div id="railProfileUidRow" hidden><dt>Firebase User ID (UID) — Admin only</dt><dd><span id="railProfileUid">—</span> <button type="button" id="railProfileCopyUid" class="rail-profile-copy" onclick="railCopyProfileUid()" title="Copy Firebase UID"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button></dd></div>
     </dl>
+    <!-- Admin-only master data settings: never displayed in regular User profiles. -->
+    <section id="railProfileAdminManagement" class="rail-profile-admin-management" hidden aria-label="Admin Management">
+      <h3><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> ADMIN MANAGEMENT</h3>
+      <button type="button" id="railProfileMasterDataBtn" class="rail-profile-master-link"
+        onclick="railOpenMasterManagerFromProfile()" title="Manage Stations, Divisions, Agencies, EI/MSDAC OEMs and more">
+        <i class="fa-solid fa-database" aria-hidden="true"></i>
+        <span><strong>ADD IN DATABASE</strong><small>Stations, Divisions, Agencies, EI/MSDAC OEMs &amp; more</small></span>
+        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      </button>
+    </section>
     <p class="rail-profile-footer">Account details are taken from the active Firebase session.</p>
   </section>
 </div>
@@ -16473,6 +17215,8 @@ window.railV44ShowWelcome = function(){
     // Hide UID (and its Copy action) from User/Student profiles.
     // Only show it after the existing Firebase admin claim has been verified.
     if(uidRow) uidRow.hidden=!isAdmin;
+    const adminManagement=get('railProfileAdminManagement');
+    if(adminManagement)adminManagement.hidden=!isAdmin;
     setText('railProfileUid',isAdmin?(current.uid||'—'):'');
     setText('railProfileEmail',current.email||'—');
     setText('railProfileName',current.displayName||'Not set');
@@ -16524,6 +17268,128 @@ window.railV44ShowWelcome = function(){
 })();
 </script>
 </body>
+
+<!-- 22 October 2026 | RailSNTGyan 3CX vivid-blue contrast fix, DARK MODE ONLY -->
+<style id="rails-3cx-contrast-v2-dark-only">
+/* Visual correction: the previous blue-on-blue panels appeared almost unchanged
+   on mobile. Add the visible navy-to-royal-blue 3CX-style tonal transition.
+   All original icons, sections, logic and LIGHT THEME remain unmodified. */
+
+/* Background visible between and around cards. */
+html body.dark-theme.hmis-home-active #mainContent {
+  background:
+    radial-gradient(ellipse 105% 60% at 94% 88%,rgba(14,111,221,.40) 0%,transparent 75%),
+    linear-gradient(165deg,#010916 0%,#03182F 35%,#053268 76%,#0755A6 100%) !important;
+  background-attachment:local !important;
+}
+html body.dark-theme.hmis-home-active header#mainHeader,
+html body.dark-theme header#mainHeader {
+  background:linear-gradient(105deg,#010817 0%,#02172F 47%,#073B7B 100%) !important;
+  background-image:linear-gradient(105deg,#010817 0%,#02172F 47%,#073B7B 100%) !important;
+  border-bottom:3px solid #F47A20 !important;
+  box-shadow:0 5px 22px rgba(0,4,19,.49),inset 0 1px 0 rgba(137,208,255,.16) !important;
+}
+/* In contrast to prior version, every home section goes from navy at its top
+   to distinctly stronger royal blue at its bottom, like the supplied 3CX slides. */
+html body.dark-theme #hmisDashboard > .hmis-card[data-source-group] {
+  background:
+    radial-gradient(ellipse 90% 46% at 12% 120%,rgba(12,123,246,.44) 0%,transparent 75%),
+    linear-gradient(180deg,#031328 0%,#062C57 56%,#0954A4 100%) !important;
+  border:1px solid rgba(81,179,253,.67) !important;
+  border-left:3px solid #26ABFF !important;
+  border-top-color:rgba(131,214,255,.58) !important;
+  border-bottom-color:rgba(64,160,254,.96) !important;
+  box-shadow:0 12px 25px rgba(0,5,24,.32),inset 0 1px 0 rgba(194,230,255,.11),inset 0 -13px 30px rgba(10,97,197,.09) !important;
+}
+/* Crisp cyan subheading rule, not heavy all-over neon. */
+html body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-title {
+  background:transparent !important;
+  border-bottom:1px solid rgba(100,188,253,.58) !important;
+  color:#F9FCFF !important;
+  text-shadow:0 1px 2px rgba(0,7,27,.38) !important;
+}
+/* Cards are raised darker blue tiles, creating real depth against the bright panel. */
+html body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item {
+  background:linear-gradient(145deg,#164875 0%,#0B2B51 42%,#04172F 100%) !important;
+  border:1px solid rgba(105,192,255,.73) !important;
+  border-top-color:rgba(170,221,255,.67) !important;
+  box-shadow:0 7px 14px rgba(0,7,28,.41),inset 0 1px 0 rgba(185,229,255,.15) !important;
+}
+html body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-name {
+  color:#FFFFFF !important;
+  text-shadow:0 1px 2px rgba(0,5,17,.25) !important;
+}
+html body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item[aria-expanded="true"] {
+  background:linear-gradient(140deg,#1B5B93,#0C315F) !important;
+  border-color:#76D7FF !important;
+  box-shadow:0 0 0 1px rgba(124,216,255,.24),0 7px 18px rgba(0,6,26,.43) !important;
+}
+@media (hover:hover) and (pointer:fine) {
+ html body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover {
+   background:linear-gradient(145deg,#236EA7,#104270) !important;
+   border-color:#83D7FF !important;
+   box-shadow:0 10px 21px rgba(0,5,23,.43),0 0 18px rgba(45,179,255,.20) !important;
+ }
+}
+/* Homepage toolbar receives clearly brighter edges rather than murky gray. */
+html body.dark-theme #hmisDashboard .hmis-top .hmis-summary-launcher,
+html body.dark-theme #hmisDashboard .hmis-top .hmis-search {
+  background:linear-gradient(130deg,#143E69,#071C3A) !important;
+  border:1px solid rgba(99,191,255,.64) !important;
+  box-shadow:0 3px 9px rgba(0,6,28,.34),inset 0 1px 0 rgba(224,245,255,.10) !important;
+}
+/* Open IRSEM / IRTEM selectors and bottom strips keep the same visible blue. */
+html body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],
+html body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] {
+  background:linear-gradient(155deg,#103B70,#072149) !important;
+  border-color:rgba(107,199,255,.77) !important;
+}
+html body.dark-theme #hmisDashboard .hmis-bottom {
+  background:linear-gradient(165deg,#082B56,#0B447B) !important;
+  border-color:rgba(105,194,255,.66) !important;
+}
+/* BOOKS: image/banner and already-colored chapter badges are NEVER recolored. */
+html body.dark-theme #mainTableContainer.rails-uniform-library-mode {
+  background:linear-gradient(180deg,#031426 0%,#06386D 100%) !important;
+  border-color:rgba(82,182,255,.70) !important;
+}
+html body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-card {
+  background:linear-gradient(180deg,#103C6B 0%,#092A50 50%,#061C38 100%) !important;
+  border:1px solid rgba(112,201,255,.69) !important;
+  box-shadow:0 7px 18px rgba(0,5,23,.36),inset 0 1px 0 rgba(221,241,255,.12) !important;
+}
+html body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-read {
+  background:linear-gradient(135deg,#1168AF,#0D477E) !important;
+  color:#FFFFFF !important;
+  border:1px solid rgba(137,211,255,.91) !important;
+  box-shadow:inset 0 1px 0 rgba(235,247,255,.14) !important;
+}
+/* Original table/list and toolbar behaviors retained, now an obvious blue hierarchy. */
+html body.dark-theme .content-header-card.sticky-header-card,
+html body.dark-theme .filter-panel.sticky-filter-panel,
+html body.dark-theme .dash-hero,
+html body.dark-theme .process-infographic-card,
+html body.dark-theme .chart-card {
+  background:linear-gradient(120deg,#0C345F 0%,#04182F 100%) !important;
+  border-color:rgba(91,187,255,.60) !important;
+  box-shadow:0 6px 20px rgba(0,6,26,.32) !important;
+}
+html body.dark-theme .table-container,
+html body.dark-theme #mainTableContainer {
+  background:linear-gradient(180deg,#041729 0%,#083C73 100%) !important;
+  border-color:rgba(100,189,252,.55) !important;
+}
+html body.dark-theme table thead th,
+html body.dark-theme table:not(.unfreeze-table) thead th:nth-child(1),
+html body.dark-theme table:not(.unfreeze-table) thead th:nth-child(2) {
+  background:linear-gradient(180deg,#155B95,#0A335E) !important;
+}
+/* No changes to icon glyph color, icon palette variables, fonts, sizes,
+   gallery image file paths, login screen, sidebar nav or JS. */
+</style>
+
+
+
 </html>
 <!-- v100: Samsung/tablet landscape sidebar expansion/bleed fix -->
 <!-- v104: FINAL tablet-landscape drawer flow fix — mobile behavior is master -->
@@ -18973,3 +19839,1511 @@ body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-it
 }
 /* Preserve larger, horizontal IRSEM/IRTEM nested selector cards. */
 </style>
+
+<!-- RailSNTGyan: five soft pastel HOME sections and matching bordered cards; dark navy/neon equivalent.
+     Visual-only rules: do not change login, Firebase, tables, navigation, sizes, grid or nested manual menus. -->
+<style id="rails-home-five-section-theme-20261021">
+/* Palette names and exact chosen light-theme backgrounds:
+   Files & Approvals: Ice Blue #EDF5FF
+   Reference Books & Docs: Lavender #F4EEFF
+   Documents for Sanction/Approval: Mint #EBF8F1
+   LDCE Gr B Question Papers: Peach #FFF4E8
+   Important Links: Aqua #EAF8FA
+   Backgrounds belong to the HOME panels, never the sidebar or record tables. */
+#hmisDashboard > .hmis-card[data-source-group="grpFilesApprovals"] {
+  --rail-panel-light:#EDF5FF;--rail-border-light:#CFE0F7;
+  --rail-panel-dark:#0B2B4E;--rail-card-dark:#122A46;--rail-border-dark:#3B9BFB;
+}
+#hmisDashboard > .hmis-card[data-source-group="grpRefBooks"] {
+  --rail-panel-light:#F4EEFF;--rail-border-light:#DDD0F5;
+  --rail-panel-dark:#291E4B;--rail-card-dark:#251F41;--rail-border-dark:#B08AFB;
+}
+#hmisDashboard > .hmis-card[data-source-group="grpSanctionDocs"] {
+  --rail-panel-light:#EBF8F1;--rail-border-light:#CDE9DA;
+  --rail-panel-dark:#0A393B;--rail-card-dark:#103239;--rail-border-dark:#40D7BA;
+}
+#hmisDashboard > .hmis-card[data-source-group="grpLdcePapers"] {
+  --rail-panel-light:#FFF4E8;--rail-border-light:#F3DDC2;
+  --rail-panel-dark:#40301D;--rail-card-dark:#312A25;--rail-border-dark:#F6BB6E;
+}
+#hmisDashboard > .hmis-card[data-source-group="grpImportantLinks"] {
+  --rail-panel-light:#EAF8FA;--rail-border-light:#CDECEF;
+  --rail-panel-dark:#0A344A;--rail-card-dark:#132E43;--rail-border-dark:#55CBE9;
+}
+/* The section fill intentionally matches the selected exact hex, without over-saturating it. */
+body:not(.dark-theme) #hmisDashboard > .hmis-card[data-source-group] {
+  background:var(--rail-panel-light) !important;
+  border:1px solid var(--rail-border-light) !important;
+  box-shadow:0 11px 26px rgba(36,61,97,.08), inset 0 1px 0 rgba(255,255,255,.65) !important;
+}
+body:not(.dark-theme) #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item {
+  background:#FFFFFF !important;
+  border:2px solid var(--rail-border-light) !important;
+  box-shadow:0 5px 13px rgba(30,49,80,.075), inset 0 1px 0 #fff !important;
+}
+/* Dark mode: matching section accents with restrained glowing tile outlines. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] {
+  background:var(--rail-panel-dark) !important;
+  border:1.5px solid var(--rail-border-dark) !important;
+  box-shadow:0 11px 28px rgba(0,0,0,.26), 0 0 12px color-mix(in srgb,var(--rail-border-dark) 17%,transparent), inset 0 1px 0 rgba(255,255,255,.055) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item {
+  background:var(--rail-card-dark) !important;
+  border:2px solid var(--rail-border-dark) !important;
+  box-shadow:0 5px 13px rgba(0,0,0,.27), 0 0 9px color-mix(in srgb,var(--rail-border-dark) 25%,transparent), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+/* Keep all five group titles legible; preserve existing icon colors and sizes. */
+body:not(.dark-theme) #hmisDashboard > .hmis-card[data-source-group] > .hmis-title {color:#172E65 !important;}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-title {color:#F0F4FF !important;}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-name {color:#F3F7FF !important;}
+@media (hover:hover) and (pointer:fine) {
+  body:not(.dark-theme) #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover {
+    box-shadow:0 8px 19px rgba(30,49,80,.15),0 0 0 1px var(--rail-border-light) !important;
+  }
+  body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover {
+    box-shadow:0 8px 20px rgba(0,0,0,.35),0 0 14px color-mix(in srgb,var(--rail-border-dark) 43%,transparent) !important;
+  }
+}
+</style>
+
+<!-- RailSNTGyan dark-mode-only premium Midnight Glass refinement (2026-10-21) -->
+<style id="rails-midnight-glass-dark-only-v2">
+/* Exclusive to dark mode and HOME. No light theme, login, tables, Firebase,
+   navigation handlers, tile geometry, or section contents are modified. */
+body.dark-theme.hmis-home-active #mainContent {
+  background:
+    radial-gradient(ellipse 85% 42% at 92% 3%, rgba(47,72,116,.17), transparent 82%),
+    radial-gradient(ellipse 65% 40% at 0% 94%, rgba(30,72,82,.13), transparent 80%),
+    #0D1422 !important;
+}
+/* Modern depth: section tints are subtle, NOT fully saturated neon blocks. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpFilesApprovals"] {
+  --mg-top:#20374E; --mg-bottom:#152437;
+  --mg-accent:#7DAACB; --mg-rgb:125,170,203;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpRefBooks"] {
+  --mg-top:#302B48; --mg-bottom:#211E35;
+  --mg-accent:#A99ACD; --mg-rgb:169,154,205;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpSanctionDocs"] {
+  --mg-top:#1F3A39; --mg-bottom:#152A2B;
+  --mg-accent:#78BBAF; --mg-rgb:120,187,175;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpLdcePapers"] {
+  --mg-top:#3D322B; --mg-bottom:#2A231F;
+  --mg-accent:#D5AC82; --mg-rgb:213,172,130;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpImportantLinks"] {
+  --mg-top:#203846; --mg-bottom:#152832;
+  --mg-accent:#85BAC8; --mg-rgb:133,186,200;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] {
+  position:relative;
+  background:
+    radial-gradient(ellipse 65% 60% at 100% 0%,rgba(var(--mg-rgb),.09) 0%,transparent 75%),
+    linear-gradient(150deg,var(--mg-top),var(--mg-bottom) 78%) !important;
+  border:1px solid rgba(var(--mg-rgb),.31) !important;
+  border-radius:23px !important;
+  box-shadow:0 13px 30px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.075) !important;
+}
+/* Section labels crisp and quieter separation */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-title {
+  color:#F1F5FC !important;
+  border-bottom:1px solid rgba(var(--mg-rgb),.23) !important;
+  text-shadow:none !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-title > i {
+  color:var(--mg-accent) !important;
+  filter:drop-shadow(0 2px 5px rgba(var(--mg-rgb),.16)) !important;
+}
+/* TILES: easily readable against coloured panel, with understated tinted outline. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item {
+  background:linear-gradient(152deg,rgba(49,64,88,.90) 0%,rgba(31,42,62,.96) 74%,rgba(27,38,56,.98) 100%) !important;
+  border:1.5px solid rgba(var(--mg-rgb),.38) !important;
+  border-radius:19px !important;
+  box-shadow:0 6px 13px rgba(4,10,22,.21),inset 0 1px 0 rgba(255,255,255,.095) !important;
+  color:#F2F5FC !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-name {
+  color:#EFF3FC !important;
+  text-shadow:none !important;
+}
+/* Elevated icon bezel with clear vibrant railway-themed symbols, not muddy grey. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-icon {
+  background:linear-gradient(145deg,#41516E 0%,#2A3852 53%,#202D44 100%) !important;
+  border:2px solid rgba(166,190,224,.48) !important;
+  box-shadow:0 5px 10px rgba(5,11,23,.28),inset 1px 1px 1px rgba(255,255,255,.24),inset -2px -3px 5px rgba(0,0,0,.17) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-icon > i:first-child {
+  color:color-mix(in srgb,var(--hmis-icon-color,#A98ADD) 75%,#FFFFFF 25%) !important;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.30)) !important;
+}
+/* Clear hover/focus feedback, muted until interaction (touch stays clean). */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:focus-visible {
+  outline:2px solid var(--mg-accent) !important;
+  outline-offset:2px !important;
+}
+@media (hover:hover) and (pointer:fine) {
+  body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover {
+    background:linear-gradient(152deg,#394C69,#263750) !important;
+    border-color:rgba(var(--mg-rgb),.70) !important;
+    box-shadow:0 11px 20px rgba(4,10,22,.34),0 0 0 1px rgba(var(--mg-rgb),.12) !important;
+  }
+}
+/* Existing active and nested reading options remain recognizable. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item[aria-expanded="true"] {
+  border-color:var(--mg-accent) !important;
+  background:linear-gradient(145deg,#394461,#222E48) !important;
+}
+/* Search launcher and dock visually harmonize with the refreshed home theme. */
+body.dark-theme #hmisDashboard .hmis-top .hmis-search,
+body.dark-theme #hmisDashboard .hmis-top .hmis-summary-launcher {
+  background:linear-gradient(145deg,#202D44,#18263B) !important;
+  border:1px solid rgba(131,156,192,.37) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.15) !important;
+}
+body.dark-theme #hmisDashboard .hmis-top .hmis-summary-label strong {color:#F0F5FC !important;}
+body.dark-theme #hmisDashboard .hmis-top .hmis-search input::placeholder {color:#AEBFD4 !important;}
+body.dark-theme #hmisDashboard .hmis-bottom {
+  background:rgba(29,41,62,.96) !important;
+  border:1px solid rgba(124,149,185,.33) !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.30) !important;
+}
+/* Preserve special nested IRSEM/IRTEM selector contrast and layout; no overrides. */
+</style>
+
+<!-- New Premium Midnight Sapphire appearance: affects Dark Theme only. -->
+<style id="rails-premium-midnight-sapphire-dark-only-v3">
+/* ====================================================================
+ RailSNTGyan | Premium Midnight Sapphire (Dark Mode Only) | 21 Oct 2026
+ Visual enhancement only. No changes to Light Mode, app logic, grid layout,
+ Firebase, login, data, navigation, modal handlers or document tables.
+ ==================================================================== */
+
+/* Seamless navy canvas, a quiet technical glow behind the dashboard. */
+html body.dark-theme.hmis-home-active #mainContent {
+  background:
+    radial-gradient(ellipse 80% 38% at 86% 0%,rgba(0,126,228,.13),transparent 78%),
+    radial-gradient(ellipse 68% 35% at 6% 77%,rgba(84,50,171,.085),transparent 84%),
+    linear-gradient(155deg,#071526 0%,#081427 53%,#071325 100%) !important;
+}
+body.dark-theme #hmisDashboard {
+  scrollbar-color:rgba(80,137,187,.55) transparent;
+}
+body.dark-theme #hmisDashboard::-webkit-scrollbar-track {background:#0a1527}
+body.dark-theme #hmisDashboard::-webkit-scrollbar-thumb {background:rgba(75,140,190,.48);border-radius:9px}
+
+/* Portal top strip: continuous sapphire glass with the existing brand accents. */
+html body.dark-theme #mainHeader {
+  background:linear-gradient(108deg,#04152B 0%,#092442 55%,#05162B 100%) !important;
+  background-image:linear-gradient(108deg,#04152B 0%,#092442 55%,#05162B 100%) !important;
+  border-bottom:3px solid #F98B37 !important;
+  box-shadow:0 7px 26px rgba(0,4,17,.44),inset 0 1px 0 rgba(158,205,245,.10) !important;
+}
+html body.dark-theme #mainHeader .header-util-btn,
+html body.dark-theme #mainHeader .theme-toggle-btn,
+html body.dark-theme #mainHeader .menu-toggle-btn {
+  background:linear-gradient(148deg,#183652,#0D223C) !important;
+  border:1px solid rgba(117,170,219,.56) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 3px 8px rgba(0,0,0,.24) !important;
+}
+html body.dark-theme #mainHeader .header-quick-search input {
+  background:#0F2946 !important;
+  border-color:rgba(96,153,204,.55) !important;
+  box-shadow:inset 0 1px 4px rgba(1,8,22,.36) !important;
+}
+html body.dark-theme #mainHeader .btn-logout {
+  background:linear-gradient(135deg,#F74768,#DA1746) !important;
+  border:1px solid rgba(255,147,168,.4) !important;
+  box-shadow:0 3px 12px rgba(225,24,70,.27),inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+
+/* Distinctive accent per HOME section, same crisp navy tiles throughout. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpFilesApprovals"] {
+  --premium-rgb:39,202,246; --premium-accent:#43D6FB;
+  --premium-a:#0C3356; --premium-b:#071D34;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpRefBooks"] {
+  --premium-rgb:194,117,255; --premium-accent:#C58BFF;
+  --premium-a:#302047; --premium-b:#1B1735;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpSanctionDocs"] {
+  --premium-rgb:72,219,173; --premium-accent:#60E2B7;
+  --premium-a:#124439; --premium-b:#092A29;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpLdcePapers"] {
+  --premium-rgb:255,171,90; --premium-accent:#FFC17D;
+  --premium-a:#4B3022; --premium-b:#291E21;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group="grpImportantLinks"] {
+  --premium-rgb:66,169,255; --premium-accent:#68BDFF;
+  --premium-a:#103B5E; --premium-b:#0A243D;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] {
+  position:relative !important;
+  isolation:isolate;
+  border:1.5px solid rgba(var(--premium-rgb),.77) !important;
+  border-radius:19px !important;
+  background:
+    radial-gradient(ellipse 66% 43% at 91% 0%,rgba(var(--premium-rgb),.13),transparent 88%),
+    radial-gradient(ellipse 78% 80% at 0% 110%,rgba(4,11,30,.26),transparent 87%),
+    linear-gradient(145deg,var(--premium-a),var(--premium-b) 80%) !important;
+  box-shadow:
+    0 12px 27px rgba(0,4,18,.42),
+    0 0 16px rgba(var(--premium-rgb),.11),
+    inset 0 1px 0 rgba(255,255,255,.11) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-title {
+  color:#F6FAFF !important;
+  font-weight:800 !important;
+  letter-spacing:.12px !important;
+  text-shadow:0 1px 7px rgba(0,0,0,.24) !important;
+  border-bottom:2px solid rgba(var(--premium-rgb),.76) !important;
+  padding-bottom:10px !important;
+  margin-bottom:11px !important;
+  box-shadow:0 5px 7px -7px rgba(var(--premium-rgb),.65) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-title > i {
+  color:var(--premium-accent) !important;
+  filter:drop-shadow(0 0 7px rgba(var(--premium-rgb),.40)) !important;
+}
+
+/* Glass-card tiles: blue-black gradients, luminous hairline borders, etched top shine. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item {
+  color:#F4F8FF !important;
+  border:1.35px solid rgba(var(--premium-rgb),.66) !important;
+  border-radius:16px !important;
+  background:
+    linear-gradient(148deg,rgba(45,91,134,.47) 0%,rgba(19,44,75,.89) 31%,rgba(9,30,56,.97) 100%) !important;
+  box-shadow:
+    0 5px 12px rgba(0,6,19,.39),
+    0 0 11px rgba(var(--premium-rgb),.10),
+    inset 0 1px 0 rgba(192,224,255,.18),
+    inset 0 -1px 0 rgba(0,8,26,.52) !important;
+  transition:transform .19s ease,border-color .19s ease,box-shadow .19s ease,background .19s ease !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-name {
+  color:#F5F8FF !important;
+  text-shadow:0 1px 2px rgba(1,7,20,.5) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-icon {
+  background:
+    linear-gradient(148deg,rgba(69,118,160,.80),rgba(29,66,103,.94) 47%,rgba(16,38,69,.99) 100%) !important;
+  border:2px solid rgba(133,196,240,.71) !important;
+  box-shadow:
+    0 5px 11px rgba(0,6,22,.42),
+    0 0 10px rgba(var(--premium-rgb),.09),
+    inset 2px 2px 2px rgba(232,246,255,.23),
+    inset -3px -3px 6px rgba(0,8,27,.27) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-icon > i:first-child {
+  color:color-mix(in srgb,var(--hmis-icon-color,#B18BEB) 83%,#FFF 17%) !important;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.38)) drop-shadow(0 0 5px color-mix(in srgb,var(--hmis-icon-color,#A68AE5) 20%,transparent)) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item[aria-expanded="true"] {
+  border-color:var(--premium-accent) !important;
+  background:linear-gradient(140deg,#29466C,#132949) !important;
+  box-shadow:0 0 0 1px rgba(var(--premium-rgb),.43),0 7px 18px rgba(0,5,20,.45) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:focus-visible {
+  outline:2px solid var(--premium-accent) !important;
+  outline-offset:3px !important;
+}
+@media(hover:hover) and (pointer:fine) {
+  body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover {
+    transform:translateY(-3px) !important;
+    border-color:var(--premium-accent) !important;
+    background:linear-gradient(145deg,#32577D,#173556) !important;
+    box-shadow:0 11px 20px rgba(0,4,19,.52),0 0 15px rgba(var(--premium-rgb),.3),inset 0 1px 0 rgba(255,255,255,.23) !important;
+  }
+}
+
+/* Search and Technical Summary controls on HOME only. */
+body.dark-theme.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-launcher,
+body.dark-theme.hmis-home-active #hmisDashboard .hmis-top .hmis-search {
+  background:linear-gradient(155deg,#133455,#0B1C35) !important;
+  border:1px solid rgba(90,167,224,.65) !important;
+  box-shadow:0 3px 12px rgba(0,3,14,.32),inset 0 1px 0 rgba(202,234,255,.14) !important;
+}
+body.dark-theme.hmis-home-active #hmisDashboard .hmis-top .hmis-search:focus-within {
+  border-color:#B27BFC !important;
+  box-shadow:0 0 0 2px rgba(166,115,250,.18),0 0 14px rgba(166,115,250,.18) !important;
+}
+body.dark-theme.hmis-home-active #hmisDashboard .hmis-top .hmis-search i {color:#BC80F5 !important;}
+body.dark-theme.hmis-home-active #hmisDashboard .hmis-top .hmis-search input {color:#EAF3FF !important;}
+body.dark-theme.hmis-home-active #hmisDashboard .hmis-top .hmis-search input::placeholder{color:#9EB6D3 !important;}
+body.dark-theme.hmis-home-active #hmisDashboard .hmis-top .hmis-summary-label strong{color:#F4F9FF !important;}
+
+/* The IRSEM/IRTEM expanded reading menu remains spacious and legible. */
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] {
+  background:linear-gradient(140deg,#182C4C,#251C46) !important;
+  border-color:rgba(184,138,255,.8) !important;
+  box-shadow:0 8px 24px rgba(4,5,28,.35),0 0 10px rgba(152,100,255,.13) !important;
+}
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-nested-title,
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-nested-title {color:#EAD9FF !important;}
+
+/* Deliberately no unscoped .hmis-* styles: light theme renders identically. */
+@media(prefers-reduced-motion:reduce) {
+  body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item {transition:none !important;}
+  body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover {transform:none !important;}
+}
+
+
+/* ===========================================================================
+   RAILSNTGYAN — 3CX-INSPIRED MIDNIGHT BLUE ENTERPRISE THEME — 22 OCT 2026
+   DARK MODE ONLY. Icon fills/strokes/font-colors, book image assets, the Light
+   Theme, structural layout, JS events, Firebase and navigation are UNCHANGED.
+   Applies after previous dark palette to make the appearance coherent sitewide.
+   =========================================================================== */
+html.dark-theme { background-color:#031225 !important; color-scheme:dark !important; }
+body.dark-theme {
+  --rail3-bg:#031225;
+  --rail3-panel:#071A31;
+  --rail3-panel-hi:#0A2340;
+  --rail3-panel-raised:#0D2B4E;
+  --rail3-card:#0A2340;
+  --rail3-border:rgba(73,162,243,.36);
+  --rail3-strong:rgba(78,187,255,.68);
+  --rail3-primary:#2FB6FF;
+  --rail3-text:#F3F8FF;
+  --rail3-muted:#B8C7DD;
+  background:#031225 !important;
+  color:var(--rail3-text) !important;
+  scrollbar-color:#28638E #061B34;
+}
+body.dark-theme .app-container {
+  background:
+    radial-gradient(ellipse 80% 40% at 90% 0%,rgba(36,146,235,.14),transparent 76%),
+    linear-gradient(180deg,#031225 0%,#061B34 46%,#082445 100%) !important;
+}
+body.dark-theme #mainContent,
+html body.dark-theme.hmis-home-active #mainContent {
+  background:
+    radial-gradient(ellipse 80% 46% at 93% 0%,rgba(38,158,245,.11),transparent 83%),
+    linear-gradient(180deg,#031225 0%,#061B34 49%,#082445 100%) !important;
+}
+/* Branding remains identical, including the existing orange separator. */
+html body.dark-theme #mainHeader,
+body.dark-theme header {
+  background:linear-gradient(110deg,#04152B 0%,#072042 54%,#0A2A4B 100%) !important;
+  background-image:linear-gradient(110deg,#04152B 0%,#072042 54%,#0A2A4B 100%) !important;
+  border-bottom:3px solid #F47A20 !important;
+  box-shadow:0 8px 25px rgba(0,4,17,.45),inset 0 1px 0 rgba(163,217,255,.11) !important;
+}
+html body.dark-theme #mainHeader .header-util-btn,
+html body.dark-theme #mainHeader .theme-toggle-btn,
+html body.dark-theme #mainHeader .menu-toggle-btn {
+  background:linear-gradient(150deg,#133758,#071C36) !important;
+  border-color:rgba(96,173,235,.46) !important;
+  box-shadow:inset 0 1px 0 rgba(193,232,255,.12),0 4px 11px rgba(0,0,0,.26) !important;
+}
+html body.dark-theme #mainHeader .header-quick-search input {
+  background:#0A2340 !important;
+  border-color:var(--rail3-border) !important;
+}
+/* Sitewide navigation: preserve active/section icons and action meanings. */
+body.dark-theme #appSidebar,
+body.dark-theme aside {
+  background:linear-gradient(180deg,#061B34,#031225) !important;
+  border-right-color:var(--rail3-border) !important;
+}
+body.dark-theme #appSidebar .home-btn-container {background:#061B34 !important;}
+body.dark-theme #appSidebar .home-btn {
+  background:linear-gradient(115deg,#115185,#0B3965) !important;
+  border-color:rgba(71,171,244,.55) !important;
+}
+body.dark-theme #appSidebar .sidebar-section-title {
+  background:linear-gradient(110deg,#0D2B4E,#081C35) !important;
+  color:var(--rail3-text) !important;
+}
+body.dark-theme #appSidebar .nav-list {background:#06182E !important;}
+body.dark-theme #appSidebar .nav-item {color:#D5E6F7 !important;}
+body.dark-theme #appSidebar .nav-item:hover {
+  background:#103858 !important;
+  border-color:rgba(71,166,238,.24) !important;
+}
+body.dark-theme #appSidebar .nav-item.active,
+body.dark-theme #appSidebar .nav-item.active-subsection,
+body.dark-theme #appSidebar .nav-item.selected {
+  background:linear-gradient(95deg,#154A77,#0B2946) !important;
+  border-color:rgba(68,179,250,.46) !important;
+  border-left-color:#F47A20 !important;
+}
+/* Five HOME panels now share ONE dark enterprise palette. Colored icons are
+   deliberately not targeted: their current colors stay exactly as before. */
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] {
+  background:
+    radial-gradient(ellipse 75% 48% at 100% 0%,rgba(47,182,255,.10),transparent 81%),
+    linear-gradient(165deg,#092845 0%,#071A31 70%,#06182E 100%) !important;
+  border:1px solid rgba(70,158,238,.46) !important;
+  border-radius:20px !important;
+  box-shadow:0 12px 27px rgba(0,5,21,.33),inset 0 1px 0 rgba(186,229,255,.10) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-title {
+  color:#F3F8FF !important;
+  border-bottom:1.5px solid rgba(72,174,250,.53) !important;
+  text-shadow:none !important;
+  box-shadow:none !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item {
+  background:linear-gradient(155deg,#103758 0%,#0A2340 45%,#071B33 100%) !important;
+  border:1px solid rgba(82,173,246,.39) !important;
+  color:#F3F8FF !important;
+  box-shadow:0 5px 12px rgba(0,6,24,.35),inset 0 1px 0 rgba(211,239,255,.12) !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item > .hmis-name {
+  color:#F1F7FF !important;
+}
+body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item[aria-expanded="true"] {
+  background:linear-gradient(150deg,#174A74,#0A2745) !important;
+  border-color:#4CC3FF !important;
+  box-shadow:0 0 0 1px rgba(76,195,255,.23),0 7px 16px rgba(0,5,22,.39) !important;
+}
+@media(hover:hover) and (pointer:fine) {
+ body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover {
+   background:linear-gradient(155deg,#185078,#0C2E50) !important;
+   border-color:rgba(94,202,255,.78) !important;
+   box-shadow:0 9px 20px rgba(0,7,29,.40),0 0 13px rgba(47,182,255,.12) !important;
+ }
+}
+body.dark-theme #hmisDashboard .hmis-top .hmis-summary-launcher,
+body.dark-theme #hmisDashboard .hmis-top .hmis-search {
+  background:linear-gradient(150deg,#0D2B4E,#071B33) !important;
+  border-color:rgba(86,173,237,.45) !important;
+  box-shadow:0 4px 12px rgba(0,4,18,.27),inset 0 1px 0 rgba(217,241,255,.09) !important;
+}
+body.dark-theme #hmisDashboard .hmis-top .hmis-search:focus-within {
+  border-color:#4CC3FF !important;
+  box-shadow:0 0 0 3px rgba(47,182,255,.18) !important;
+}
+/* Expanded IRSEM / IRTEM selector: blue, not purple background. */
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"],
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] {
+  background:linear-gradient(145deg,#0D3151,#071C36) !important;
+  border-color:rgba(84,184,252,.58) !important;
+  box-shadow:0 8px 23px rgba(0,4,21,.31) !important;
+}
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irsemSubmenu"] .hmis-nested-title,
+body.dark-theme #hmisDashboard .hmis-nested[data-parent="irtemSubmenu"] .hmis-nested-title {
+  color:#EAF3FF !important;
+}
+body.dark-theme #hmisDashboard .hmis-bottom {
+  background:rgba(8,33,58,.98) !important;
+  border-color:rgba(79,164,235,.49) !important;
+  box-shadow:0 10px 26px rgba(0,5,22,.38) !important;
+}
+/* Data / list / catalogue view header. No geometric changes to sticky columns. */
+body.dark-theme .content-header-card.sticky-header-card,
+body.dark-theme .filter-panel.sticky-filter-panel,
+body.dark-theme .dash-hero,
+body.dark-theme .process-infographic-card,
+body.dark-theme .chart-card {
+  background:linear-gradient(135deg,#092745 0%,#071A31 100%) !important;
+  border-color:rgba(73,157,234,.38) !important;
+  box-shadow:0 7px 23px rgba(0,5,19,.27) !important;
+}
+body.dark-theme .content-header-card.sticky-header-card,
+body.dark-theme .dash-hero {border-left:5px solid #2FB6FF !important;}
+body.dark-theme .content-header-card.sticky-header-card .view-title-group h2,
+body.dark-theme .dash-hero-title h2,
+body.dark-theme .chart-header h3,
+body.dark-theme .infographic-title-tag {color:#F2F8FF !important;}
+body.dark-theme .content-header-card.sticky-header-card .view-title-group p,
+body.dark-theme .dash-hero-title p,
+body.dark-theme .filter-item {color:#B8C7DD !important;}
+body.dark-theme .filter-panel.sticky-filter-panel input,
+body.dark-theme .filter-panel.sticky-filter-panel select,
+body.dark-theme .header-quick-search input,
+body.dark-theme .search-input {
+  background:#0A2340 !important;
+  border-color:rgba(92,169,233,.39) !important;
+  color:#EAF2FF !important;
+}
+body.dark-theme .filter-panel.sticky-filter-panel :is(input,select):focus {
+  border-color:#2FB6FF !important;
+  box-shadow:0 0 0 3px rgba(47,182,255,.18) !important;
+}
+body.dark-theme .table-container,
+body.dark-theme #mainTableContainer {
+  background:#061B34 !important;
+  border-color:rgba(74,159,234,.36) !important;
+  box-shadow:0 10px 27px rgba(0,4,20,.33) !important;
+}
+body.dark-theme table {border-color:rgba(72,150,222,.4) !important;}
+body.dark-theme table thead th,
+body.dark-theme table:not(.unfreeze-table) thead th:nth-child(1),
+body.dark-theme table:not(.unfreeze-table) thead th:nth-child(2) {
+  background:linear-gradient(180deg,#104776,#0A2D51) !important;
+  color:#F4FAFF !important;
+  border-bottom-color:#F47A20 !important;
+}
+body.dark-theme table tbody td {background:#081E37 !important;border-color:rgba(94,151,207,.28) !important;color:#EAF2FF !important;}
+body.dark-theme table tbody tr:nth-child(even) td {background:#0B2744 !important;}
+body.dark-theme table tbody tr:hover td {background:#123A5B !important;}
+/* Explicit opaque frozen cells on all viewport sizes. */
+body.dark-theme #mainTableContainer #mainRecordTable tbody tr:nth-child(odd) > td:nth-child(-n+2) {background:#081E37 !important;}
+body.dark-theme #mainTableContainer #mainRecordTable tbody tr:nth-child(even) > td:nth-child(-n+2) {background:#0B2744 !important;}
+body.dark-theme #mainTableContainer #mainRecordTable tbody tr:hover > td:nth-child(-n+2) {background:#123A5B !important;}
+body.dark-theme .btn-outline,
+body.dark-theme .action-icon-btn {
+  background:#103454 !important;
+  border-color:rgba(91,168,237,.48) !important;
+  color:#EAF2FF !important;
+}
+body.dark-theme .btn-primary {background:linear-gradient(125deg,#1367A3,#0C477C) !important;}
+/* Uniform 600x400 book cards: preserve image, badge code color and icon glyphs. */
+body.dark-theme #mainTableContainer.rails-uniform-library-mode {
+  background:linear-gradient(155deg,#06182F,#082445) !important;
+}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-card {
+  background:linear-gradient(155deg,#0D2B4E 0%,#071A31 100%) !important;
+  border:1px solid rgba(82,173,246,.40) !important;
+  color:#F3F8FF !important;
+  box-shadow:0 6px 18px rgba(0,4,19,.28) !important;
+}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-card:hover {
+  border-color:rgba(97,203,255,.78) !important;
+  box-shadow:0 9px 24px rgba(0,4,19,.38),0 0 13px rgba(47,182,255,.11) !important;
+}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-title {
+  color:#F4F8FF !important;
+  -webkit-text-fill-color:#F4F8FF !important;
+}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-read {
+  background:linear-gradient(135deg,#164D79,#0E3C69) !important;
+  border-color:rgba(81,180,248,.66) !important;
+  color:#E9F7FF !important;
+}
+body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-admin {
+  background:#0C2B4A !important;
+  border-color:rgba(95,160,226,.50) !important;
+  /* Icon color intentionally not changed. */
+}
+/* Fallback chapter/signal covers if a subsection uses its old gallery. */
+body.dark-theme #mainTableContainer.chapter-gallery-mode .chapter-book-card,
+body.dark-theme #mainTableContainer.signal-image-gallery-mode .signal-book-card,
+body.dark-theme #mainTableContainer.signal-image-gallery-mode .signal-book-body {
+  background:linear-gradient(150deg,#0D2B4E,#071A31) !important;
+  border-color:rgba(82,173,246,.40) !important;
+}
+/* Restrict color adjustments to visible surfaces; don't touch image/title content,
+   icon fill/stroke/color, Firestore documents, authentication or print settings. */
+@media(prefers-reduced-motion:reduce){
+ body.dark-theme #hmisDashboard > .hmis-card[data-source-group] > .hmis-grid > .hmis-item:hover,
+ body.dark-theme #mainTableContainer.rails-uniform-library-mode .rails-lib-card:hover{transform:none!important}
+}
+/* ======================================================================== */
+
+</style>
+
+<!-- RailSNTGyan / 3CX reference inspired Cobalt Navy Table Palette -- Dark Theme ONLY.
+     Visual changes only: does not alter layout, column dimensions, scrollbar, JS,
+     Firebase credentials, button event handlers, PDFs, images or icon hues. -->
+<style id="rails-table-3cx-cobalt-reference-v3">
+/* 3CX reference: midnight-black upper tones, ocean-blue panel tones, royal-blue
+   highlights and fine luminous cyan borders. Never apply to light mode. */
+html body.dark-theme #mainTableContainer:not(.rails-uniform-library-mode) {
+  background:linear-gradient(180deg,#03162C 0%,#062D58 66%,#094A8D 100%) !important;
+  border-color:#2377B7 !important;
+  box-shadow:0 9px 26px rgba(0,4,22,.36),inset 0 0 0 1px rgba(44,174,250,.17) !important;
+}
+html body.dark-theme #mainRecordTable,
+html body.dark-theme #railsFitTable {
+  --table-border:#2773AD;
+  --cell-border:rgba(65,140,205,.30);
+  color:#F4F9FF !important;
+  border-color:#2C77B5 !important;
+  font-variant-numeric:tabular-nums;
+}
+/* Visibly blue heading: unlike the prior green/grey table header. */
+html body.dark-theme #mainRecordTable thead th,
+html body.dark-theme #railsFitTable thead th,
+html body.dark-theme #mainRecordTable:not(.unfreeze-table) thead th:nth-child(-n+2),
+html body.dark-theme #mainTableContainer.rails-fit-mode #railsFitTable thead th {
+  background:#064A85 !important;
+  background-image:linear-gradient(180deg,#041D3A 0%,#073969 42%,#0965B2 100%) !important;
+  color:#F6FBFF !important;
+  border-bottom:2px solid #2AB6F1 !important;
+  border-right:1px solid rgba(71,160,235,.44) !important;
+  font-weight:800 !important;
+  text-shadow:0 1px 1px rgba(0,9,24,.55);
+}
+/* Reference's black-navy -> saturated cobalt palette, kept dark enough for text. */
+html body.dark-theme #mainRecordTable tbody tr:nth-child(odd) > td,
+html body.dark-theme #railsFitTable tbody tr:nth-child(odd) > td {
+  background:#061B34 !important;
+  background-color:#061B34 !important;
+  background-image:none !important;
+}
+html body.dark-theme #mainRecordTable tbody tr:nth-child(even) > td,
+html body.dark-theme #railsFitTable tbody tr:nth-child(even) > td {
+  background:#0C3666 !important;
+  background-color:#0C3666 !important;
+  background-image:none !important;
+}
+html body.dark-theme #mainRecordTable tbody tr:hover > td,
+html body.dark-theme #railsFitTable tbody tr:hover > td {
+  background:#13508A !important;
+  background-color:#13508A !important;
+  background-image:none !important;
+}
+/* Freeze columns must be opaque and MATCH their parent row color. */
+html body.dark-theme #mainTableContainer #mainRecordTable tbody tr:nth-child(odd) > td:nth-child(-n+2),
+html body.dark-theme #mainTableContainer #railsFitTable tbody tr:nth-child(odd) > td:nth-child(-n+2) {
+  background:#061B34 !important;
+  background-color:#061B34 !important;
+}
+html body.dark-theme #mainTableContainer #mainRecordTable tbody tr:nth-child(even) > td:nth-child(-n+2),
+html body.dark-theme #mainTableContainer #railsFitTable tbody tr:nth-child(even) > td:nth-child(-n+2) {
+  background:#0C3666 !important;
+  background-color:#0C3666 !important;
+}
+html body.dark-theme #mainTableContainer #mainRecordTable tbody tr:hover > td:nth-child(-n+2),
+html body.dark-theme #mainTableContainer #railsFitTable tbody tr:hover > td:nth-child(-n+2) {
+  background:#13508A !important;
+  background-color:#13508A !important;
+}
+html body.dark-theme #mainRecordTable tbody td,
+html body.dark-theme #railsFitTable tbody td {
+  color:#F3F8FF !important;
+  border-bottom:1px solid rgba(77,157,230,.25) !important;
+  border-right:1px solid rgba(58,141,215,.22) !important;
+  line-height:1.44 !important;
+  text-shadow:none !important;
+}
+html body.dark-theme #mainRecordTable tbody :is(.work-desc-cell,.work-desc-wide,.hq-subject-cell,.jpo-subject-cell),
+html body.dark-theme #railsFitTable tbody :is(.work-desc-cell,.work-desc-wide,.hq-subject-cell,.jpo-subject-cell) {
+  color:#F8FBFF !important;
+  line-height:1.5 !important;
+  font-weight:550 !important;
+}
+html body.dark-theme #mainRecordTable .work-link,
+html body.dark-theme #railsFitTable .work-link {
+  color:#F6FAFF !important;
+  -webkit-text-fill-color:#F6FAFF !important;
+  font-weight:600 !important;
+}
+html body.dark-theme #mainRecordTable .work-link:hover,
+html body.dark-theme #railsFitTable .work-link:hover {
+  color:#BCEAFF !important;
+  -webkit-text-fill-color:#BCEAFF !important;
+}
+/* Eliminate orange/teal frozen vertical rules; preserve sticky offsets. */
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable thead th:nth-child(1),
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable tbody td:nth-child(1),
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable.rails-freeze-managed tr > :first-child {
+  border-right:1px solid rgba(63,159,231,.58) !important;
+}
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable thead th:nth-child(2),
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable tbody td:nth-child(2),
+html body.dark-theme #mainTableContainer:not(.rails-fit-mode) #mainRecordTable.rails-freeze-managed.rails-freeze-two tr > :nth-child(2) {
+  border-right:2px solid #2AA5E4 !important;
+  box-shadow:4px 0 9px -4px rgba(0,8,26,.53) !important;
+}
+html body.dark-theme #mainTableContainer.rails-fit-mode #railsFitTable {
+  border-color:#2D88CB !important;
+}
+html body.dark-theme #mainTableContainer.rails-fit-mode #railsFitTable tr > * {
+  border-right:1px solid rgba(73,143,216,.31) !important;
+  border-bottom:1px solid rgba(77,153,225,.25) !important;
+}
+html body.dark-theme #mainTableContainer.rails-fit-mode #railsFitTable tr > :first-child {
+  border-right:1px solid rgba(58,167,238,.68) !important;
+}
+html body.dark-theme #mainTableContainer.rails-fit-mode #railsFitTable tr > :nth-child(2) {
+  border-right:2px solid #2AA5E4 !important;
+}
+/* Existing agency/equipment badges and functional icon colors are preserved;
+   only non-icon action button SURFACES receive the reference's blue treatment. */
+html body.dark-theme #mainRecordTable .actions-cell .action-icon-btn:not(.attachment-chain-btn),
+html body.dark-theme #railsFitTable .actions-cell .action-icon-btn:not(.attachment-chain-btn) {
+  background:#0F447A !important;
+  border:1px solid rgba(69,153,229,.82) !important;
+  box-shadow:inset 0 1px 0 rgba(202,236,255,.10) !important;
+}
+html body.dark-theme #mainRecordTable .actions-cell .attachment-chain-btn.broken,
+html body.dark-theme #railsFitTable .actions-cell .attachment-chain-btn.broken {
+  background:#10385F !important;
+  border-color:#347BB5 !important;
+}
+/* Deep navy control panels tie into the blue table; no geometry modifications. */
+html body.dark-theme #tableViewSection .content-header-card.sticky-header-card,
+html body.dark-theme #tableViewSection .filter-panel.sticky-filter-panel {
+  background:linear-gradient(110deg,#04162B 0%,#07264A 55%,#0A3C70 100%) !important;
+  border-color:rgba(63,144,213,.48) !important;
+}
+html body.dark-theme #tableViewSection .table-mode-container,
+html body.dark-theme #tableViewSection .table-view-control {
+  background:linear-gradient(90deg,#051931,#0A2D55) !important;
+}
+</style>
+
+
+<style id="rails-master-manager-style">
+/* Master manager: both themes; all styles contained in rm- namespace */
+.rm-sidebar-admin[hidden]{display:none!important}
+.rm-sidebar-admin{border-top:1px solid rgba(75,177,233,.38);margin-top:8px}
+.rm-sidebar-admin .nav-item{border-left:3px solid #34c2f7!important;cursor:pointer}
+.rm-modal{position:fixed;inset:0;background:rgba(0,8,18,.76);z-index:25000;display:none;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(4px);color:#f0f8ff}
+.rm-modal.open{display:flex}
+.rm-dialog{display:flex;flex-direction:column;width:min(1150px,98vw);max-height:94dvh;overflow:hidden;background:#091a30;border:1px solid #357daa;border-radius:16px;box-shadow:0 18px 55px #0009}
+.rm-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;background:linear-gradient(105deg,#061529,#083762,#0a508c);border-bottom:2px solid #28b9ef}
+.rm-head h2{font-size:18px;font-weight:800;color:white}.rm-head p{font-size:11px;color:#c2daef;margin:4px 0 0}
+.rm-close{border:1px solid #68b9e1;color:#fff;background:#15476e;padding:4px 13px;font-size:24px;border-radius:9px;cursor:pointer}
+.rm-body{padding:16px;overflow:auto;flex:1;min-height:0}
+.rm-controls{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.rm-count{font-size:12px;color:#bbe6ff}
+.rm-main{display:grid;grid-template-columns:minmax(240px,330px) minmax(0,1fr);gap:14px}
+.rm-form,.rm-record-list{padding:15px;border:1px solid #2d638d;background:linear-gradient(150deg,#102640,#081c34);border-radius:12px}
+.rm-form h3,.rm-record-list h3{font-size:13px;margin-bottom:12px;color:#e8f6ff}
+.rm-form label,.rm-controls label{font-size:12px;font-weight:700;display:flex;flex-direction:column;gap:6px;margin-bottom:10px;color:#e2efff}
+.rm-form select,.rm-form input,.rm-controls select{background:#0b3053!important;color:#f7fcff!important;border:1px solid #4389b6!important;border-radius:8px!important;padding:9px 10px!important;font-size:13px!important;width:100%;min-width:0}
+.rm-form label.rm-check{flex-direction:row;align-items:center;gap:8px}.rm-form label.rm-check input{width:17px}
+.rm-buttons{display:flex;flex-wrap:wrap;gap:8px}.rm-buttons button,.rm-row-actions button{border:1px solid #4c96be;background:#154874;color:#f4fbff;border-radius:8px;padding:9px 12px;font-size:11px;font-weight:700;cursor:pointer}.rm-buttons button:disabled{opacity:.6;cursor:not-allowed}
+.rm-buttons .rm-primary{background:#0872a6;border-color:#39c7fb}
+.rm-feedback{min-height:26px;font-size:12px;color:#93f1ce;margin-top:9px;line-height:1.5}.rm-feedback.bad{color:#ffb2b2}
+.rm-table-viewport{overflow:auto;max-height:48vh;border-radius:8px}.rm-table-viewport table{min-width:550px!important;width:100%!important;border-collapse:collapse!important;font-size:11px!important}
+.rm-table-viewport th,.rm-table-viewport td{background:#103251!important;color:#ebf8ff!important;border:1px solid #315d82!important;padding:8px!important;white-space:normal!important;text-align:left!important}
+.rm-table-viewport tbody tr:nth-child(even) td{background:#0b2540!important}.rm-table-viewport th{background:#0a426f!important;position:sticky;top:0;z-index:2}
+.rm-table-viewport td.rm-active{color:#81f7ca!important}.rm-table-viewport td.rm-inactive{color:#ffc2c2!important}
+.rm-row-actions{display:flex;gap:5px}.rm-row-actions button{padding:5px 7px;white-space:nowrap}.rm-row-actions .rm-off{background:#662c3e}.rm-row-actions .rm-on{background:#145d4d}
+.rm-station-fields[hidden]{display:none!important}
+body:not(.dark-theme) .rm-dialog{background:#f3f7fc;color:#12253b;border-color:#bdd0e1}body:not(.dark-theme) .rm-head{background:linear-gradient(110deg,#0b385a,#0c6796)}
+body:not(.dark-theme) .rm-form,body:not(.dark-theme) .rm-record-list{background:#fff;border-color:#cfdeea}
+body:not(.dark-theme) .rm-form h3,body:not(.dark-theme) .rm-record-list h3,body:not(.dark-theme) .rm-form label,body:not(.dark-theme) .rm-controls label{color:#18314e}
+body:not(.dark-theme) .rm-form input,body:not(.dark-theme) .rm-form select,body:not(.dark-theme) .rm-controls select{background:#f8fbff!important;color:#153653!important}
+body:not(.dark-theme) .rm-count{color:#435c76}
+@media(max-width:750px){.rm-modal{padding:4px}.rm-dialog{max-height:97dvh;width:100%}.rm-body{padding:10px}.rm-main{grid-template-columns:1fr}.rm-head{padding:12px}.rm-table-viewport{max-height:260px}}
+
+
+
+/* ================================================================
+   RM RESPONSIVE FIT FIX (v91)
+   Prevent the 550px master table from expanding the modal/content
+   on narrow Android screens. Saved Entries becomes readable cards
+   on phones. No changes to Firebase logic or other portal tables.
+   ================================================================ */
+#rmModal,
+#rmModal * { box-sizing:border-box !important; }
+#rmModal{
+  width:100vw !important;
+  max-width:100vw !important;
+  min-width:0 !important;
+  height:100dvh !important;
+  inset:0 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  padding:clamp(4px,1.2vw,12px) !important;
+}
+#rmModal .rm-dialog{
+  width:min(1150px,100%) !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  max-height:calc(100dvh - 2 * clamp(4px,1.2vw,12px)) !important;
+  margin:0 auto !important;
+  overflow:hidden !important;
+}
+#rmModal .rm-body{
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+#rmModal .rm-head,
+#rmModal .rm-controls,
+#rmModal .rm-main,
+#rmModal .rm-form,
+#rmModal .rm-record-list,
+#rmModal .rm-station-fields,
+#rmModal .rm-form label,
+#rmModal .rm-controls label {
+  min-width:0 !important;
+  max-width:100% !important;
+}
+#rmModal .rm-head > div {min-width:0 !important; flex:1 1 auto !important;}
+#rmModal .rm-close{flex:0 0 auto !important;}
+#rmModal .rm-head h2{overflow-wrap:anywhere;}
+#rmModal .rm-controls > label{min-width:0 !important; flex:1 1 240px !important; max-width:420px !important;}
+#rmModal .rm-controls select,
+#rmModal .rm-form input:not([type="checkbox"]),
+#rmModal .rm-form select {
+  display:block !important;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+}
+#rmModal .rm-controls .rm-count{flex:0 1 auto !important;max-width:100% !important;white-space:normal !important;}
+#rmModal .rm-main{grid-template-columns:minmax(0,330px) minmax(0,1fr) !important;}
+#rmModal .rm-table-viewport{
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  overflow-x:auto !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+}
+#rmModal .rm-table-viewport table{
+  width:100% !important;
+  max-width:none !important;
+  min-width:550px !important;
+  table-layout:auto !important;
+}
+#rmModal .rm-row-actions{flex-wrap:wrap !important;}
+
+/* Tablet portrait: a single-column editor + Saved Entries, no clipped controls. */
+@media (max-width:900px){
+  #rmModal .rm-main{grid-template-columns:minmax(0,1fr) !important;}
+  #rmModal .rm-form,
+  #rmModal .rm-record-list,
+    #rmModal .rm-table-viewport{max-height:320px !important;}
+}
+@media (max-width:600px){
+  #rmModal{padding:4px !important;}
+  #rmModal .rm-dialog{
+    width:100% !important;
+    max-width:100% !important;
+    max-height:calc(100dvh - 8px) !important;
+    border-radius:12px !important;
+  }
+  #rmModal .rm-head{padding:12px 13px !important;gap:8px !important;}
+  #rmModal .rm-head h2{font-size:17px !important;line-height:1.25 !important;}
+  #rmModal .rm-head p{font-size:10px !important;overflow-wrap:anywhere;}
+  #rmModal .rm-close{min-width:38px !important;min-height:38px !important;padding:3px 9px !important;}
+  #rmModal .rm-body{padding:10px !important;}
+  #rmModal .rm-controls{display:grid !important;grid-template-columns:minmax(0,1fr) !important;gap:4px !important;}
+  #rmModal .rm-controls > label{width:100% !important;max-width:100% !important;}
+  #rmModal .rm-controls .rm-count{text-align:left !important;margin:0 0 6px 0 !important;}
+  #rmModal .rm-main{display:grid !important;grid-template-columns:minmax(0,1fr) !important;gap:10px !important;}
+  #rmModal .rm-form,
+  #rmModal .rm-record-list,
+  #rmModal .rm-form label,
+  #rmModal .rm-controls label{font-size:12px !important;}
+  #rmModal .rm-form input:not([type="checkbox"]),
+  #rmModal .rm-form select,
+  #rmModal .rm-controls select{font-size:16px !important;min-height:41px !important;}
+  #rmModal .rm-form label.rm-check input{width:17px !important;min-width:17px !important;}
+  #rmModal .rm-buttons button{min-height:38px !important;}
+  /* Mobile Saved Entries: each record fits horizontally without scrolling. */
+  #rmModal .rm-table-viewport{overflow-x:hidden !important;max-height:none !important;}
+  #rmModal .rm-table-viewport table,
+  #rmModal .rm-table-viewport tbody{display:block !important;width:100% !important;min-width:0 !important;max-width:100% !important;}
+  #rmModal .rm-table-viewport thead{display:none !important;}
+  #rmModal .rm-table-viewport tbody tr{
+    display:block !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    background:#092943 !important;
+    border:1px solid #37678e !important;
+    border-radius:9px !important;
+    margin:0 0 9px !important;
+    padding:5px 9px !important;
+    overflow:hidden !important;
+  }
+  #rmModal .rm-table-viewport tbody td{
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:space-between !important;
+    gap:10px !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    border:0 !important;
+    border-bottom:1px solid rgba(108,175,219,.19) !important;
+    padding:7px 0 !important;
+    font-size:12px !important;
+    line-height:1.35 !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere !important;
+    background:transparent !important;
+  }
+  #rmModal .rm-table-viewport tbody tr td:last-child{border-bottom:0 !important;}
+  #rmModal .rm-table-viewport tbody td::before{
+    content:"";
+    display:block;
+    flex:0 0 66px;
+    color:#98c9e5;
+    font-size:10px;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  #rmModal .rm-table-viewport tbody td:nth-child(1)::before{content:"Name";}
+  #rmModal .rm-table-viewport tbody td:nth-child(2)::before{content:"Details";}
+  #rmModal .rm-table-viewport tbody td:nth-child(3)::before{content:"Status";}
+  #rmModal .rm-table-viewport tbody td:nth-child(4)::before{content:"Actions";}
+  #rmModal .rm-table-viewport tbody td[colspan]{display:block !important;text-align:center !important;}
+  #rmModal .rm-table-viewport tbody td[colspan]::before{display:none !important;}
+  #rmModal .rm-row-actions{display:flex !important;justify-content:flex-end !important;gap:5px !important;}
+  #rmModal .rm-row-actions button{font-size:11px !important;min-height:31px !important;}
+}
+/* Guard against viewport-size anomalies caused by browser zoom / tablet UA. */
+@media (max-width:400px){
+  #rmModal .rm-body{padding:7px !important;}
+  #rmModal .rm-form,#rmModal .rm-record-list{padding:9px !important;}
+  #rmModal .rm-table-viewport tbody td::before{flex-basis:55px;}
+}
+
+</style>
+<style id="rail-master-excel-standards-style">
+#rmModal .rm-excel-standard-note{font-size:12px;line-height:1.55;margin:8px 0 12px;padding:10px 12px;border:1px solid rgba(74,180,232,.42);border-left:3px solid #2FB6FF;background:rgba(13,62,102,.44);color:#E1F3FF;border-radius:9px;overflow-wrap:anywhere}
+@media(max-width:600px){#rmModal .rm-excel-standard-note{font-size:11px;padding:9px}}
+#rmModal .rm-firestore-note{margin-top:12px;color:#b5d7ee;font-size:11px;line-height:1.6;border-top:1px solid rgba(90,180,240,.22);padding:11px 3px 0}
+body:not(.dark-theme) #rmModal .rm-firestore-note{color:#465b72}
+#rmModal .rm-firestore-note code{background:transparent;font-size:inherit;color:inherit}
+</style>
+<script id="rails-master-manager-script">
+/* RailSNTGyan Master Data Management: Firebase-backed, admin-only writes. */
+(function(){
+'use strict';
+const TYPES={
+ division:'Division',station:'Station & Code',agency:'Agency',oem:'OEM (legacy / unclassified)',
+ eiOem:'EI OEM',msdacOem:'MSDAC OEM',
+ department:'Department',sanctionBy:'Sanction / Given By',inspectionBy:'Inspection Done By',
+ equipment:'Equipment',issuedBy:'Issued By',movementFileType:'File Type (Movement)',
+ receivedFrom:'Received From (Movement)',movementStatus:'Present Status (Movement)'
+};
+const FORM_SELECTS={
+ division:['formDivision','fmDivision'],agency:['formAgency'],eiOem:['formEiOem'],msdacOem:['formOem'],
+ department:['formDepartment'],sanctionBy:['formGivenBy','formEiSanctionBy'],
+ inspectionBy:['formInspectionBy'],equipment:['formEquipment'],issuedBy:['formIssuedBy'],
+ movementFileType:['fmFileType'],receivedFrom:['fmReceivedFrom'],movementStatus:['fmStatus']
+};
+let docs=[], liveUnsub=null;
+let selectedType='station', editingId=null;
+const $=id=>document.getElementById(id);
+const fs=()=>firebase.firestore();
+const cloud=()=>fs().collection('rail_master_data');
+const clean=v=>String(v===undefined||v===null?'':v).trim();
+const key=v=>clean(v).normalize('NFKC').toLocaleLowerCase('en-IN');
+const hasAdmin=()=>!!(firebase.auth().currentUser && typeof railAdmin!=='undefined' && railAdmin===true);
+const alertBox=(msg,isError=false)=>{let el=$('rmFeedback');if(el){el.textContent=msg;el.className='rm-feedback'+(isError?' bad':'');}else if(isError)console.error(msg);};
+const activeGroup=t=>docs.filter(x=>x.type===t&&x.active!==false).sort((a,b)=>((+a.sortOrder||0)-(+b.sortOrder||0))||a.name.localeCompare(b.name));
+// Live Firestore master records are the ONLY source of dropdown values.
+// No bundled station lists or hardcoded master fallbacks.
+const effective=t=>activeGroup(t);
+/* Admin tools live ONLY in the Admin Profile, not Home or sidebar. */
+function showRoleNav(){
+ const profileSection=$('railProfileAdminManagement');
+ if(profileSection)profileSection.hidden=!hasAdmin();
+ // Cleanup if an older page injection happened in a repeated initialization.
+ $('rmAdminHomeCard')?.remove();
+ $('rmAdminNav')?.remove();
+ if(!hasAdmin())close();
+}
+function makeOption(value,label){const o=document.createElement('option');o.value=value;o.textContent=label||value;return o;}
+function updateSelect(id,type){
+ const sel=$(id);if(!sel||sel.tagName!=='SELECT')return;
+ const old=sel.value;
+ const placeholder=sel.options[0]&&sel.options[0].value===''?sel.options[0].textContent:'-- Select --';
+ const isSpecialOther=['formAgency','fmFileType','fmReceivedFrom','fmStatus','formEiOem','formOem'].includes(id);
+ const options=effective(type);
+ sel.replaceChildren(makeOption('',placeholder));
+ options.forEach(x=>{const opt=makeOption(x.name,x.name);sel.appendChild(opt)});
+ if(old && old!=='Other'&&!Array.from(sel.options).some(op=>op.value===old)){
+  sel.appendChild(makeOption(old,old+' (Existing record)'));
+ }
+ if(isSpecialOther){const value=['formEiOem','formOem'].includes(id)?'OTHER':'Other';if(!Array.from(sel.options).some(op=>op.value===value))sel.appendChild(makeOption(value,'Other'));}
+ if(old)sel.value=old;
+}
+function updateAllSelects(){
+ for(const [t,ids] of Object.entries(FORM_SELECTS))ids.forEach(id=>updateSelect(id,t));
+ updateDivisionFilter();updateDepartments();updateStations();
+}
+function updateDivisionFilter(){
+ const sel=$('filterDivision');if(!sel)return;const old=sel.value;
+ sel.replaceChildren(makeOption('ALL','All Divisions'));
+ effective('division').forEach(x=>sel.appendChild(makeOption(x.name,x.name)));
+ if(old&&old!=='ALL'&&!Array.from(sel.options).some(o=>o.value===old))sel.appendChild(makeOption(old,old));
+ sel.value=old||'ALL';
+}
+function updateDepartments(){
+ const container=document.querySelector('.jpo-department-grid');if(!container)return;
+ const current=new Set(Array.from(container.querySelectorAll('input:checked')).map(x=>x.value));
+ const entries=effective('department');
+ container.replaceChildren();
+ for(const x of entries){
+  if(x.name==='Other')continue;
+  const label=document.createElement('label');const cb=document.createElement('input');cb.type='checkbox';cb.className='jpo-dept-checkbox';cb.value=x.name;cb.checked=current.has(x.name);
+  const text=document.createElement('span');text.textContent=x.name;label.append(cb,' ',text);container.appendChild(label);
+ }
+ const lab=document.createElement('label');const cb=document.createElement('input');cb.type='checkbox';cb.value='Other';cb.className='jpo-dept-checkbox';cb.checked=current.has('Other');cb.addEventListener('change',()=>{if(typeof toggleJpoOtherDepartment==='function')toggleJpoOtherDepartment()});
+ const txt=document.createElement('span');txt.textContent='Other';lab.append(cb,' ',txt);container.appendChild(lab);
+}
+function updateStations(){
+ const byDivision={};effective('station').forEach(row=>{
+  const div=clean(row.division);if(!div)return;
+  if(!byDivision[div])byDivision[div]=[];
+  byDivision[div].push({id:row.id||row.oldId||row.name,name:row.name,code:row.code||''});
+ });
+ if(typeof window.railSetStationCatalog==='function')window.railSetStationCatalog(byDivision);
+}
+function startListening(user){
+ if(liveUnsub){liveUnsub();liveUnsub=null}
+ if(!user){docs=[];masterListLoaded=false;excelClearStage();updateAllSelects();return}
+ // Clients only read; Firebase rules independently enforce the admin write claim.
+ // includeMetadataChanges is important: an unchanged cached snapshot can be
+ // followed by a SERVER-only metadata change. Without this option, the listener
+ // may never inform us that the master collection is server-synchronized.
+ liveUnsub=cloud().onSnapshot({includeMetadataChanges:true},snapshot=>{
+  masterListLoaded=!snapshot.metadata || !snapshot.metadata.fromCache;
+  docs=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
+  updateAllSelects();if($('rmModal')?.classList.contains('open'))renderList();
+  if(masterListLoaded){
+   const msg=$('rmExcelMessage');
+   if(msg && /not finished syncing|checking Firebase master/i.test(msg.textContent||'')){
+    excelMsg('Firebase master data synchronized ('+docs.length+' saved). Click Preview & Check.');
+   }
+  }
+ },err=>{
+  masterListLoaded=false;
+  console.error('Master read error:',err);
+  alertBox('Firestore master list नहीं खुल रही: '+err.message,true);
+  const msg=$('rmExcelMessage');
+  if(msg)excelMsg('Firebase read failed ('+(err.code||'error')+'): '+err.message+'. Check Firestore Rules for rail_master_data and your Admin login.',true);
+ });
+}
+function ui(){
+ const el=document.createElement('div');el.id='rmModal';el.className='rm-modal';el.setAttribute('aria-hidden','true');
+ el.innerHTML=`<div class="rm-dialog" role="dialog" aria-modal="true" aria-labelledby="rmHeading">
+ <div class="rm-head"><div><h2 id="rmHeading"><i class="fa-solid fa-database"></i> ADD IN DATABASE</h2><p>Manage Railway S&T Master Data · Firebase Firestore</p></div><button type="button" class="rm-close" id="rmClose" aria-label="Close">×</button></div>
+ <div class="rm-body"><div class="rm-controls"><label>Master Type<select id="rmType"></select></label><div class="rm-count" id="rmCount"></div></div>
+
+ <details class="rm-excel-panel" id="rmExcelPanel"><summary><i class="fa-solid fa-file-excel" aria-hidden="true"></i> Bulk Upload Excel (.xlsx / .xls) <span class="rm-excel-hint">Upload multiple master lists</span></summary>
+ <div class="rm-excel-inside"><p>Upload Excel with sheets for <b>Stations, Divisions, Agencies, EI OEMs, MSDAC OEMs, Departments</b> etc. Matching station name + division will update its code <b>without adding a second station</b>. Any code owned by another station will be blocked as a conflict. Check the Old → New preview before saving.</p>
+ <p class="rm-excel-standard-note"><b>Standard Master Excel:</b> File name can be anything. Worksheet names must match one of: <b>Stations, Divisions, Agencies, EI OEMs, MSDAC OEMs, Departments, Sanction Given By, Inspection By, Equipment, Issued By, File Types, Received From, Movement Status</b>. Station sheet needs <b>Station Name, Station Code, Division</b>; other sheets need <b>Name</b>. Unknown or legacy combined OEM worksheet names will block import. The Instructions sheet is ignored.</p>
+ <label class="rm-excel-file-label" for="rmExcelFile">Choose Excel file <input id="rmExcelFile" type="file" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"></label>
+ <label class="rm-excel-mode-label" for="rmExcelMode">Upload Mode <select id="rmExcelMode" aria-label="Excel upload behavior"><option value="add-update" selected>Add New + Update Existing (recommended)</option><option value="add-only">Add New Only</option><option value="update-only">Update Existing Only</option></select></label>
+ <div class="rm-excel-buttons"><button type="button" id="rmExcelPreview" class="rm-primary"><i class="fa-solid fa-magnifying-glass-chart"></i> Preview &amp; Check</button><button type="button" id="rmExcelSave" class="rm-primary" disabled><i class="fa-solid fa-cloud-arrow-up"></i> Confirm Add / Update to Firebase</button><a href="RailSNTGyan_Standard_Master_Data.xlsx" download="RailSNTGyan_Standard_Master_Data.xlsx" class="rm-excel-template"><i class="fa-solid fa-download"></i> Download Excel Template</a></div>
+ <div id="rmExcelMessage" class="rm-excel-message" role="status" aria-live="polite">Upload file, then select Preview &amp; Check.</div><div id="rmExcelResults" class="rm-excel-results" hidden></div>
+ <small>Smart Update: same Station Name + Division updates the <b>existing station document</b> (for example ABC → ABD). An optional <b>Master ID</b> targets a specific record, even if its name changes. Station Code must be unique across all stations. Empty cells do not clear existing code/order/status. Conflicts are skipped; review the preview before confirming. Existing sanction/approval records are not rewritten. Excel station codes with leading zeros must be formatted as Text.</small>
+ </div></details>
+ <div class="rm-main"><form id="rmForm" class="rm-form"><h3 id="rmFormTitle">Add Master Entry</h3>
+ <label>Name / Value<input id="rmName" required maxlength="150" autocomplete="off" placeholder="Enter name"></label>
+ <div class="rm-station-fields" id="rmStationExtra" hidden><label>Division<select id="rmDivision"></select></label><label>Station Code<input id="rmCode" maxlength="30" placeholder="Station code (optional)"></label></div>
+ <label>Order (optional)<input id="rmOrder" type="number" step="1" min="0" placeholder="0"></label>
+ <label class="rm-check"><input id="rmActive" type="checkbox" checked> Active (show in dropdown)</label>
+ <div class="rm-buttons"><button type="submit" class="rm-primary" id="rmSave">Save in Firebase</button><button type="button" id="rmReset">Clear</button></div>
+ <div class="rm-feedback" id="rmFeedback" role="status" aria-live="polite"></div>
+ </form><div class="rm-record-list"><h3>Saved Master Entries</h3><div class="rm-table-viewport"><table><thead><tr><th>Name / Value</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead><tbody id="rmRows"></tbody></table></div></div></div>
+ <p class="rm-firestore-note">Master entries are managed directly in Firestore. Use <b>Bulk Upload Excel</b> for first-time setup and later updates. Firestore Security Rules must allow signed-in users to read and Admins to write <code>rail_master_data</code>.</p></div></div>`;
+ document.body.appendChild(el);
+ const typeSel=$('rmType');for(const [t,n] of Object.entries(TYPES))typeSel.appendChild(makeOption(t,n));
+ typeSel.value=selectedType;typeSel.addEventListener('change',()=>{selectedType=typeSel.value;resetForm();renderList()});
+ $('rmClose').addEventListener('click',close);$('rmModal').addEventListener('click',e=>{if(e.target===$('rmModal'))close()});
+ $('rmReset').addEventListener('click',resetForm);$('rmForm').addEventListener('submit',save);
+ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('rmModal')?.classList.contains('open'))close()});
+ updateAllSelects();showRoleNav();
+}
+function open(){
+ if(!hasAdmin()){alert('Only Admin can manage master data.');return;}
+ if(typeof verifyAdminPassword==='function'&&!verifyAdminPassword('manage master database'))return;
+ const el=$('rmModal');if(!el)return;
+ $('rmType').value=selectedType;resetForm();renderList();el.classList.add('open');el.setAttribute('aria-hidden','false');
+ $('rmName').focus();
+}
+function close(){const el=$('rmModal');if(el){el.classList.remove('open');el.setAttribute('aria-hidden','true')}}
+function fillDivisionSelect(){const sel=$('rmDivision'),old=sel.value;sel.replaceChildren(makeOption('','-- Select Division --'));
+ effective('division').forEach(x=>sel.appendChild(makeOption(x.name,x.name)));
+ if(old)sel.value=old;
+}
+function resetForm(){editingId=null;const form=$('rmForm');if(!form)return;form.reset();$('rmFormTitle').textContent='Add '+TYPES[selectedType];$('rmStationExtra').hidden=selectedType!=='station';$('rmName').placeholder=selectedType==='station'?'Station name':'Enter '+TYPES[selectedType];
+ fillDivisionSelect();$('rmActive').checked=true;$('rmSave').textContent='Add in Database';alertBox('');}
+function rowButton(label,action,kind){const b=document.createElement('button');b.type='button';b.textContent=label;b.className=kind;b.addEventListener('click',action);return b}
+function renderList(){const rows=$('rmRows');if(!rows)return;rows.replaceChildren();const group=docs.filter(x=>x.type===selectedType).sort((a,b)=>((+a.sortOrder||0)-(+b.sortOrder||0))||a.name.localeCompare(b.name));
+ $('rmCount').textContent=group.length+' saved · '+group.filter(x=>x.active!==false).length+' active';
+ if(group.length===0){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.textContent='No master records yet. Add an entry or use Bulk Upload Excel.';tr.append(td);rows.append(tr);return}
+ for(const r of group){const tr=document.createElement('tr');const name=document.createElement('td');name.textContent=r.name;
+ const detail=document.createElement('td');detail.textContent=r.type==='station'?((r.division||'')+(r.code?' · '+r.code:'')):(r.sortOrder?'Order '+r.sortOrder:'—');
+ const status=document.createElement('td');status.textContent=r.active===false?'Inactive':'Active';status.className=r.active===false?'rm-inactive':'rm-active';
+ const actions=document.createElement('td');const actionsBox=document.createElement('div');actionsBox.className='rm-row-actions';
+ actionsBox.append(rowButton('Edit',()=>edit(r),'rm-edit'),rowButton(r.active===false?'Activate':'Deactivate',()=>toggle(r),r.active===false?'rm-on':'rm-off'));
+ if(r.type==='station')actionsBox.append(rowButton('Copy ID',()=>copyStationMasterId(r),'rm-copy-id'));
+ actions.append(actionsBox);tr.append(name,detail,status,actions);rows.append(tr);
+ }
+}
+async function copyStationMasterId(r){
+ if(!hasAdmin())return;
+ try{
+  if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(r.id);alertBox('Copied Master ID for '+r.name+'. Paste it into the Excel Master ID column.');}
+  else window.prompt('Copy the Master ID for '+r.name,r.id);
+ }catch(e){window.prompt('Copy the Master ID for '+r.name,r.id);}
+}
+function edit(r){if(!hasAdmin())return;editingId=r.id;selectedType=r.type;$('rmType').value=r.type;$('rmStationExtra').hidden=r.type!=='station';
+ fillDivisionSelect();$('rmName').value=r.name;$('rmDivision').value=r.division||'';$('rmCode').value=r.code||'';$('rmOrder').value=r.sortOrder??'';$('rmActive').checked=r.active!==false;
+ $('rmFormTitle').textContent='Edit '+TYPES[r.type];$('rmSave').textContent='Save Changes';alertBox('Editing existing database entry');$('rmName').focus();}
+function dupe(data,id){const isStation=data.type==='station';return docs.some(x=>x.id!==id&&x.type===data.type&&(
+ isStation?((key(x.division)===key(data.division)&&key(x.name)===key(data.name))||(data.code&&x.code&&key(x.code)===key(data.code))):key(x.name)===key(data.name)));}
+async function save(e){e.preventDefault();if(!hasAdmin()){alertBox('Admin access required.',true);return;}
+ const name=clean($('rmName').value);const division=clean($('rmDivision').value);const code=clean($('rmCode').value).toUpperCase();const type=selectedType;
+ if(!name){alertBox('Name is required.',true);return;}if(type==='station'&&!division){alertBox('Select the Division.',true);return;}
+ const order=+$('rmOrder').value||0;const payload={type,name,active:$('rmActive').checked,sortOrder:order,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:firebase.auth().currentUser.uid};
+ if(type==='station'){payload.division=division;payload.code=code;}
+ if(dupe(payload,editingId)){alertBox('Duplicate entry: same name/code already exists in this category/division.',true);return;}
+ const btn=$('rmSave');btn.disabled=true;try{
+  if(editingId)await cloud().doc(editingId).update(payload);
+  else await cloud().add({...payload,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  resetForm();alertBox('Saved in Firebase successfully. Dropdowns will refresh automatically.');
+ }catch(err){alertBox('Save failed: '+err.message,true);}finally{btn.disabled=false;}
+}
+async function toggle(r){if(!hasAdmin())return;
+ if(!confirm((r.active===false?'Activate':'Deactivate')+' '+r.name+'? Existing records will not be modified.'))return;
+ try{await cloud().doc(r.id).update({active:r.active===false,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:firebase.auth().currentUser.uid});alertBox('Status updated.');}
+ catch(err){alertBox('Update failed: '+err.message,true)}
+}
+/* -------- Smart Excel add / update with preview and conflict checks -------- */
+let bulkExcelStage=null,bulkExcelBusy=false,masterListLoaded=false;
+let excelLoaderPromise=null;
+const EXCEL_JS_CDNS=[
+ 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js',
+ 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'
+];
+const EXCEL_HEADERS={
+ name:['name','namevalue','value','stationname','station','bookname','label'],
+ division:['division','divisionname','div'],
+ code:['stationcode','stationcd','code','stncode','stncd'],
+ order:['sortorder','order','srno','sno','serialno','serialnumber','sequence'],
+ active:['active','isactive','status','enabled'],
+ type:['mastertype','mastercategory','category','type'],
+ masterId:['masterid','recordid','firestoreid','documentid','stationid']
+};
+const EXCEL_STANDARD_SHEETS=['Stations','Divisions','Agencies','EI OEMs','MSDAC OEMs','Departments','Sanction Given By','Inspection By','Equipment','Issued By','File Types','Received From','Movement Status'];
+const EXCEL_TYPE_ALIASES={
+ division:['division','divisions','div'],
+ station:['station','stations','stationandcode','stationcode','stationcodes','stationmaster'],
+ agency:['agency','agencies','implementingagency'],
+ oem:['oem','oems','oemmake','manufacturers','manufacturer'], // legacy list only; not used in EI/MSDAC dropdowns
+ eiOem:['eioem','eioems','eioemmake','electronicinterlockingoem','electronicinterlockingoems','eiinterlockingoem'],
+ msdacOem:['msdacoem','msdacoems','msdacoemmake','axlecounteroem','axlecounteroems','digitalaxlecounteroem'],
+ department:['department','departments','dept'],
+ sanctionBy:['sanctionby','sanctionauthority','sanctionauthorities','givenby','sanctiongivenby'],
+ inspectionBy:['inspectionby','inspectiondoneby','inspectionauthority'],
+ equipment:['equipment','equipments','equipmenttype'],
+ issuedBy:['issuedby','issuingauthority'],
+ movementFileType:['filetype','filetypes','movementfiletype'],
+ receivedFrom:['receivedfrom','receivedby','filereceivedfrom'],
+ movementStatus:['movementstatus','presentstatus','filestatus']
+};
+const normExcelHeader=v=>clean(v).normalize('NFKC').toLowerCase().replace(/[^a-z0-9]+/g,'');
+function excelType(v){const norm=normExcelHeader(v);for(const [t,aliases] of Object.entries(EXCEL_TYPE_ALIASES))if(aliases.includes(norm))return t;return null;}
+function excelProp(obj,k){const keys=EXCEL_HEADERS[k];for(const [field,value] of Object.entries(obj))if(keys.includes(normExcelHeader(field)))return clean(value);return '';}
+function excelIdentity(r){return r.type==='station'?key(r.division)+'|'+key(r.name):key(r.name);}
+function statusActive(raw){const s=key(raw);return !['0','false','no','n','inactive','disabled','disable','off'].includes(s);}
+function excelMsg(msg,bad=false){const el=$('rmExcelMessage');if(!el)return;el.textContent=msg;el.classList.toggle('bad',bad);}
+function excelStat(parent,label,n){const b=document.createElement('div');b.className='rm-excel-stat';const v=document.createElement('strong');v.textContent=String(n);b.append(v,document.createTextNode(label));parent.append(b);}
+function excelLoadScript(url){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=url;s.async=true;s.onload=()=>window.XLSX?resolve():reject(new Error('Excel parser not available'));s.onerror=()=>reject(new Error('Cannot load '+url));document.head.appendChild(s);});}
+function ensureExcelLibrary(){
+ if(window.XLSX?.read&&window.XLSX?.utils?.sheet_to_json)return Promise.resolve(window.XLSX);
+ if(excelLoaderPromise)return excelLoaderPromise;
+ excelLoaderPromise=(async()=>{for(const url of EXCEL_JS_CDNS){try{await excelLoadScript(url);return window.XLSX;}catch(err){console.warn('XLSX source failed',err)}}throw new Error('Excel reader not available. Open the online GitHub Pages website and retry.');})();
+ return excelLoaderPromise.catch(err=>{excelLoaderPromise=null;throw err});
+}
+function excelClearStage(){bulkExcelStage=null;const s=$('rmExcelSave');if(s)s.disabled=true;const r=$('rmExcelResults');if(r){r.hidden=true;r.replaceChildren();}}
+// Do not treat cached / not-yet-synced records as an authoritative duplicate
+// check. A fresh server read enables first-time import of an EMPTY collection
+// and identifies permission failures without weakening the safety gate.
+async function excelEnsureMasterServerSync(){
+ if(masterListLoaded)return true;
+ try{
+  const snapshot=await cloud().get({source:'server'});
+  docs=snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
+  masterListLoaded=true;
+  updateAllSelects();
+  if($('rmModal')?.classList.contains('open'))renderList();
+  excelMsg('Firebase master data synchronized ('+docs.length+' saved). Preparing Excel preview...');
+  return true;
+ }catch(err){
+  const code=String(err&&err.code||'unknown');
+  const message=String(err&&err.message||'Server could not be reached');
+  let guidance='Check your internet connection and log in again.';
+  if(code.includes('permission-denied'))guidance='Firestore Rules must allow signed-in READ access to rail_master_data and Admin WRITE access. Check your published rules and Admin claim.';
+  else if(code.includes('unavailable')||code.includes('deadline-exceeded'))guidance='Firebase server is unreachable. Check internet and retry.';
+  else if(code.includes('unauthenticated'))guidance='Your Firebase session is not authenticated. Sign in again.';
+  if(location.protocol==='content:'||location.protocol==='file:')guidance+=' Open the PUBLISHED HTTPS GitHub Pages site, not the downloaded content:// or file:// HTML.';
+  excelMsg('Firebase sync error ('+code+'): '+message+'. '+guidance,true);
+  return false;
+ }
+}
+
+/* A name+division match uses the document's existing Firebase ID. If the Name
+   or Division must be renamed, supply the existing Master ID in Excel. */
+function excelRowKey(r){return r.masterId?'id|'+r.masterId:r.type+'|'+excelIdentity(r);}
+function excelNormCode(v){return key(v).toUpperCase();}
+function excelSnapshotSignature(rows){return JSON.stringify(rows.map(r=>[r.id,r.type,key(r.name),key(r.division),excelNormCode(r.code),r.sortOrder??null,r.active!==false]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))));}
+function excelBuildStage(rows,existing,mode,details={}){
+ const stage={name:details.name||'',mode,sourceRows:rows,sheetCount:details.sheetCount||0,
+  adds:[],updates:[],duplicate:[],conflicts:[],issues:[...(details.issues||[])],notes:[...(details.notes||[])],signature:excelSnapshotSignature(existing)};
+ const byId=new Map(existing.map(r=>[r.id,r]));
+ const group=new Map();
+ for(const r of rows){const k=excelRowKey(r);if(!group.has(k))group.set(k,[]);group.get(k).push(r);}
+ const prepared=[];
+ for(const [id,list] of group){
+  if(list.length===1){prepared.push(list[0]);continue;}
+  const repr=r=>JSON.stringify([r.type,key(r.name),key(r.division),excelNormCode(r.code),r.hasOrder?r.sortOrder:null,r.hasActive?r.active:null,r.masterId]);
+  const first=repr(list[0]);
+  if(list.every(x=>repr(x)===first)){
+   prepared.push(list[0]);list.slice(1).forEach(r=>stage.duplicate.push(r.source+': repeated identical row; skipped.'));
+  }else{
+   list.forEach(r=>stage.conflicts.push(r.source+': conflicting values for same station/record within Excel; none imported.'));
+  }
+ }
+ const proposedCodes=new Map();
+ const plans=[];
+ for(const r of prepared){
+  let match=null;
+  if(r.masterId){
+   match=byId.get(r.masterId);
+   if(!match){stage.conflicts.push(r.source+': Master ID '+r.masterId+' not found. No new record created.');continue;}
+   if(match.type!==r.type){stage.conflicts.push(r.source+': Master ID belongs to a different category.');continue;}
+  }else{
+   const found=existing.filter(d=>d.type===r.type&&(r.type==='station'?(key(d.name)===key(r.name)&&key(d.division)===key(r.division)):key(d.name)===key(r.name)));
+   if(found.length>1){stage.conflicts.push(r.source+': more than one existing record has this name/division. Resolve duplicates or use Master ID.');continue;}
+   match=found[0]||null;
+  }
+  if(match&&r.type==='station'&&r.masterId){
+   const others=existing.some(d=>d.id!==match.id&&d.type==='station'&&key(d.name)===key(r.name)&&key(d.division)===key(r.division));
+   if(others){stage.conflicts.push(r.source+': new name/division already used by another station.');continue;}
+  }
+  if(!match&&mode==='update-only'){stage.duplicate.push(r.source+': not found; Update Existing Only selected.');continue;}
+  if(match&&mode==='add-only'){stage.duplicate.push(r.source+': already exists; Add New Only selected.');continue;}
+  const finalCode=r.type==='station'?(r.hasCode?excelNormCode(r.code):excelNormCode(match?.code)):'';
+  // One station code must not belong to any *other* station, including inactive ones.
+  if(r.type==='station'&&finalCode){
+   const owner=existing.find(d=>d.type==='station'&&d.id!==match?.id&&excelNormCode(d.code)===finalCode);
+   if(owner){stage.conflicts.push(r.source+': Code '+finalCode+' already belongs to '+owner.name+' ('+owner.division+'). Skipped.');continue;}
+  }
+  let payload;
+  if(match){
+   payload={};
+   if(r.masterId){if(key(r.name)!==key(match.name))payload.name=r.name;if(r.type==='station'&&key(r.division)!==key(match.division))payload.division=r.division;}
+   if(r.type==='station'&&r.hasCode&&finalCode!==excelNormCode(match.code))payload.code=finalCode;
+   if(r.hasOrder&&Number(r.sortOrder)!==Number(match.sortOrder||0))payload.sortOrder=r.sortOrder;
+   if(r.hasActive&&r.active!==(match.active!==false))payload.active=r.active;
+   if(!Object.keys(payload).length){stage.duplicate.push(r.source+': already up to date; no changes.');continue;}
+   plans.push({action:'update',id:match.id,row:r,payload,oldCode:clean(match.code),newCode:finalCode,oldName:match.name,oldDivision:match.division});
+  }else{
+   payload={type:r.type,name:r.name,sortOrder:r.hasOrder?r.sortOrder:r.rowIndex,active:r.hasActive?r.active:true};
+   if(r.type==='station'){payload.division=r.division;payload.code=finalCode;}
+   plans.push({action:'add',row:r,payload,newCode:finalCode});
+  }
+ }
+ // Detect duplicate station code across different Excel rows (including add+update).
+ const conflictIdx=new Set();
+ for(let i=0;i<plans.length;i++){
+  const p=plans[i];if(p.row.type!=='station'||!p.newCode)continue;
+  const first=proposedCodes.get(p.newCode);
+  if(first!==undefined){conflictIdx.add(first);conflictIdx.add(i);}
+  else proposedCodes.set(p.newCode,i);
+ }
+ // Two lines can target one document using a Master ID vs name/division.
+ const targetIds=new Map();
+ for(let i=0;i<plans.length;i++)if(plans[i].action==='update'){
+  const id=plans[i].id;if(targetIds.has(id)){conflictIdx.add(i);conflictIdx.add(targetIds.get(id));}else targetIds.set(id,i);
+ }
+ for(let i=0;i<plans.length;i++){
+  const p=plans[i];if(conflictIdx.has(i)){
+   stage.conflicts.push(p.row.source+': duplicate Code or Master ID appears in multiple Excel rows. Correct Excel before import.');
+  }else if(p.action==='add')stage.adds.push(p);else stage.updates.push(p);
+ }
+ // Missing divisions are added to match valid NEW or UPDATED stations.
+ const plannedDivs=new Set(existing.filter(r=>r.type==='division').map(r=>key(r.name)));
+ stage.adds.filter(p=>p.row.type==='division').forEach(p=>plannedDivs.add(key(p.payload.name)));
+ const missing=[];
+ for(const p of [...stage.adds,...stage.updates]){
+  if(p.row.type!=='station')continue;
+  const div=p.action==='add'?p.payload.division:(p.payload.division||p.row.division);
+  if(!div||plannedDivs.has(key(div)))continue;
+  plannedDivs.add(key(div));missing.push({action:'add',row:{type:'division',name:div,source:p.row.source+' [Auto Division]',rowIndex:0},payload:{type:'division',name:div,sortOrder:0,active:true}});
+ }
+ if(missing.length){
+  if(mode==='update-only')stage.notes.push(missing.length+' missing Division entries were not added (Update Existing Only). Add Divisions separately.');
+  else{stage.adds.unshift(...missing);stage.notes.push('Auto-add '+missing.length+' missing Division master entries for valid stations.');}
+ }
+ return stage;
+}
+function showExcelStage(stage){
+ const target=$('rmExcelResults');if(!target)return;target.replaceChildren();target.hidden=false;
+ const summary=document.createElement('div');summary.className='rm-excel-summary';
+ excelStat(summary,'New',stage.adds.length);excelStat(summary,'Update',stage.updates.length);
+ excelStat(summary,'Unchanged / Skipped',stage.duplicate.length);excelStat(summary,'Conflicts',stage.conflicts.length);
+ excelStat(summary,'Invalid',stage.issues.length);excelStat(summary,'Sheets',stage.sheetCount);
+ target.append(summary);
+ const title=document.createElement('p');title.textContent='Changes to be saved (first 30). Code changes are shown Old → New:';target.append(title);
+ const listing=document.createElement('div');listing.className='rm-excel-preview-list';
+ for(const p of [...stage.updates,...stage.adds].slice(0,30)){
+  const box=document.createElement('div');box.className='rm-excel-preview-item '+(p.action==='update'?'rm-excel-updated':'rm-excel-new');
+  const status=document.createElement('span');status.className='rm-excel-preview-status';status.textContent=p.action==='update'?'UPDATE existing':'ADD new';
+  const label=document.createElement('b');label.textContent=TYPES[p.row.type]+' · '+p.row.name;
+  const details=document.createElement('span');details.textContent=p.row.type==='station'?'Division: '+p.row.division:'Source: '+p.row.source;
+  box.append(status,label,details);
+  if(p.row.type==='station'){
+   const change=document.createElement('span');change.className='rm-change-line';
+   const old=document.createElement('span');old.className='rm-change-old';old.textContent=p.action==='update'?(p.oldCode||'(blank)'):'NEW';
+   const fresh=document.createElement('span');fresh.className='rm-change-new';fresh.textContent=p.newCode||'(blank)';
+   change.append('Station Code: ',old,'  →  ',fresh);box.append(change);
+  }
+  if(p.action==='update'&&p.row.type!=='station'){
+   const changed=document.createElement('span');changed.className='rm-change-line';changed.textContent='Fields to update: '+Object.keys(p.payload).join(', ');box.append(changed);
+  }
+  listing.append(box);
+ }
+ target.append(listing);
+ if(stage.conflicts.length){const box=document.createElement('div');box.className='rm-excel-conflict';box.textContent='CONFLICTS – these entries will NOT be imported:\n'+stage.conflicts.slice(0,30).join('\n')+(stage.conflicts.length>30?'\n...and '+(stage.conflicts.length-30)+' more':'');box.style.whiteSpace='pre-line';target.append(box);}
+ if(stage.issues.length||stage.duplicate.length||stage.notes.length){const h=document.createElement('div');h.className='rm-excel-issues';h.textContent=[...stage.notes,...stage.issues.slice(0,15),...stage.duplicate.slice(0,15)].join('\n');h.style.whiteSpace='pre-line';target.append(h);}
+ $('rmExcelSave').disabled=!stage.adds.length&&!stage.updates.length;
+}
+async function previewExcel(){
+ if(!hasAdmin()){excelMsg('Admin login required.',true);return;}
+ if(bulkExcelBusy)return;excelClearStage();
+ const input=$('rmExcelFile');const file=input?.files?.[0];if(!file){excelMsg('Choose an Excel file first.',true);return;}
+ if(!/\.(xlsx|xls|csv)$/i.test(file.name)){excelMsg('Only .xlsx, .xls and .csv are supported.',true);return;}
+ if(file.size>12*1024*1024){excelMsg('Excel file exceeds 12 MB. Split it into smaller files.',true);return;}
+ if(!masterListLoaded){excelMsg('Checking Firebase master data on the server...');if(!(await excelEnsureMasterServerSync()))return;}
+ const mode=$('rmExcelMode')?.value||'add-update';
+ const btn=$('rmExcelPreview');btn.disabled=true;excelMsg('Reading Excel and checking existing stations...');
+ try{
+  const XLSX=await ensureExcelLibrary(),data=await file.arrayBuffer(),wb=XLSX.read(data,{type:'array',cellDates:false,cellText:true});
+  if(!wb.SheetNames.length)throw new Error('Excel workbook is empty.');
+  const rows=[],issues=[],notes=[],blockingIssues=[];let sheetCount=0,totalRows=0;
+  for(const sheetName of wb.SheetNames){
+   if(['instructions','readme','help','example','examples'].includes(normExcelHeader(sheetName)))continue;
+   const items=XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{defval:'',raw:false,blankrows:false});
+   if(!items.length)continue;sheetCount++;
+   const sheetType=excelType(sheetName),heads=Object.keys(items[0]).map(normExcelHeader);
+   // Standard names; allow cosmetic case, spaces, and punctuation only.
+   if(!EXCEL_STANDARD_SHEETS.some(label=>normExcelHeader(label)===normExcelHeader(sheetName))){
+    blockingIssues.push('"'+sheetName+'": non-standard sheet name. Use Stations, Agencies, EI OEMs, MSDAC OEMs, etc.');
+    continue;
+   }
+   const required=sheetType==='station'?['stationname','stationcode','division']:['name'];
+   const missing=required.filter(h=>!heads.includes(h));
+   if(missing.length){
+    blockingIssues.push('"'+sheetName+'": missing required column(s): '+missing.join(', '));
+    continue;
+   }
+   const inferred=sheetType,fallback=null;
+   for(let i=0;i<items.length;i++){
+    totalRows++;if(totalRows>5000)throw new Error('Maximum 5,000 rows per import. Split Excel file.');
+    const obj=items[i],source=sheetName+' row '+(i+2);
+    const type=excelType(excelProp(obj,'type'))||inferred||fallback;
+    if(!type){issues.push(source+': invalid Master Type');continue;}
+    const name=excelProp(obj,'name'),division=excelProp(obj,'division'),rawCode=excelProp(obj,'code'),masterId=excelProp(obj,'masterId');
+    const orderRaw=excelProp(obj,'order'),statusRaw=excelProp(obj,'active');
+    if(!name&&!division&&!rawCode&&!masterId)continue;
+    if(!name){issues.push(source+': Station Name / Name is required');continue;}
+    if(name.length>150||division.length>150||rawCode.length>30){issues.push(source+': Name / Division / Code too long');continue;}
+    if(type==='station'&&!division){issues.push(source+': Division is required');continue;}
+    if(masterId&&(!/^[^\/#?\[\]]{1,150}$/.test(masterId)||masterId==='.'||masterId==='..')){issues.push(source+': invalid Master ID');continue;}
+    if(orderRaw&&(!/^\d+$/.test(orderRaw)||+orderRaw>999999)){issues.push(source+': Order must be 0 to 999999');continue;}
+    const row={type,name,division,code:rawCode.toUpperCase(),hasCode:!!rawCode,
+     masterId,hasOrder:orderRaw!=='',sortOrder:orderRaw?Number(orderRaw):undefined,
+     hasActive:statusRaw!=='',active:statusActive(statusRaw),source,rowIndex:i+1};
+    rows.push(row);
+   }
+  }
+  if(blockingIssues.length){
+   const preview='Excel format error. No records have been saved. Correct the following worksheet issues: '+blockingIssues.slice(0,5).join(' | ');
+   throw new Error(preview+(blockingIssues.length>5?' | ...and '+(blockingIssues.length-5)+' more':''));
+  }
+  if(!sheetCount)throw new Error('No data sheets found.');
+  const stage=excelBuildStage(rows,docs,mode,{name:file.name,sheetCount,issues,notes});
+  bulkExcelStage=stage;showExcelStage(stage);
+  excelMsg('Preview: '+stage.adds.length+' NEW, '+stage.updates.length+' UPDATE, '+stage.duplicate.length+' skipped, '+stage.conflicts.length+' conflicts, '+stage.issues.length+' invalid. Review Old → New, then confirm.',stage.conflicts.length>0);
+ }catch(err){excelClearStage();excelMsg('Excel error: '+err.message,true);}finally{btn.disabled=false;}
+}
+function excelDocId(r){
+ const ident=r.type+'|'+excelIdentity(r); // Station ID is name+division, NOT mutable code.
+ let h=2166136261;for(let i=0;i<ident.length;i++){h^=ident.charCodeAt(i);h=Math.imul(h,16777619);}
+ return 'excel_'+r.type+'_'+(normExcelHeader(r.name).slice(0,35)||'entry')+'_'+(h>>>0).toString(16).padStart(8,'0');
+}
+async function confirmExcelImport(){
+ const stage=bulkExcelStage;if(!stage||bulkExcelBusy||(!stage.adds.length&&!stage.updates.length))return;
+ if(!hasAdmin()){excelMsg('Admin access required.',true);return;}
+ if(!masterListLoaded){if(!(await excelEnsureMasterServerSync()))return;}
+ if($('rmExcelMode')?.value!==stage.mode){excelMsg('Upload mode changed. Preview again.',true);excelClearStage();return;}
+ const message='Update '+stage.updates.length+' EXISTING records and add '+stage.adds.length+' NEW records?\n'+stage.conflicts.length+' conflicts will be skipped.\nExisting station documents will keep their Firebase IDs.\nPlease verify the Old → New station codes carefully.';
+ if(!confirm(message))return;
+ bulkExcelBusy=true;$('rmExcelSave').disabled=true;$('rmExcelPreview').disabled=true;$('rmExcelFile').disabled=true;$('rmExcelMode').disabled=true;
+ let added=0,updated=0;
+ try{
+  // Get fresh SERVER data before every write, rather than trusting an old preview.
+  const fresh=await cloud().get({source:'server'}),serverDocs=fresh.docs.map(d=>({id:d.id,...d.data()}));
+  if(excelSnapshotSignature(serverDocs)!==stage.signature)throw new Error('Master Data changed since Preview (possibly another Admin). No import started. Click Preview & Check again.');
+  const plan=[...stage.updates,...stage.adds];
+  for(let i=0;i<plan.length;i+=90){
+   if(!hasAdmin())throw new Error('Admin session expired.');
+   const chunk=plan.slice(i,i+90),batch=fs().batch();
+   // New deterministic IDs allow safe retry after partial network failures.
+   const newRefs=chunk.filter(p=>p.action==='add').map(p=>cloud().doc(excelDocId(p.row)));
+   const lookups=await Promise.all(newRefs.map(ref=>ref.get({source:'server'})));
+   if(lookups.some(s=>s.exists))throw new Error('A new Master ID already exists. Import stopped, re-preview required.');
+   for(const p of chunk){
+    if(p.action==='update'){
+     batch.update(cloud().doc(p.id),{...p.payload,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:firebase.auth().currentUser.uid});
+    }else{
+     batch.set(cloud().doc(excelDocId(p.row)),{...p.payload,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:firebase.auth().currentUser.uid});
+    }
+   }
+   await batch.commit();
+   added+=chunk.filter(p=>p.action==='add').length;updated+=chunk.filter(p=>p.action==='update').length;
+   excelMsg('Saving '+Math.min(i+90,plan.length)+'/'+plan.length+': '+added+' added, '+updated+' updated.');
+  }
+  excelMsg('Import Summary — '+added+' New, '+updated+' Updated, '+stage.duplicate.length+' Unchanged/Skipped, '+stage.conflicts.length+' Conflicts skipped, '+stage.issues.length+' Invalid rows skipped. Dropdowns will refresh automatically.');
+  excelClearStage();
+ }catch(err){excelMsg('Import stopped after '+added+' new and '+updated+' updated: '+err.message+' If any records were saved, Preview the Excel again before retrying.',true);}
+ finally{bulkExcelBusy=false;$('rmExcelPreview').disabled=false;$('rmExcelFile').disabled=false;$('rmExcelMode').disabled=false;}
+}
+function initExcelBulkEvents(){
+ const file=$('rmExcelFile');if(!file)return;
+ file.addEventListener('change',()=>{excelClearStage();excelMsg(file.files?.length?'Selected '+file.files[0].name+'. Click Preview & Check.':'Choose an Excel file to import.');});
+ $('rmExcelPreview').addEventListener('click',previewExcel);
+ $('rmExcelSave').addEventListener('click',confirmExcelImport);
+ $('rmExcelMode').addEventListener('change',()=>{excelClearStage();excelMsg('Upload mode changed. Click Preview & Check again.');});
+ window.addEventListener('beforeunload',e=>{if(bulkExcelBusy){e.preventDefault();e.returnValue='';}});
+}
+function init(){
+ ui();
+ initExcelBulkEvents();
+ // File Movement modal is created lazily by original code; update its controls on open.
+ if(typeof window.openFileMovementModal==='function'){
+   const original=window.openFileMovementModal;
+   window.openFileMovementModal=function(){const result=original.apply(this,arguments);queueMicrotask(()=>updateAllSelects());return result};
+ }
+ firebase.auth().onAuthStateChanged(user=>{
+ showRoleNav();
+ if(user){user.getIdTokenResult().then(()=>{showRoleNav()}).catch(()=>{});}
+ startListening(user);
+ });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+window.railOpenMasterManager=open;
+window.railOpenMasterManagerFromProfile=function(){
+ const validAdmin=hasAdmin() && document.documentElement.classList.contains('portal-session-auth');
+ const profile=$('railProfileOverlay');
+ if(!validAdmin || !profile || profile.hidden)return;
+ // Manager is a separate dialog: close the higher-z-index Profile first.
+ if(typeof window.railCloseProfile==='function')window.railCloseProfile(false);
+ open();
+};
+window.railMasterRoleUpdated=showRoleNav;
+window.railPreserveMasterRecordValues=function(rec){
+ if(!rec)return;
+ const vals={formDivision:rec.division,formGivenBy:rec.givenBy||rec.sanctionBy,
+  formDepartment:rec.department,formInspectionBy:rec.inspectionBy,
+  formEquipment:rec.equipment,formEiOem:rec.oem,formEiSanctionBy:rec.sanctionBy,
+  formOem:rec.oem,formIssuedBy:rec.issuedBy};
+ for(const [id,raw] of Object.entries(vals)){
+  const el=$(id);const value=clean(raw);if(!el||el.tagName!=='SELECT'||!value)continue;
+  if(!Array.from(el.options).some(o=>o.value===value)){
+   el.appendChild(makeOption(value,value+' (Existing record)'));
+  }
+  el.value=value;
+ }
+};
+})();
+
+</script>
