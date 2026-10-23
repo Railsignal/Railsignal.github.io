@@ -74,10 +74,25 @@ html.rail-saved-light body:not(.dark-theme) {
       width:100% !important; height:100dvh !important;
       z-index:99999 !important; display:flex !important;
       align-items:center !important; justify-content:center !important;
-      background:linear-gradient(135deg,#021426,#042346 48%,#031329) !important;
+       background:#031329 !important;
+       background-image:linear-gradient(180deg,rgba(1,12,28,.09),rgba(1,12,28,.22)),url("assets/login-desktop-4k.webp") !important;
+       background-size:cover !important;
+       background-position:center center !important;
+       background-repeat:no-repeat !important;
     }
     html.portal-session-auth body #loginScreen { display:none !important; visibility:hidden !important; }
   </style>
+  <!-- Login V4.4: responsive image layer (does not change Firebase or the portal). -->
+  <style id="rail-login-background-responsive-first-paint">
+    @media (orientation:portrait) {
+      html:not(.portal-session-auth) body #loginScreen {
+        background-image:linear-gradient(180deg,rgba(1,12,28,.09),rgba(1,12,28,.22)),url("assets/login-mobile-4k.webp") !important;
+        background-position:30% bottom !important;
+      }
+    }
+  </style>
+  <link rel="preload" as="image" href="assets/login-desktop-4k.webp" media="(orientation:landscape)">
+  <link rel="preload" as="image" href="assets/login-mobile-4k.webp" media="(orientation:portrait)">
   <title>RailSNTGyan - Railway S&T Knowledge Portal</title>
   <!-- Hindi calligraphy only for the V4.4 welcome message; serif fallback works offline. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16794,9 +16809,18 @@ html body.dark-theme #loginScreen {
   isolation:isolate; position:fixed!important; inset:0!important; width:100%!important; height:100dvh!important;
   min-height:0!important; padding:22px 12px!important; overflow:auto!important; z-index:99999!important;
   display:flex!important; align-items:center!important; justify-content:center!important;
-  background:linear-gradient(135deg,#021426,#042346 48%,#031329)!important;
+  background:#031329!important;
+  background-image:linear-gradient(180deg,rgba(1,12,28,.09),rgba(1,12,28,.22)),url("assets/login-desktop-4k.webp")!important;
+  background-size:cover!important; background-position:center center!important; background-repeat:no-repeat!important;
   color:#fff!important; color-scheme:dark!important;
   backdrop-filter:none!important; -webkit-backdrop-filter:none!important;
+}
+/* Railway image is drawn by CSS, while V4.4 canvas remains an animated transparent overlay. */
+@media (orientation:portrait) {
+ html body #loginScreen, html body.dark-theme #loginScreen {
+  background-image:linear-gradient(180deg,rgba(1,12,28,.09),rgba(1,12,28,.22)),url("assets/login-mobile-4k.webp")!important;
+  background-position:30% bottom!important;
+ }
 }
 #loginScreen #railV44Canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 html body #loginScreen .login-card,
@@ -16950,7 +16974,7 @@ html.portal-session-auth body.dark-theme #loginScreen{display:none!important;vis
 <script id="rails-login-v44-background-script">
 (function(){
 const canvas = document.getElementById('railV44Canvas');
-const ctx = canvas.getContext('2d', {alpha:false});
+const ctx = canvas.getContext('2d', {alpha:true}); // transparent over the CSS railway wallpaper
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let W=0,H=0,dpr=1,pts=[],bubbles=[];
 const bubbleSeeds = [
@@ -17131,8 +17155,7 @@ function drawBg(t){
   const overlay=document.getElementById('loginScreen');
   if(overlay && overlay.style.display==='none'){if(!reduceMotion)requestAnimationFrame(drawBg);return;}
   ctx.clearRect(0,0,W,H);
-  const g=ctx.createLinearGradient(0,0,W,H);
-  g.addColorStop(0,'#021426');g.addColorStop(.45,'#042346');g.addColorStop(1,'#031329'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  // No opaque fill: reveal the image while preserving animated Aurora, stars and bubbles.
   const clouds=[
     {x:.16,y:.18,r:.72,color:'rgba(24,150,222,.10)'},
     {x:.78,y:.34,r:.78,color:'rgba(11,86,200,.10)'},
