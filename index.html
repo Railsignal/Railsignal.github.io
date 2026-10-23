@@ -20796,12 +20796,71 @@ body:not(.dark-theme) .rm-count{color:#435c76}
 body:not(.dark-theme) #rmModal .rm-firestore-note{color:#465b72}
 #rmModal .rm-firestore-note code{background:transparent;font-size:inherit;color:inherit}
 </style>
+
+<style id="rails-master-compact-view-v1">
+/* Compact, paginated Master Database directory. Scoped to the Admin modal. */
+#rmModal .rm-compact-list-panel{min-width:0!important;max-width:100%!important;overflow:hidden!important;}
+#rmModal .rm-compact-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px;margin-bottom:10px;}
+#rmModal .rm-compact-heading h3{margin:0!important;}
+#rmModal #rmResultCount{font-size:11px;color:#a8d6f4;font-weight:600;}
+#rmModal .rm-compact-filters{display:grid;grid-template-columns:minmax(145px,1fr) minmax(128px,160px) auto;gap:8px;align-items:center;margin-bottom:12px;max-width:100%;}
+#rmModal .rm-compact-search-label{display:flex;flex-direction:row;align-items:center;gap:8px;min-width:0;margin:0;padding:0 10px;border:1px solid #3a78a4;border-radius:9px;background:#0c2742;color:#85c9f3;}
+#rmModal .rm-compact-search-label input{width:100%;min-width:0;height:36px;padding:0!important;margin:0;background:transparent!important;border:0!important;outline:0!important;box-shadow:none!important;font-size:13px!important;color:#f3faff!important;}
+#rmModal .rm-compact-search-label input::placeholder{color:#8faac0!important;}
+#rmModal .rm-compact-search-label:focus-within{border-color:#31c7f6;box-shadow:0 0 0 2px rgba(49,199,246,.22);}
+#rmModal .rm-compact-division-wrap{min-width:0;margin:0;}
+#rmModal .rm-compact-division-wrap[hidden]{display:none!important;}
+#rmModal .rm-compact-division-wrap select,#rmModal .rm-compact-page-size-label select{width:100%;min-width:0;height:38px;border:1px solid #397cab;border-radius:8px;background:#102b49;color:#f0faff;padding:6px 9px;font-size:12px;}
+#rmModal .rm-compact-page-size-label{display:flex;flex-direction:row;align-items:center;gap:6px;margin:0;font-size:11px;font-weight:600;white-space:nowrap;color:#b9ddf1;}
+#rmModal .rm-compact-page-size-label select{width:65px;}
+#rmModal .rm-compact-results{display:flex;flex-direction:column;gap:7px;width:100%;min-width:0;overflow:visible;}
+#rmModal .rm-compact-item{padding:9px 10px;border:1px solid #315d85;border-radius:9px;background:linear-gradient(120deg,#0b2845,#0a2038);min-width:0;}
+#rmModal .rm-compact-item:nth-child(even){background:linear-gradient(120deg,#0f3153,#0a2643);}
+#rmModal .rm-compact-entry{display:flex;align-items:center;gap:8px;min-width:0;}
+#rmModal .rm-compact-identity{flex:1 1 auto;min-width:0;overflow:hidden;}
+#rmModal .rm-compact-name{font-size:12.5px;font-weight:800;color:#eff8ff;overflow-wrap:anywhere;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+#rmModal .rm-compact-meta{color:#afcbe2;font-size:11px;line-height:1.35;margin-top:3px;overflow-wrap:anywhere;}
+#rmModal .rm-compact-status{flex:0 0 auto;font-size:15px;line-height:1;}
+#rmModal .rm-compact-active{color:#77dab3;}
+#rmModal .rm-compact-inactive{color:#ebadb3;}
+#rmModal .rm-compact-actions{display:flex;gap:5px;align-items:center;flex:0 0 auto;}
+#rmModal .rm-compact-edit,#rmModal .rm-compact-more-trigger{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;background:#143e65;color:#cbefff;border:1px solid #4386b2;border-radius:8px;font-size:13px;cursor:pointer;list-style:none;}
+#rmModal .rm-compact-edit:hover,#rmModal .rm-compact-more-trigger:hover{background:#1b5887;border-color:#53c9fa;}
+#rmModal .rm-compact-more-actions[hidden]{display:none!important;}
+#rmModal .rm-compact-more-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;border-top:1px solid rgba(72,160,217,.25);padding-top:9px;margin-top:9px;}
+#rmModal .rm-compact-more-actions button{border-radius:7px;min-height:31px;padding:5px 10px;border:1px solid #4b96bf;background:#144a73;color:#f5fbff;font-size:11px;font-weight:700;cursor:pointer;}
+#rmModal .rm-compact-more-actions button.rm-off{background:#68354d;border-color:#a35d75;}
+#rmModal .rm-compact-more-actions button.rm-on{background:#165b4d;border-color:#279676;}
+#rmModal .rm-compact-pagination{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:13px;border-top:1px solid rgba(92,167,220,.22);padding-top:11px;color:#a8d6f4;font-size:11px;}
+#rmModal .rm-compact-page-button{min-height:33px;border:1px solid #488bb7;background:#124367;border-radius:8px;padding:5px 12px;color:#eefaff;font-size:11px;cursor:pointer;}
+#rmModal .rm-compact-page-button:disabled{cursor:default;opacity:.42;}
+#rmModal .rm-compact-empty{padding:18px 12px;text-align:center;border:1px dashed #406987;border-radius:8px;color:#afc9df;font-size:12px;line-height:1.5;}
+#rmModal .rm-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+body:not(.dark-theme) #rmModal .rm-compact-search-label,body:not(.dark-theme) #rmModal .rm-compact-division-wrap select,body:not(.dark-theme) #rmModal .rm-compact-page-size-label select{background:#f8fbff;color:#193754;border-color:#bed5e7;}
+body:not(.dark-theme) #rmModal .rm-compact-search-label input{color:#193754!important;}
+body:not(.dark-theme) #rmModal .rm-compact-item{background:#f8fbff;border-color:#d0e1ee;}
+body:not(.dark-theme) #rmModal .rm-compact-item:nth-child(even){background:#eff6fc;}
+body:not(.dark-theme) #rmModal .rm-compact-name{color:#193754;}
+body:not(.dark-theme) #rmModal .rm-compact-meta,body:not(.dark-theme) #rmModal #rmResultCount,body:not(.dark-theme) #rmModal .rm-compact-pagination{color:#4f6b83;}
+body:not(.dark-theme) #rmModal .rm-compact-edit,body:not(.dark-theme) #rmModal .rm-compact-more-trigger,body:not(.dark-theme) #rmModal .rm-compact-page-button{background:#edf7ff;color:#205a86;border-color:#b5d4ec;}
+@media(max-width:900px){#rmModal .rm-compact-filters{grid-template-columns:minmax(0,1fr) minmax(0,135px) auto;}}
+@media(max-width:600px){
+ #rmModal .rm-compact-filters{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;}
+ #rmModal .rm-compact-search-label{grid-column:1/-1;}
+ #rmModal .rm-compact-division-wrap{grid-column:1/2;}
+ #rmModal .rm-compact-page-size-label{grid-column:2/3;justify-content:flex-end;}
+ #rmModal .rm-compact-division-wrap[hidden]+.rm-compact-page-size-label{grid-column:1/-1;justify-content:flex-start;}
+ #rmModal .rm-compact-edit,#rmModal .rm-compact-more-trigger{width:33px;height:33px;}
+ #rmModal .rm-compact-item{padding:8px 9px;}
+}
+</style>
+
 <script id="rails-master-manager-script">
 /* RailSNTGyan Master Data Management: Firebase-backed, admin-only writes. */
 (function(){
 'use strict';
 const TYPES={
- division:'Division',station:'Station & Code',agency:'Agency',oem:'OEM (legacy / unclassified)',
+ division:'Division',station:'Station & Code',agency:'Agency',
  eiOem:'EI OEM',msdacOem:'MSDAC OEM',
  department:'Department',sanctionBy:'Sanction / Given By',inspectionBy:'Inspection Done By',
  equipment:'Equipment',issuedBy:'Issued By',movementFileType:'File Type (Movement)',
@@ -20814,7 +20873,7 @@ const FORM_SELECTS={
  movementFileType:['fmFileType'],receivedFrom:['fmReceivedFrom'],movementStatus:['fmStatus']
 };
 let docs=[], liveUnsub=null;
-let selectedType='station', editingId=null;
+let selectedType='station', editingId=null, masterPage=1;
 const $=id=>document.getElementById(id);
 const fs=()=>firebase.firestore();
 const cloud=()=>fs().collection('rail_master_data');
@@ -20918,7 +20977,7 @@ function ui(){
  <p class="rm-excel-standard-note"><b>Standard Master Excel:</b> File name can be anything. Worksheet names must match one of: <b>Stations, Divisions, Agencies, EI OEMs, MSDAC OEMs, Departments, Sanction Given By, Inspection By, Equipment, Issued By, File Types, Received From, Movement Status</b>. Station sheet needs <b>Station Name, Station Code, Division</b>; other sheets need <b>Name</b>. Unknown or legacy combined OEM worksheet names will block import. The Instructions sheet is ignored.</p>
  <label class="rm-excel-file-label" for="rmExcelFile">Choose Excel file <input id="rmExcelFile" type="file" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv"></label>
  <label class="rm-excel-mode-label" for="rmExcelMode">Upload Mode <select id="rmExcelMode" aria-label="Excel upload behavior"><option value="add-update" selected>Add New + Update Existing (recommended)</option><option value="add-only">Add New Only</option><option value="update-only">Update Existing Only</option></select></label>
- <div class="rm-excel-buttons"><button type="button" id="rmExcelPreview" class="rm-primary"><i class="fa-solid fa-magnifying-glass-chart"></i> Preview &amp; Check</button><button type="button" id="rmExcelSave" class="rm-primary" disabled><i class="fa-solid fa-cloud-arrow-up"></i> Confirm Add / Update to Firebase</button><a href="RailSNTGyan_Standard_Master_Data.xlsx" download="RailSNTGyan_Standard_Master_Data.xlsx" class="rm-excel-template"><i class="fa-solid fa-download"></i> Download Excel Template</a></div>
+ <div class="rm-excel-buttons"><button type="button" id="rmExcelPreview" class="rm-primary"><i class="fa-solid fa-magnifying-glass-chart"></i> Preview &amp; Check</button><button type="button" id="rmExcelSave" class="rm-primary" disabled><i class="fa-solid fa-cloud-arrow-up"></i> Confirm Add / Update to Firebase</button><a href="RailSNTGyan_Blank_Master_Template.xlsx" download="RailSNTGyan_Blank_Master_Template.xlsx" class="rm-excel-template"><i class="fa-solid fa-download"></i> Download Excel Template</a></div>
  <div id="rmExcelMessage" class="rm-excel-message" role="status" aria-live="polite">Upload file, then select Preview &amp; Check.</div><div id="rmExcelResults" class="rm-excel-results" hidden></div>
  <small>Smart Update: same Station Name + Division updates the <b>existing station document</b> (for example ABC → ABD). An optional <b>Master ID</b> targets a specific record, even if its name changes. Station Code must be unique across all stations. Empty cells do not clear existing code/order/status. Conflicts are skipped; review the preview before confirming. Existing sanction/approval records are not rewritten. Excel station codes with leading zeros must be formatted as Text.</small>
  </div></details>
@@ -20929,11 +20988,29 @@ function ui(){
  <label class="rm-check"><input id="rmActive" type="checkbox" checked> Active (show in dropdown)</label>
  <div class="rm-buttons"><button type="submit" class="rm-primary" id="rmSave">Save in Firebase</button><button type="button" id="rmReset">Clear</button></div>
  <div class="rm-feedback" id="rmFeedback" role="status" aria-live="polite"></div>
- </form><div class="rm-record-list"><h3>Saved Master Entries</h3><div class="rm-table-viewport"><table><thead><tr><th>Name / Value</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead><tbody id="rmRows"></tbody></table></div></div></div>
+ </form><div class="rm-record-list rm-compact-list-panel">
+   <div class="rm-compact-heading"><h3>Saved Master Entries</h3><span id="rmResultCount" aria-live="polite"></span></div>
+   <div class="rm-compact-filters">
+      <label class="rm-compact-search-label" for="rmSearch"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="rmSearch" type="search" placeholder="Search name, station code..." autocomplete="off" aria-label="Search master entries"></label>
+      <label class="rm-compact-division-wrap" id="rmCompactDivisionWrap" for="rmDivisionFilter" hidden><span class="rm-visually-hidden">Filter by division</span><select id="rmDivisionFilter" aria-label="Filter by division"><option value="">All Divisions</option></select></label>
+      <label class="rm-compact-page-size-label" for="rmPageSize"><span>Show</span><select id="rmPageSize" aria-label="Entries per page"><option value="25" selected>25</option><option value="50">50</option></select></label>
+   </div>
+   <div class="rm-compact-results" id="rmRows" role="list" aria-label="Saved master entries"></div>
+   <nav class="rm-compact-pagination" aria-label="Master list pagination">
+     <button type="button" id="rmPrevPage" class="rm-compact-page-button" aria-label="Previous page"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Prev</button>
+     <span id="rmPageInfo" aria-live="polite">Page 1 of 1</span>
+     <button type="button" id="rmNextPage" class="rm-compact-page-button" aria-label="Next page">Next <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+   </nav>
+ </div></div>
  <p class="rm-firestore-note">Master entries are managed directly in Firestore. Use <b>Bulk Upload Excel</b> for first-time setup and later updates. Firestore Security Rules must allow signed-in users to read and Admins to write <code>rail_master_data</code>.</p></div></div>`;
  document.body.appendChild(el);
  const typeSel=$('rmType');for(const [t,n] of Object.entries(TYPES))typeSel.appendChild(makeOption(t,n));
- typeSel.value=selectedType;typeSel.addEventListener('change',()=>{selectedType=typeSel.value;resetForm();renderList()});
+ typeSel.value=selectedType;typeSel.addEventListener('change',()=>{selectedType=typeSel.value;masterPage=1;$('rmSearch').value='';$('rmDivisionFilter').value='';resetForm();renderList()});
+ $('rmSearch').addEventListener('input',()=>{masterPage=1;renderList()});
+ $('rmDivisionFilter').addEventListener('change',()=>{masterPage=1;renderList()});
+ $('rmPageSize').addEventListener('change',()=>{masterPage=1;renderList()});
+ $('rmPrevPage').addEventListener('click',()=>{if(masterPage>1){masterPage--;renderList();}});
+ $('rmNextPage').addEventListener('click',()=>{masterPage++;renderList()});
  $('rmClose').addEventListener('click',close);$('rmModal').addEventListener('click',e=>{if(e.target===$('rmModal'))close()});
  $('rmReset').addEventListener('click',resetForm);$('rmForm').addEventListener('submit',save);
  window.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('rmModal')?.classList.contains('open'))close()});
@@ -20954,16 +21031,65 @@ function fillDivisionSelect(){const sel=$('rmDivision'),old=sel.value;sel.replac
 function resetForm(){editingId=null;const form=$('rmForm');if(!form)return;form.reset();$('rmFormTitle').textContent='Add '+TYPES[selectedType];$('rmStationExtra').hidden=selectedType!=='station';$('rmName').placeholder=selectedType==='station'?'Station name':'Enter '+TYPES[selectedType];
  fillDivisionSelect();$('rmActive').checked=true;$('rmSave').textContent='Add in Database';alertBox('');}
 function rowButton(label,action,kind){const b=document.createElement('button');b.type='button';b.textContent=label;b.className=kind;b.addEventListener('click',action);return b}
-function renderList(){const rows=$('rmRows');if(!rows)return;rows.replaceChildren();const group=docs.filter(x=>x.type===selectedType).sort((a,b)=>((+a.sortOrder||0)-(+b.sortOrder||0))||a.name.localeCompare(b.name));
- $('rmCount').textContent=group.length+' saved · '+group.filter(x=>x.active!==false).length+' active';
- if(group.length===0){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.textContent='No master records yet. Add an entry or use Bulk Upload Excel.';tr.append(td);rows.append(tr);return}
- for(const r of group){const tr=document.createElement('tr');const name=document.createElement('td');name.textContent=r.name;
- const detail=document.createElement('td');detail.textContent=r.type==='station'?((r.division||'')+(r.code?' · '+r.code:'')):(r.sortOrder?'Order '+r.sortOrder:'—');
- const status=document.createElement('td');status.textContent=r.active===false?'Inactive':'Active';status.className=r.active===false?'rm-inactive':'rm-active';
- const actions=document.createElement('td');const actionsBox=document.createElement('div');actionsBox.className='rm-row-actions';
- actionsBox.append(rowButton('Edit',()=>edit(r),'rm-edit'),rowButton(r.active===false?'Activate':'Deactivate',()=>toggle(r),r.active===false?'rm-on':'rm-off'));
- if(r.type==='station')actionsBox.append(rowButton('Copy ID',()=>copyStationMasterId(r),'rm-copy-id'));
- actions.append(actionsBox);tr.append(name,detail,status,actions);rows.append(tr);
+function renderList(){
+ const rows=$('rmRows');if(!rows)return;
+ rows.replaceChildren();
+ // Keep all legacy documents intact in Firestore. The obsolete OEM category is
+ // simply no longer selectable, so unrelated records never get modified.
+ const group=docs.filter(x=>x.type===selectedType).sort((a,b)=>((+a.sortOrder||0)-(+b.sortOrder||0))||String(a.name||'').localeCompare(String(b.name||'')));
+ const active=group.filter(x=>x.active!==false).length;
+ $('rmCount').textContent=group.length+' saved · '+active+' active';
+ const isStation=selectedType==='station';
+ const divWrap=$('rmCompactDivisionWrap');divWrap.hidden=!isStation;
+ const divSelect=$('rmDivisionFilter');
+ const selectedDivision=divSelect.value;
+ const divisions=isStation?Array.from(new Set(group.map(x=>clean(x.division)).filter(Boolean))).sort((a,b)=>a.localeCompare(b)):[];
+ const priorOptions=Array.from(divSelect.options).slice(1).map(o=>o.value);
+ if(priorOptions.join('\0')!==divisions.join('\0')){
+  divSelect.replaceChildren(makeOption('','All Divisions'));
+  divisions.forEach(div=>divSelect.appendChild(makeOption(div,div)));
+  divSelect.value=divisions.includes(selectedDivision)?selectedDivision:'';
+  masterPage=1;
+ }
+ const term=key($('rmSearch').value),division=divSelect.value;
+ const filtered=group.filter(r=>(!division||key(r.division)===key(division))&&
+  (!term||key([r.name,r.code,r.division,r.sortOrder].join(' ')).includes(term)));
+ const pageSize=Number($('rmPageSize').value)||25;
+ const totalPages=Math.max(1,Math.ceil(filtered.length/pageSize));
+ masterPage=Math.max(1,Math.min(masterPage,totalPages));
+ const start=(masterPage-1)*pageSize,shown=filtered.slice(start,start+pageSize);
+ $('rmResultCount').textContent=filtered.length?`Showing ${start+1}–${start+shown.length} of ${filtered.length}`:'0 results';
+ $('rmPageInfo').textContent=`Page ${masterPage} of ${totalPages}`;
+ $('rmPrevPage').disabled=masterPage<=1;
+ $('rmNextPage').disabled=masterPage>=totalPages;
+ if(!filtered.length){
+  const empty=document.createElement('div');empty.className='rm-compact-empty';
+  empty.textContent=group.length?'No matching entries. Try a different search or division.':'No master records yet. Add an entry or use Bulk Upload Excel.';
+  rows.appendChild(empty);return;
+ }
+ for(const r of shown){
+  const item=document.createElement('article');item.className='rm-compact-item';item.setAttribute('role','listitem');
+  const main=document.createElement('div');main.className='rm-compact-entry';
+  const identity=document.createElement('div');identity.className='rm-compact-identity';
+  const name=document.createElement('div');name.className='rm-compact-name';name.textContent=r.name||'—';name.title=r.name||'';
+  const meta=document.createElement('div');meta.className='rm-compact-meta';
+  meta.textContent=isStation?[r.division,r.code].filter(Boolean).join(' · '):(r.sortOrder?'Order '+r.sortOrder:'Master entry');
+  identity.append(name,meta);
+  const status=document.createElement('span');status.className='rm-compact-status '+(r.active===false?'rm-compact-inactive':'rm-compact-active');
+  status.setAttribute('title',r.active===false?'Inactive':'Active');status.setAttribute('aria-label',r.active===false?'Inactive':'Active');
+  status.innerHTML=r.active===false?'<i class="fa-solid fa-circle-minus" aria-hidden="true"></i>':'<i class="fa-solid fa-circle-check" aria-hidden="true"></i>';
+  const actions=document.createElement('div');actions.className='rm-compact-actions';
+  const editBtn=document.createElement('button');editBtn.type='button';editBtn.className='rm-compact-edit';editBtn.title='Edit '+r.name;editBtn.setAttribute('aria-label','Edit '+r.name);
+  editBtn.innerHTML='<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>';editBtn.addEventListener('click',()=>edit(r));
+  const moreTrigger=document.createElement('button');moreTrigger.type='button';moreTrigger.className='rm-compact-more-trigger';moreTrigger.title='More actions for '+r.name;moreTrigger.setAttribute('aria-label','More actions for '+r.name);moreTrigger.setAttribute('aria-expanded','false');
+  moreTrigger.innerHTML='<i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>';
+  const moreActions=document.createElement('div');moreActions.className='rm-compact-more-actions';moreActions.hidden=true;
+  const hideMore=()=>{moreActions.hidden=true;moreTrigger.setAttribute('aria-expanded','false');};
+  moreActions.appendChild(rowButton(r.active===false?'Activate':'Deactivate',()=>{hideMore();toggle(r);},r.active===false?'rm-on':'rm-off'));
+  if(isStation)moreActions.appendChild(rowButton('Copy ID',()=>{hideMore();copyStationMasterId(r);},'rm-copy-id'));
+  moreTrigger.addEventListener('click',()=>{moreActions.hidden=!moreActions.hidden;moreTrigger.setAttribute('aria-expanded',String(!moreActions.hidden));});
+  actions.append(editBtn,moreTrigger);
+  main.append(identity,status,actions);item.append(main,moreActions);rows.appendChild(item);
  }
 }
 async function copyStationMasterId(r){
@@ -21016,7 +21142,6 @@ const EXCEL_TYPE_ALIASES={
  division:['division','divisions','div'],
  station:['station','stations','stationandcode','stationcode','stationcodes','stationmaster'],
  agency:['agency','agencies','implementingagency'],
- oem:['oem','oems','oemmake','manufacturers','manufacturer'], // legacy list only; not used in EI/MSDAC dropdowns
  eiOem:['eioem','eioems','eioemmake','electronicinterlockingoem','electronicinterlockingoems','eiinterlockingoem'],
  msdacOem:['msdacoem','msdacoems','msdacoemmake','axlecounteroem','axlecounteroems','digitalaxlecounteroem'],
  department:['department','departments','dept'],
