@@ -7182,6 +7182,32 @@ body:not(.dark-theme) #rmModal .rm-excel-preview-item.rm-excel-new{background:#e
 @media(max-width:650px){#rmModal #rmExcelMode{flex-basis:100%;font-size:15px;min-height:42px}}
 </style>
 
+
+<style id="rail-compact-v3-deployment-proof">
+/* Master Database v3: deploy identifier and compact-only rendering. */
+#rmModal .rm-head-build {
+  display:inline-flex;align-items:center;vertical-align:middle;margin-left:8px;
+  padding:3px 7px;border-radius:6px;background:#1ec3e8;
+  color:#04263f;font-size:10px;letter-spacing:.035em;font-weight:900;
+  white-space:nowrap;box-shadow:0 0 0 1px rgba(160,243,255,.55);
+}
+#rmModal .rm-record-list.rm-compact-list-panel{overflow:visible!important;max-height:none!important;}
+#rmModal .rm-record-list.rm-compact-list-panel #rmRows{min-width:0!important;max-width:100%!important;}
+#rmModal .rm-record-list.rm-compact-list-panel #rmRows .rm-compact-item {
+  min-width:0!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;
+}
+/* A legacy tables view is not part of v3. Hide only legacy master list tables. */
+#rmModal .rm-record-list .rm-table-viewport{display:none!important;}
+@media(max-width:650px){
+ #rmModal .rm-head-build{font-size:9px;margin-left:5px;padding:2px 5px}
+ #rmModal .rm-compact-entry{align-items:center!important}
+ #rmModal .rm-compact-item{margin:0!important}
+ #rmModal .rm-compact-name{font-size:12px!important}
+ #rmModal .rm-compact-meta{font-size:10.5px!important}
+ #rmModal .rm-firestore-note{position:static!important;}
+}
+</style>
 </head>
 <script id="rn-theme-prebody-v33">
 (function(){
@@ -21018,9 +21044,10 @@ function startListening(user){
  });
 }
 function ui(){
- const el=document.createElement('div');el.id='rmModal';el.className='rm-modal';el.setAttribute('aria-hidden','true');
+ document.getElementById('rmModal')?.remove(); // replace stale instance if reinjected during navigation
+ const el=document.createElement('div');el.id='rmModal';el.className='rm-modal';el.setAttribute('aria-hidden','true');el.setAttribute('data-master-build','2026-10-23-compact-v3');
  el.innerHTML=`<div class="rm-dialog" role="dialog" aria-modal="true" aria-labelledby="rmHeading">
- <div class="rm-head"><div><h2 id="rmHeading"><i class="fa-solid fa-database"></i> ADD IN DATABASE</h2><p>Manage Railway S&T Master Data · Firebase Firestore</p></div><button type="button" class="rm-close" id="rmClose" aria-label="Close">×</button></div>
+ <div class="rm-head"><div><h2 id="rmHeading"><i class="fa-solid fa-database"></i> ADD IN DATABASE <span class="rm-head-build" title="Verified Compact Master database version 3">COMPACT v3</span></h2><p>Manage Railway S&T Master Data · Firebase Firestore</p></div><button type="button" class="rm-close" id="rmClose" aria-label="Close">×</button></div>
  <div class="rm-body"><div class="rm-controls"><label>Master Type<select id="rmType"></select></label><div class="rm-count" id="rmCount"></div></div>
 
  <details class="rm-excel-panel" id="rmExcelPanel"><summary><i class="fa-solid fa-file-excel" aria-hidden="true"></i> Bulk Upload Excel (.xlsx / .xls) <span class="rm-excel-hint">Upload multiple master lists</span></summary>
@@ -21040,7 +21067,7 @@ function ui(){
  <div class="rm-buttons"><button type="submit" class="rm-primary" id="rmSave">Save in Firebase</button><button type="button" id="rmReset">Clear</button></div>
  <div class="rm-feedback" id="rmFeedback" role="status" aria-live="polite"></div>
  </form><div class="rm-record-list rm-compact-list-panel">
-   <div class="rm-compact-heading"><h3>Saved Master Entries <small class="rm-compact-version" title="Compact Master Database View version 2">COMPACT v2</small></h3><span id="rmResultCount" aria-live="polite"></span></div>
+   <div class="rm-compact-heading"><h3>Saved Master Entries <small class="rm-compact-version" title="Compact Master Database View version 3">COMPACT v3</small></h3><span id="rmResultCount" aria-live="polite"></span></div>
    <div class="rm-compact-filters">
       <label class="rm-compact-search-label" for="rmSearch"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="rmSearch" type="search" placeholder="Search name, station code..." autocomplete="off" aria-label="Search master entries"></label>
       <label class="rm-compact-division-wrap" id="rmCompactDivisionWrap" for="rmDivisionFilter" hidden><span class="rm-visually-hidden">Filter by division</span><select id="rmDivisionFilter" aria-label="Filter by division"><option value="">All Divisions</option></select></label>
