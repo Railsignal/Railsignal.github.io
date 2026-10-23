@@ -20855,6 +20855,57 @@ body:not(.dark-theme) #rmModal .rm-compact-edit,body:not(.dark-theme) #rmModal .
 }
 </style>
 
+
+<style id="rails-master-compact-v2-overflow-fix">
+/* Strict mobile/tablet modal containment.  The .rm-record-list used to inherit
+   a 320px max-height from the legacy table layout.  Keeping that limit caused
+   list contents to visually run into the footer.  Let the ONE modal body scroll
+   vertically and keep pagination and instructions in normal document flow. */
+#rmModal .rm-body { overflow-y:auto !important; overflow-x:hidden !important; min-height:0 !important; }
+#rmModal .rm-main { min-width:0 !important; align-items:start !important; }
+#rmModal .rm-main > .rm-record-list.rm-compact-list-panel {
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  contain:none !important;
+  position:relative !important;
+}
+#rmModal .rm-record-list.rm-compact-list-panel .rm-compact-results,
+#rmModal .rm-record-list.rm-compact-list-panel .rm-compact-filters,
+#rmModal .rm-record-list.rm-compact-list-panel .rm-compact-pagination {
+  height:auto !important;
+  max-height:none !important;
+  overflow:visible !important;
+  position:relative !important;
+}
+#rmModal .rm-record-list.rm-compact-list-panel .rm-compact-item {
+  display:block !important; width:100% !important; min-width:0 !important;
+  height:auto !important; max-height:none !important; position:relative !important;
+}
+#rmModal .rm-firestore-note { position:static !important; clear:both !important; margin-top:14px !important; }
+#rmModal .rm-compact-heading h3 { display:flex;align-items:center;flex-wrap:wrap;gap:7px; }
+#rmModal .rm-compact-version { font-size:9px !important;line-height:1.4;font-weight:800;
+ padding:3px 7px;border-radius:20px;color:#04182a;background:#69d6ff;
+ letter-spacing:.35px;white-space:nowrap; }
+body:not(.dark-theme) #rmModal .rm-compact-version{background:#d9f2ff;color:#125178;}
+@media(max-width:900px){
+ #rmModal .rm-main > .rm-record-list.rm-compact-list-panel { max-height:none !important; }
+ #rmModal .rm-main > .rm-form { max-height:none !important; height:auto !important; }
+}
+@media(max-width:600px){
+ #rmModal .rm-main{display:flex !important;flex-direction:column !important;gap:12px !important;}
+ #rmModal .rm-main > .rm-form,
+ #rmModal .rm-main > .rm-record-list.rm-compact-list-panel{flex:0 0 auto !important;width:100% !important;}
+ #rmModal .rm-compact-filters{width:100%;}
+ #rmModal .rm-compact-results .rm-compact-item{padding:8px 9px !important;}
+ #rmModal .rm-compact-entry{gap:6px !important;}
+ #rmModal .rm-compact-name{font-size:12px !important;}
+ #rmModal .rm-compact-meta{font-size:10.5px !important;}
+ #rmModal .rm-compact-edit,#rmModal .rm-compact-more-trigger{min-width:32px !important;}
+}
+</style>
+
 <script id="rails-master-manager-script">
 /* RailSNTGyan Master Data Management: Firebase-backed, admin-only writes. */
 (function(){
@@ -20989,7 +21040,7 @@ function ui(){
  <div class="rm-buttons"><button type="submit" class="rm-primary" id="rmSave">Save in Firebase</button><button type="button" id="rmReset">Clear</button></div>
  <div class="rm-feedback" id="rmFeedback" role="status" aria-live="polite"></div>
  </form><div class="rm-record-list rm-compact-list-panel">
-   <div class="rm-compact-heading"><h3>Saved Master Entries</h3><span id="rmResultCount" aria-live="polite"></span></div>
+   <div class="rm-compact-heading"><h3>Saved Master Entries <small class="rm-compact-version" title="Compact Master Database View version 2">COMPACT v2</small></h3><span id="rmResultCount" aria-live="polite"></span></div>
    <div class="rm-compact-filters">
       <label class="rm-compact-search-label" for="rmSearch"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="rmSearch" type="search" placeholder="Search name, station code..." autocomplete="off" aria-label="Search master entries"></label>
       <label class="rm-compact-division-wrap" id="rmCompactDivisionWrap" for="rmDivisionFilter" hidden><span class="rm-visually-hidden">Filter by division</span><select id="rmDivisionFilter" aria-label="Filter by division"><option value="">All Divisions</option></select></label>
