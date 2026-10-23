@@ -20932,6 +20932,24 @@ body:not(.dark-theme) #rmModal .rm-compact-version{background:#d9f2ff;color:#125
 }
 </style>
 
+
+<style id="rails-master-excel-export-style">
+/* Admin-only Master Database XLSX export; compact and responsive. */
+#rmModal .rm-export-strip{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:0 0 12px;min-width:0;}
+#rmModal .rm-export-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:37px;max-width:100%;border-radius:9px;border:1px solid #57bcef;background:linear-gradient(135deg,#0b84bf,#075e96);color:#fff;font-size:12px;font-weight:800;padding:8px 14px;cursor:pointer;}
+#rmModal .rm-export-button:hover{background:linear-gradient(135deg,#1199d6,#076fa8);}
+#rmModal .rm-export-button:disabled{opacity:.62;cursor:wait;}
+#rmModal #rmExportStatus{color:#a9cfe6;font-size:11px;line-height:1.45;overflow-wrap:anywhere;}
+#rmModal #rmExportStatus.rm-export-error{color:#ffb6b9;}
+body:not(.dark-theme) #rmModal .rm-export-button{background:#e8f5fd;border-color:#77bde5;color:#164a6a;}
+body:not(.dark-theme) #rmModal #rmExportStatus{color:#4b6e88;}
+body:not(.dark-theme) #rmModal #rmExportStatus.rm-export-error{color:#af263d;}
+@media(max-width:600px){
+ #rmModal .rm-export-strip{display:flex;flex-direction:column;align-items:stretch;gap:5px;}
+ #rmModal .rm-export-button{width:100%;min-height:40px;}
+}
+</style>
+
 <script id="rails-master-manager-script">
 /* RailSNTGyan Master Data Management: Firebase-backed, admin-only writes. */
 (function(){
@@ -21068,6 +21086,7 @@ function ui(){
  <div class="rm-feedback" id="rmFeedback" role="status" aria-live="polite"></div>
  </form><div class="rm-record-list rm-compact-list-panel">
    <div class="rm-compact-heading"><h3>Saved Master Entries <small class="rm-compact-version" title="Compact Master Database View version 3">COMPACT v3</small></h3><span id="rmResultCount" aria-live="polite"></span></div>
+   <div class="rm-export-strip"><button id="rmExportAll" type="button" class="rm-export-button" title="Download all current Firebase Master Data as one Excel workbook"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Current Database (Excel)</button><small id="rmExportStatus" aria-live="polite">13 master sheets · Includes Master IDs</small></div>
    <div class="rm-compact-filters">
       <label class="rm-compact-search-label" for="rmSearch"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="rmSearch" type="search" placeholder="Search name, station code..." autocomplete="off" aria-label="Search master entries"></label>
       <label class="rm-compact-division-wrap" id="rmCompactDivisionWrap" for="rmDivisionFilter" hidden><span class="rm-visually-hidden">Filter by division</span><select id="rmDivisionFilter" aria-label="Filter by division"><option value="">All Divisions</option></select></label>
@@ -21089,6 +21108,7 @@ function ui(){
  $('rmPageSize').addEventListener('change',()=>{masterPage=1;renderList()});
  $('rmPrevPage').addEventListener('click',()=>{if(masterPage>1){masterPage--;renderList();}});
  $('rmNextPage').addEventListener('click',()=>{masterPage++;renderList()});
+ $('rmExportAll').addEventListener('click',exportCurrentMasterExcel);
  $('rmClose').addEventListener('click',close);$('rmModal').addEventListener('click',e=>{if(e.target===$('rmModal'))close()});
  $('rmReset').addEventListener('click',resetForm);$('rmForm').addEventListener('submit',save);
  window.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('rmModal')?.classList.contains('open'))close()});
@@ -21244,6 +21264,97 @@ function ensureExcelLibrary(){
  if(excelLoaderPromise)return excelLoaderPromise;
  excelLoaderPromise=(async()=>{for(const url of EXCEL_JS_CDNS){try{await excelLoadScript(url);return window.XLSX;}catch(err){console.warn('XLSX source failed',err)}}throw new Error('Excel reader not available. Open the online GitHub Pages website and retry.');})();
  return excelLoaderPromise.catch(err=>{excelLoaderPromise=null;throw err});
+}
+/* ---- Export current Firestore master data to a re-importable XLSX workbook ----
+   Always read server data; do not export cached, filtered, or paginated views. */
+const EXCEL_EXPORT_SHEETS=[
+ ['station','Stations'],['division','Divisions'],['agency','Agencies'],
+ ['eiOem','EI OEMs'],['msdacOem','MSDAC OEMs'],['department','Departments'],
+ ['sanctionBy','Sanction Given By'],['inspectionBy','Inspection By'],
+ ['equipment','Equipment'],['issuedBy','Issued By'],
+ ['movementFileType','File Types'],['receivedFrom','Received From'],
+ ['movementStatus','Movement Status']
+];
+let masterExportBusy=false;
+function masterExportMessage(message,isError=false){
+ const el=$('rmExportStatus');if(!el)return;
+ el.textContent=message;el.classList.toggle('rm-export-error',isError);
+}
+function masterExportCell(value){
+ // Explicit text cells preserve leading zeros and punctuation (station codes, IDs).
+ return clean(value);
+}
+function masterExportInstructions(count,unknown,date){
+ return [
+  ['RailSNTGyan - Current Firebase Master Database Export'],
+  ['Export date (local)',date],
+  ['Master records exported',count],
+  ['Import-compatible master sheets',EXCEL_EXPORT_SHEETS.length],
+  ['Data source','Firestore collection: rail_master_data (server read)'],
+  [],
+  ['How to reuse this workbook'],
+  ['1. Each master type is in a separate standard-named worksheet.'],
+  ['2. To add/update, edit these sheets and upload via Admin Profile > ADD IN DATABASE > Bulk Upload Excel.'],
+  ['3. Keep Master ID unchanged for existing records. It targets the SAME Firestore document.'],
+  ['4. Station: Station Name + Division normally identifies an existing entry; Master ID also supports rename.'],
+  ['5. Rows deleted from Excel do NOT delete Firebase records. Deactivate via Admin panel.'],
+  ['6. Check Preview & Check and conflicts before confirming an import.'],
+  ['7. The Instructions worksheet is ignored by the importer.'],
+  ['8. Only rail_master_data is exported. PCSTE/EI/MSDAC sanction records are NOT included.'],
+  ...(unknown?[['WARNING',unknown+' records have unrecognized master types. They are in Archive (Do Not Import).'],['Remove the Archive sheet before importing this workbook, since it is not a standard import worksheet.']]:[])
+ ];
+}
+async function exportCurrentMasterExcel(){
+ const button=$('rmExportAll');
+ if(masterExportBusy||!button)return;
+ if(!hasAdmin()){
+  masterExportMessage('Admin Login is required for Excel export.',true);return;
+ }
+ masterExportBusy=true;button.disabled=true;
+ masterExportMessage('Reading latest Master Data from Firebase Server...');
+ try{
+  const snapshot=await cloud().get({source:'server'});
+  const all=snapshot.docs.map(d=>({id:d.id,...d.data()}));
+  if(!all.length){masterExportMessage('No Master Data found in Firebase to download.',true);return;}
+  masterExportMessage('Preparing '+all.length+' records in Excel...');
+  const XLSX=await ensureExcelLibrary();
+  const workbook=XLSX.utils.book_new();
+  const knownTypes=new Set(EXCEL_EXPORT_SHEETS.map(x=>x[0]));
+  const unknown=all.filter(r=>!knownTypes.has(r.type));
+  const time=new Date();
+  const date=[time.getFullYear(),String(time.getMonth()+1).padStart(2,'0'),String(time.getDate()).padStart(2,'0')].join('-');
+  const instructions=XLSX.utils.aoa_to_sheet(masterExportInstructions(all.length,unknown.length,date));
+  instructions['!cols']=[{wch:85},{wch:44}];
+  XLSX.utils.book_append_sheet(workbook,instructions,'Instructions');
+  for(const [type,sheetName] of EXCEL_EXPORT_SHEETS){
+   const isStation=type==='station';
+   const headers=isStation?['Station Name','Station Code','Division','Master ID','Order','Active']:['Name','Master ID','Order','Active'];
+   const entries=all.filter(r=>r.type===type).sort((a,b)=>(Number(a.sortOrder||0)-Number(b.sortOrder||0))||String(a.name||'').localeCompare(String(b.name||'')));
+   const data=entries.map(r=>isStation?
+    [masterExportCell(r.name),masterExportCell(r.code),masterExportCell(r.division),masterExportCell(r.id),Number(r.sortOrder||0),r.active===false?'No':'Yes']:
+    [masterExportCell(r.name),masterExportCell(r.id),Number(r.sortOrder||0),r.active===false?'No':'Yes']);
+   const ws=XLSX.utils.aoa_to_sheet([headers,...data]);
+   ws['!cols']=isStation?[{wch:34},{wch:17},{wch:22},{wch:49},{wch:12},{wch:11}]:[{wch:43},{wch:49},{wch:12},{wch:11}];
+   if(data.length)ws['!autofilter']={ref:'A1:'+String.fromCharCode(64+headers.length)+(data.length+1)};
+   XLSX.utils.book_append_sheet(workbook,ws,sheetName);
+  }
+  if(unknown.length){
+   const archive=XLSX.utils.aoa_to_sheet([
+    ['Master Type','Name','Station Code','Division','Master ID','Order','Active'],
+    ...unknown.map(r=>[masterExportCell(r.type),masterExportCell(r.name),masterExportCell(r.code),masterExportCell(r.division),masterExportCell(r.id),Number(r.sortOrder||0),r.active===false?'No':'Yes'])
+   ]);
+   archive['!cols']=[{wch:23},{wch:35},{wch:18},{wch:22},{wch:49},{wch:12},{wch:11}];
+   XLSX.utils.book_append_sheet(workbook,archive,'Archive (Do Not Import)');
+  }
+  const filename='RailSNTGyan_Master_Database_'+date+'.xlsx';
+  XLSX.writeFile(workbook,filename,{bookType:'xlsx',compression:true});
+  masterExportMessage('Excel Download started: '+all.length+' records, '+EXCEL_EXPORT_SHEETS.length+' Master Sheets'+(unknown.length?' + '+unknown.length+' archive entries':'')+'.');
+ }catch(err){
+  const code=String(err&&err.code||'');
+  const hint=code.includes('permission-denied')?' Check Firestore READ Rules.':' Check internet and try again.';
+  masterExportMessage('Export failed: '+String(err&&err.message||err)+hint,true);
+  console.error('RailSNTGyan master Excel export failed',err);
+ }finally{masterExportBusy=false;button.disabled=false;}
 }
 function excelClearStage(){bulkExcelStage=null;const s=$('rmExcelSave');if(s)s.disabled=true;const r=$('rmExcelResults');if(r){r.hidden=true;r.replaceChildren();}}
 // Do not treat cached / not-yet-synced records as an authoritative duplicate
