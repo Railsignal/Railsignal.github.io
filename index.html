@@ -17070,6 +17070,55 @@ html.portal-session-auth body.dark-theme #loginScreen{display:none!important;vis
  html body #loginScreen .login-card {margin:0 auto!important;}
 }
 </style>
+<!-- Login V4.4 Glass Center refinement (2026-10-24): appearance only; no auth or app changes. -->
+<style id="rails-v44-login-glass-centered-20261024">
+/* Slight transparency reveals the railway behind the glass without sacrificing contrast. */
+html body #loginScreen .login-card,
+html body.dark-theme #loginScreen .login-card {
+  background:
+    radial-gradient(circle at 19% 18%,rgba(255,198,145,.12),transparent 26%),
+    radial-gradient(circle at 83% 73%,rgba(27,110,255,.16),transparent 32%),
+    radial-gradient(circle at 28% 86%,rgba(76,232,255,.09),transparent 20%),
+    linear-gradient(180deg,rgba(12,35,72,.70),rgba(5,20,44,.77))!important;
+  backdrop-filter:blur(13px) saturate(1.08)!important;
+  -webkit-backdrop-filter:blur(13px) saturate(1.08)!important;
+}
+/* True horizontal and vertical centering for portrait mobile/tablet. */
+@media (orientation:portrait) and (max-width:1100px) {
+  html body #loginScreen, html body.dark-theme #loginScreen {
+    align-items:center!important;
+    justify-content:center!important;
+    padding-top:12px!important;
+    padding-bottom:12px!important;
+  }
+  html body #loginScreen .login-card, html body.dark-theme #loginScreen .login-card {
+    margin:auto!important;
+    transform:none!important;
+  }
+}
+/* Move the portrait railway image slightly left so the red signal remains visible
+   beside the centered card (not behind it) on regular smartphones. */
+@media (orientation:portrait) and (max-width:600px) {
+  html body #loginScreen, html body.dark-theme #loginScreen {
+    background-position:35% bottom!important;
+  }
+}
+/* Tablet landscape: remove the earlier visual offset, center the existing compact card. */
+@media (orientation:landscape) and (min-width:650px) and (max-height:1000px) and (pointer:coarse) {
+  html body #loginScreen, html body.dark-theme #loginScreen {
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  html body #loginScreen .login-card,html body.dark-theme #loginScreen .login-card {
+    margin:auto!important;
+    transform:none!important;
+  }
+}
+/* For narrow/short screens keep flex scrolling available while centered when space permits. */
+@media (orientation:portrait) and (max-height:540px) {
+  html body #loginScreen, html body.dark-theme #loginScreen {align-items:safe center!important;}
+}
+</style>
 <script id="rails-login-v44-background-script">
 (function(){
 const canvas = document.getElementById('railV44Canvas');
