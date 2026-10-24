@@ -105,6 +105,7 @@ html.rail-saved-light body:not(.dark-theme) {
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
 
   <!-- Chart.js for Dashboard Visualizations -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -7223,6 +7224,83 @@ body:not(.dark-theme) #rmModal .rm-excel-preview-item.rm-excel-new{background:#e
  #rmModal .rm-firestore-note{position:static!important;}
 }
 </style>
+<style id="rail-admin-users-management-css">
+/* RailSNTGyan admin-only Firebase users: embedded UI, no credentials in the browser. */
+#railUserManagerPanel[hidden]{display:none!important}
+#railProfileOverlay.rail-users-open {justify-content:center!important;align-items:center!important;padding:10px!important;}
+#railProfileOverlay.rail-users-open .rail-profile-panel {
+  width:min(950px,calc(100vw - 20px))!important;max-height:calc(100dvh - 20px)!important;
+  padding:clamp(12px,2.4vw,22px)!important;border-radius:18px!important;
+}
+#railProfileOverlay.rail-users-open .rail-profile-details,
+#railProfileOverlay.rail-users-open .rail-profile-badge,
+#railProfileOverlay.rail-users-open #railProfileAdminManagement,
+#railProfileOverlay.rail-users-open .rail-profile-footer{display:none!important}
+#railUserManagerPanel {--ru-border:rgba(127,214,248,.28);--ru-bg:rgba(1,17,37,.48);
+  --ru-text:#f2faff;--ru-muted:#b8d1e8;--ru-input:#092643;color:var(--ru-text);}
+#railUserManagerPanel *{box-sizing:border-box}
+#railUserManagerPanel .ru-top{display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 10px}
+#railUserManagerPanel h3{font-size:16px;font-weight:800;color:inherit;margin:0}
+#railUserManagerPanel .ru-small{font-size:11px;color:var(--ru-muted);line-height:1.5}
+#railUserManagerPanel .ru-actions{display:flex;gap:7px;flex-wrap:wrap}
+#railUserManagerPanel button{font:inherit;cursor:pointer}
+#railUserManagerPanel .ru-btn{border-radius:9px;padding:9px 12px;border:1px solid rgba(120,214,255,.38);
+  background:rgba(12,69,112,.72);color:#f3fbff;font-weight:750;font-size:12px;display:inline-flex;gap:6px;align-items:center;justify-content:center;}
+#railUserManagerPanel .ru-btn.ru-primary{background:linear-gradient(100deg,#068aaf,#1672e4);color:white;border-color:#4fdefe}
+#railUserManagerPanel .ru-btn.ru-danger{background:rgba(151,31,51,.28);border-color:rgba(251,121,139,.5);color:#ffe4e9}
+#railUserManagerPanel .ru-btn:disabled{opacity:.48;cursor:not-allowed}
+#railUserManagerPanel .ru-btn:focus-visible,#railUserManagerPanel input:focus-visible{outline:2px solid #7ae5ff;outline-offset:2px}
+#railUserManagerPanel .ru-feedback{border-radius:9px;padding:9px 11px;border:1px solid var(--ru-border);margin:7px 0 10px;
+  background:rgba(35,133,190,.15);color:#dbf4ff;font-size:12px;line-height:1.45}
+#railUserManagerPanel .ru-feedback.ru-error{color:#ffe0e0;background:rgba(144,23,23,.18);border-color:#d67d7d}
+#railUserManagerPanel .ru-feedback[hidden]{display:none}
+#railUserManagerPanel .ru-columns{display:grid;grid-template-columns:minmax(235px,.85fr) minmax(0,1.15fr);gap:12px;align-items:stretch}
+#railUserManagerPanel .ru-list-wrap,#railUserManagerPanel .ru-editor{border:1px solid var(--ru-border);border-radius:12px;padding:12px;background:var(--ru-bg);min-width:0}
+#railUserManagerPanel .ru-list-wrap{display:flex;flex-direction:column;min-height:320px}
+#railUserManagerPanel .ru-search{width:100%;margin:8px 0 8px}
+#railUserManagerPanel .ru-list{max-height:min(47dvh,440px);overflow:auto;display:flex;flex-direction:column;gap:6px}
+#railUserManagerPanel .ru-person{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;
+  border:1px solid var(--ru-border);background:rgba(24,71,109,.27);border-radius:8px;padding:9px;color:inherit}
+#railUserManagerPanel .ru-person strong{font-size:12px;overflow-wrap:anywhere}
+#railUserManagerPanel .ru-person small{font-size:10px;color:var(--ru-muted);overflow-wrap:anywhere}
+#railUserManagerPanel .ru-person.ru-selected{background:rgba(23,136,190,.4);border-color:#5ad7ff}
+#railUserManagerPanel .ru-person.ru-disabled{border-left:3px solid #ee6c74}
+#railUserManagerPanel .ru-busy{opacity:.65;pointer-events:none}
+#railUserManagerPanel .ru-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#railUserManagerPanel .ru-fields label{display:flex;flex-direction:column;gap:4px;color:var(--ru-muted);font-size:11px;font-weight:750;min-width:0}
+#railUserManagerPanel .ru-fields label.ru-wide{grid-column:1/-1}
+#railUserManagerPanel input{background:var(--ru-input);color:var(--ru-text);border:1px solid var(--ru-border);font-size:13px;
+  border-radius:8px;padding:9px 10px;min-width:0;width:100%;outline:none}
+#railUserManagerPanel input::placeholder{color:#98b3c8}
+#railUserManagerPanel .ru-editor h4{font-size:14px;margin:0 0 9px}
+#railUserManagerPanel .ru-form-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+#railUserManagerPanel .ru-pw-section{margin-top:13px;border-top:1px solid var(--ru-border);padding-top:10px}
+#railUserManagerPanel .ru-pw-section[hidden],#railUserManagerPanel .ru-only-create[hidden],
+#railUserManagerPanel .ru-only-edit[hidden]{display:none!important}
+#railUserManagerPanel .ru-uid{font:11px ui-monospace,monospace;word-break:break-all;color:var(--ru-muted)}
+#railUserManagerPanel .ru-pill{font-size:10px;font-weight:800;border:1px solid var(--ru-border);
+  border-radius:50px;padding:2px 6px;color:#d4f4ff}
+html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel {
+  --ru-border:#b4d0e0;--ru-bg:#f5fbff;--ru-text:#153653;--ru-muted:#526d84;--ru-input:#fff;}
+html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-person{background:#eaf5fb;color:#153653}
+html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-person.ru-selected{background:#c7eafc;border-color:#2999d2}
+html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-btn:not(.ru-primary):not(.ru-danger){background:#e3f2ff;color:#154b6a}
+html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback{color:#164869;background:#e3f6ff}
+html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback.ru-error{color:#922b29;background:#ffeded}
+@media(max-width:720px){
+ #railProfileOverlay.rail-users-open{align-items:flex-start!important;padding:6px!important;}
+ #railProfileOverlay.rail-users-open .rail-profile-panel{width:calc(100vw - 12px)!important;max-height:calc(100dvh - 12px)!important;padding:11px!important}
+ #railUserManagerPanel .ru-columns{grid-template-columns:1fr}
+ #railUserManagerPanel .ru-list-wrap{min-height:0}
+ #railUserManagerPanel .ru-list{max-height:22dvh}
+ #railUserManagerPanel .ru-fields{grid-template-columns:1fr 1fr;gap:7px}
+ #railUserManagerPanel .ru-fields label.ru-mobile-full{grid-column:1/-1}
+ #railUserManagerPanel .ru-btn{padding:8px 10px}
+}
+@media(max-width:370px){#railUserManagerPanel .ru-fields{grid-template-columns:1fr}#railUserManagerPanel .ru-fields label{grid-column:auto!important}}
+#railUserManagerPanel [hidden]{display:none!important}
+
+</style>
 </head>
 <script id="rn-theme-prebody-v33">
 (function(){
@@ -7245,16 +7323,12 @@ body:not(.dark-theme) #rmModal .rm-excel-preview-item.rm-excel-new{background:#e
 </script>
 
 
-  <!-- FULL PAGE LOGIN SCREEN -->
-  <div id="loginScreen">
+  <!-- HMIS-INSPIRED RESPONSIVE SIGN-IN PAGE (RailSNTGyan branding, existing Firebase auth) -->
+  <div id="loginScreen" class="hmis-login-page">
     <canvas id="railV44Canvas" aria-hidden="true"></canvas>
-    <div class="login-card">
-      <div class="railV44CardReflection" aria-hidden="true"></div>
-      <div class="railV44CardBubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-      <div class="login-brand-wrapper">
-        <!-- PROMINENT CENTERED LOGO ABOVE BRAND TEXT -->
-        <div class="login-logo-container">
-          <svg class="login-logo-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <header class="hmis-topbar">
+      <div class="hmis-brand-block">
+        <div class="hmis-logo-badge" aria-label="RailSNTGyan logo"><svg class="login-logo-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="trainBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#b0cddb"/>
@@ -7365,43 +7439,73 @@ body:not(.dark-theme) #rmModal .rm-excel-preview-item.rm-excel-new{background:#e
                 <line x1="8" y1="39" x2="30" y2="36" class="book-line"/>
               </g>
             </g>
-          </svg>
+          </svg></div>
+        <div class="hmis-heading-text">
+          <div class="hmis-header-name"><span>RailSNT</span><strong>Gyan</strong></div>
+          <div class="hmis-header-subtitle">Railway S&amp;T Knowledge Portal</div>
+          <div class="hmis-header-hindi" lang="hi">सिग्नलिंग का ज्ञान, सुरक्षित रेल की पहचान।</div>
         </div>
+      </div>
+      <div class="hmis-header-art" aria-hidden="true"></div>
+      <div class="hmis-head-badge"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="17" rx="3"/><path d="M8 8h8M8 13h2m4 0h2M8 22l3-3m5 3-3-3"/></svg><span>INDIAN RAILWAY<br>S&amp;T KNOWLEDGE</span></div>
+    </header>
+    <nav class="hmis-topnav" aria-label="Login page navigation">
+      <button class="hmis-navitem is-current" type="button" onclick="railHmisNavigate('home')"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></button>
+      <button class="hmis-navitem" type="button" onclick="railHmisNavigate('about')"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-3-2.2-6-2.2-10-2v15c4-.2 7-.2 10 2m0-15c3-2.2 6-2.2 10-2v15c-4-.2-7-.2-10 2V6z"/></svg><span>About</span></button>
+      <button class="hmis-navitem" type="button" onclick="railHmisNavigate('links')"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 .2l3-3a5 5 0 0 0-7-7l-2 2"/><path d="M14 11a5 5 0 0 0-7-.2l-3 3a5 5 0 0 0 7 7l2-2"/></svg><span>Important Links</span></button>
+      <button class="hmis-navitem" type="button" onclick="railHmisNavigate('help')"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg><span>Help &amp; Support</span></button>
+      <button class="hmis-navitem hmis-navlogin" type="button" onclick="railHmisNavigate('login')"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg><span>Login</span></button>
+    </nav>
 
-        <div>
-          <div class="login-brand-title">
-            <span class="brand-teal">RailSNT</span><span class="brand-orange">Gyan</span>
+    <div class="hmis-mainarea" id="hmisHome">
+      <section class="hmis-scene" aria-labelledby="hmisHeroTitle">
+        <div class="hmis-scene-bg" aria-hidden="true"></div>
+        <div class="hmis-scene-signal" aria-hidden="true"></div>
+        <div class="hmis-scene-text">
+          <h1 id="hmisHeroTitle"><span>RailSNT</span><strong>Gyan</strong></h1>
+          <div class="hmis-hero-subtitle">Railway S&amp;T Knowledge Portal</div>
+          <div class="hmis-accentline" aria-hidden="true"></div>
+          <p lang="hi">सिग्नलिंग का ज्ञान, सुरक्षित रेल की पहचान।</p>
+        </div>
+        <div class="hmis-features" aria-label="Portal knowledge sections">
+          <div class="hmis-feature"><span class="hmis-feature-icon icon-book"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-3-2.2-6-2.2-10-2v15c4-.2 7-.2 10 2m0-15c3-2.2 6-2.2 10-2v15c-4-.2-7-.2-10 2V6z"/></svg></span><span>Reference<br>Books &amp; Docs</span></div>
+          <div class="hmis-feature"><span class="hmis-feature-icon icon-folder"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v1"/><path d="M2 19l3-9h17l-3 11H5a3 3 0 0 1-3-2z"/></svg></span><span>Files &amp;<br>Approvals</span></div>
+          <div class="hmis-feature"><span class="hmis-feature-icon icon-exam"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></span><span>LDCE<br>Question Papers</span></div>
+          <div class="hmis-feature"><span class="hmis-feature-icon icon-links"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 .2l3-3a5 5 0 0 0-7-7l-2 2"/><path d="M14 11a5 5 0 0 0-7-.2l-3 3a5 5 0 0 0 7 7l2-2"/></svg></span><span>Important<br>Links</span></div>
+        </div>
+      </section>
+
+      <section class="login-card hmis-login-card" id="hmisSignIn" aria-labelledby="hmisSignInTitle">
+        <div class="hmis-signin-title"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg><h2 id="hmisSignInTitle">Sign In</h2></div>
+        <div class="hmis-accentline hmis-form-line" aria-hidden="true"></div>
+        <p class="hmis-signin-intro">Login to RailSNTGyan Portal</p>
+        <div id="hmisNavInfo" class="hmis-nav-notice" role="status" hidden></div>
+        <form class="hmis-auth-form" onsubmit="event.preventDefault();checkPortalPassword();">
+          <div class="login-form-group">
+            <label for="pageEmailInput">Email Address <em>*</em></label>
+            <div class="login-input-wrapper"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/></svg>
+              <input type="email" id="pageEmailInput" class="login-input" placeholder="Enter your registered email" autocomplete="username" spellcheck="false" required>
+            </div>
           </div>
-          <div class="login-brand-subtitle">Railway S&T Knowledge Portal</div>
-        </div>
-      </div>
-      <p class="login-desc">Empowering Railway S&T Professionals • Secure Firebase Login</p>
-      
-      <div class="login-form-group">
-        <label for="pageEmailInput">Email Address</label>
-        <div class="login-input-wrapper">
-          <i class="fa-solid fa-envelope"></i>
-          <input type="email" id="pageEmailInput" class="login-input" placeholder="Enter registered email" autocomplete="username" onkeydown="handleLoginKeyPress(event)">
-        </div>
-      </div>
-      <div class="login-form-group">
-        <label for="pagePasswordInput">Password</label>
-        <div class="login-input-wrapper">
-          <i class="fa-solid fa-lock"></i>
-          <input type="password" id="pagePasswordInput" class="login-input" placeholder="Enter account password" autocomplete="current-password" onkeydown="handleLoginKeyPress(event)">
-          <button type="button" class="rail-password-eye" aria-label="Show password" aria-pressed="false" title="Show password" onclick="toggleRailPasswordVisibility(this)"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
-        </div>
-      </div>
-
-      <button type="button" class="login-btn" onclick="checkPortalPassword()">
-        <i class="fa-solid fa-right-to-bracket"></i> Login
-      </button>
-
-      <div id="loginErrorMsg" class="login-error-msg">
-        <i class="fa-solid fa-triangle-exclamation"></i> Unable to sign in. Please check your email and password.
-      </div>
+          <div class="login-form-group">
+            <label for="pagePasswordInput">Password <em>*</em></label>
+            <div class="login-input-wrapper"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="11" rx="2"/><path d="M8 11V8a4 4 0 1 1 8 0v3"/></svg>
+              <input type="password" id="pagePasswordInput" class="login-input" placeholder="Enter your password" autocomplete="current-password" required>
+              <button type="button" class="rail-password-eye" aria-label="Show password" aria-pressed="false" title="Show password" onclick="toggleRailPasswordVisibility(this)"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6"/><circle cx="12" cy="12" r="2.5"/></svg></button>
+            </div>
+          </div>
+          <div class="hmis-form-help"><span><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 6 3 9 8 11 5-2 8-5 8-11V5z"/><path d="M12 2v20"/></svg> Secure Firebase Sign-in</span>
+            <button type="button" class="hmis-forgot" onclick="railHmisPasswordReset()">Forgot password?</button>
+          </div>
+          <button type="submit" class="login-btn"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4h7v16h-7M3 12h13m-5-5 5 5-5 5"/></svg> Login</button>
+          <div id="loginErrorMsg" class="login-error-msg" role="alert"></div>
+        </form>
+        <div class="hmis-login-separator"><span>AUTHORIZED ACCESS</span></div>
+        <div class="hmis-auth-note"><svg class="hmis-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 6 3 9 8 11 5-2 8-5 8-11V5z"/><path d="M12 2v20"/></svg><span>Authorized users only. Use your registered Firebase account to access the portal.</span></div>
+      </section>
     </div>
-    <div id="railV44Welcome" aria-hidden="true" role="status">
+    <footer class="hmis-bottom-bar"><span>© 2026 RailSNTGyan &nbsp; | &nbsp; Railway S&amp;T Knowledge Portal</span><span>LEARN <b>|</b> EXPLORE <b>|</b> APPLY <b>|</b> EXCEL</span></footer>
+<div id="railV44Welcome" aria-hidden="true" role="status">
       <div class="railV44WelcomeCard">
         <div class="railV44WelcomeLogo">🙏</div>
         <div class="railV44WelcomeIntro">Welcome to</div>
@@ -17072,51 +17176,148 @@ html.portal-session-auth body.dark-theme #loginScreen{display:none!important;vis
 </style>
 <!-- Login V4.4 Glass Center refinement (2026-10-24): appearance only; no auth or app changes. -->
 <style id="rails-v44-login-glass-centered-20261024">
-/* Clearer see-through navy glass (roughly 46%-55% opacity), with high-contrast input fields. */
+/* 24-Oct-2026: True see-through login card. The railway wallpaper is continuous
+   behind the card: no secondary card image, colored gradient or glass blur. */
 html body #loginScreen .login-card,
 html body.dark-theme #loginScreen .login-card {
-  background:
-    radial-gradient(circle at 19% 18%,rgba(255,198,145,.07),transparent 26%),
-    radial-gradient(circle at 83% 73%,rgba(27,110,255,.09),transparent 32%),
-    radial-gradient(circle at 28% 86%,rgba(76,232,255,.045),transparent 20%),
-    linear-gradient(180deg,rgba(12,35,72,.46),rgba(5,20,44,.55))!important;
-  backdrop-filter:blur(7px) saturate(1.05)!important;
-  -webkit-backdrop-filter:blur(7px) saturate(1.05)!important;
+  background:rgba(3,12,31,.045)!important;
+  background-image:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:0 0 0 1.5px rgba(130,232,255,.58),
+             0 12px 34px rgba(0,9,28,.18),
+             0 0 24px rgba(11,190,255,.12)!important;
 }
-/* True horizontal and vertical centering for portrait mobile/tablet. */
+/* The old decorative reflection looked like a second backdrop and covered the
+   actual scene. Remove it. Keep the ambient constellation/bubble canvas outside. */
+html body #loginScreen .railV44CardReflection {display:none!important;}
+html body #loginScreen .railV44CardBubbles {opacity:.13!important;}
+/* Keep white labels and headings readable against the photograph. */
+html body #loginScreen .login-brand-title,
+html body #loginScreen .login-brand-subtitle,
+html body #loginScreen .login-desc,
+html body #loginScreen .login-form-group label {
+  text-shadow:0 2px 7px rgba(0,8,26,.95),0 1px 3px rgba(0,8,26,.7)!important;
+}
+/* Real mobile/tablet centered positioning retained from previous tested layout. */
 @media (orientation:portrait) and (max-width:1100px) {
   html body #loginScreen, html body.dark-theme #loginScreen {
-    align-items:center!important;
-    justify-content:center!important;
-    padding-top:12px!important;
-    padding-bottom:12px!important;
+    align-items:center!important;justify-content:center!important;
+    padding-top:12px!important;padding-bottom:12px!important;
   }
   html body #loginScreen .login-card, html body.dark-theme #loginScreen .login-card {
-    margin:auto!important;
-    transform:none!important;
+    margin:auto!important;transform:none!important;
   }
 }
-/* Move the portrait railway image slightly left so the red signal remains visible
-   beside the centered card (not behind it) on regular smartphones. */
 @media (orientation:portrait) and (max-width:600px) {
   html body #loginScreen, html body.dark-theme #loginScreen {
     background-position:35% bottom!important;
   }
 }
-/* Tablet landscape: remove the earlier visual offset, center the existing compact card. */
 @media (orientation:landscape) and (min-width:650px) and (max-height:1000px) and (pointer:coarse) {
+  html body #loginScreen,html body.dark-theme #loginScreen {
+    align-items:center!important;justify-content:center!important;
+  }
+  html body #loginScreen .login-card,html body.dark-theme #loginScreen .login-card {
+    margin:auto!important;transform:none!important;
+  }
+}
+@media (orientation:portrait) and (max-height:540px) {
+  html body #loginScreen,html body.dark-theme #loginScreen {align-items:safe center!important;}
+}
+</style>
+
+<!-- Desktop / laptop V4.4 refined: compact, readable glass panel; phone/tablet untouched. -->
+<style id="rail-login-desktop-balanced-v1">
+/* The see-through mobile look caused an overly tall, nearly invisible login card
+   on short laptop viewports. Scope this visual correction to mouse/trackpad
+   desktops so existing touch layouts and all Firebase scripts remain intact. */
+@media screen and (min-width: 769px) and (pointer:fine) {
   html body #loginScreen, html body.dark-theme #loginScreen {
     align-items:center!important;
     justify-content:center!important;
+    padding:14px 18px!important;
+    overflow-y:auto!important;
+    background-position:center center!important;
   }
-  html body #loginScreen .login-card,html body.dark-theme #loginScreen .login-card {
+  html body #loginScreen .login-card,
+  html body.dark-theme #loginScreen .login-card {
+    box-sizing:border-box!important;
+    width:min(366px,calc(100vw - 48px))!important;
+    max-width:366px!important;
+    height:auto!important;
+    max-height:calc(100dvh - 28px)!important;
     margin:auto!important;
-    transform:none!important;
+    padding:18px 24px 20px!important;
+    border-radius:24px!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    background:linear-gradient(150deg,rgba(5,19,43,.70),rgba(4,19,44,.76))!important;
+    background-image:linear-gradient(150deg,rgba(5,19,43,.70),rgba(4,19,44,.76))!important;
+    -webkit-backdrop-filter:blur(9px) saturate(1.08)!important;
+    backdrop-filter:blur(9px) saturate(1.08)!important;
+    box-shadow:0 0 0 1px rgba(128,219,245,.52),0 14px 48px rgba(0,7,25,.33),0 0 26px rgba(35,169,226,.10)!important;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(112,212,241,.35) transparent;
+  }
+  html body #loginScreen .railV44CardReflection {display:none!important;}
+  html body #loginScreen .railV44CardBubbles {opacity:.08!important;}
+  html body #loginScreen .login-brand-wrapper {
+    gap:3px!important;
+    margin:0 0 7px!important;
+  }
+  html body #loginScreen .login-logo-container,
+  html body.dark-theme #loginScreen .login-logo-container {
+    width:90px!important;
+    height:90px!important;
+    flex:0 0 90px!important;
+  }
+  html body #loginScreen .login-logo-container::before {
+    width:80px!important;height:35px!important;
+    margin-left:-40px!important;margin-top:-17.5px!important;
+  }
+  html body #loginScreen .login-logo-container::after {inset:9px!important;}
+  html body #loginScreen .login-logo-svg {
+    width:56px!important;height:56px!important;
+    max-width:56px!important;max-height:56px!important;
+  }
+  html body #loginScreen .login-brand-title {font-size:26px!important;line-height:1.08!important;}
+  html body #loginScreen .login-brand-subtitle {font-size:12.5px!important;line-height:1.3!important;}
+  html body #loginScreen p.login-desc {
+    font-size:11.2px!important;
+    line-height:1.4!important;
+    margin:8px 0 14px!important;
+  }
+  html body #loginScreen .login-form-group {margin-bottom:11px!important;}
+  html body #loginScreen .login-form-group label {
+    font-size:12px!important;margin-bottom:5px!important;
+  }
+  html body #loginScreen .login-input-wrapper {height:45px!important;border-radius:12px!important;}
+  html body #loginScreen .login-input,
+  html body.dark-theme #loginScreen .login-input {
+    height:45px!important;line-height:45px!important;
+    font-size:13px!important;border-radius:12px!important;
+    padding-left:43px!important;
+  }
+  html body #loginScreen .login-input-wrapper>i {font-size:15px!important;left:13px!important;}
+  html body #loginScreen .login-btn,
+  html body.dark-theme #loginScreen .login-btn {
+    height:49px!important;font-size:16px!important;border-radius:13px!important;
   }
 }
-/* For narrow/short screens keep flex scrolling available while centered when space permits. */
-@media (orientation:portrait) and (max-height:540px) {
-  html body #loginScreen, html body.dark-theme #loginScreen {align-items:safe center!important;}
+/* Extra-short laptop browser viewports, including zoom or browser toolbars. */
+@media screen and (min-width: 769px) and (pointer:fine) and (max-height:590px) {
+  html body #loginScreen .login-card,html body.dark-theme #loginScreen .login-card {
+    padding:11px 20px 13px!important;
+    max-height:calc(100dvh - 14px)!important;
+  }
+  html body #loginScreen .login-logo-container,
+  html body.dark-theme #loginScreen .login-logo-container {width:70px!important;height:70px!important;flex-basis:70px!important;}
+  html body #loginScreen .login-logo-container::after {inset:7px!important;}
+  html body #loginScreen .login-logo-svg {width:45px!important;height:45px!important;max-width:45px!important;max-height:45px!important;}
+  html body #loginScreen p.login-desc {margin:5px 0 9px!important;}
+  html body #loginScreen .login-form-group {margin-bottom:8px!important;}
+  html body #loginScreen .login-btn {height:45px!important;}
 }
 </style>
 <script id="rails-login-v44-background-script">
@@ -17316,7 +17517,7 @@ function drawBg(t){
   drawStarField(t);
   if(!reduceMotion) requestAnimationFrame(drawBg);
 }
-resize(); requestAnimationFrame(drawBg);
+if (!document.getElementById('loginScreen')?.classList.contains('hmis-login-page')) { resize(); requestAnimationFrame(drawBg); }
 let railV44ResizeTimer;
 addEventListener('resize',()=>{clearTimeout(railV44ResizeTimer);railV44ResizeTimer=setTimeout(resize,120);},{passive:true});
 
@@ -17370,6 +17571,67 @@ window.railV44ShowWelcome = function(){
         <span><strong>ADD IN DATABASE</strong><small>Stations, Divisions, Agencies, EI/MSDAC OEMs &amp; more</small></span>
         <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
       </button>
+      <button type="button" id="railProfileUserManageBtn" class="rail-profile-master-link"
+        onclick="railOpenUserManager()" title="Create Firebase users, edit profiles, disable accounts and manage passwords"
+        style="margin-top:9px">
+        <i class="fa-solid fa-users-gear" aria-hidden="true"></i>
+        <span><strong>MANAGE USERS</strong><small>Add User · Edit Details · Enable/Disable · Reset Password</small></span>
+        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      </button>
+    </section>
+    <!-- Firebase user management: visible only in an existing verified Admin Profile. -->
+    <section id="railUserManagerPanel" hidden aria-label="Firebase User Management">
+      <div class="ru-top">
+        <div><h3><i class="fa-solid fa-users-gear" aria-hidden="true"></i> USER MANAGEMENT</h3>
+          <div class="ru-small">Existing Firebase accounts · Secure Admin access</div></div>
+        <div class="ru-actions">
+          <button class="ru-btn" type="button" id="ruBackBtn"><i class="fa-solid fa-arrow-left"></i> Profile</button>
+          <button class="ru-btn ru-primary" type="button" id="ruNewBtn"><i class="fa-solid fa-user-plus"></i> Add User</button>
+        </div>
+      </div>
+      <div class="ru-feedback" id="ruFeedback" role="status" aria-live="polite">Loading existing Firebase users…</div>
+      <div class="ru-columns">
+        <div class="ru-list-wrap">
+          <strong style="font-size:12px">Firebase Accounts <span class="ru-pill" id="ruCount">0</span></strong>
+          <input class="ru-search" id="ruSearch" type="search" autocomplete="off" placeholder="Search name or email" aria-label="Search users">
+          <div id="ruList" class="ru-list" role="list" aria-label="Users"></div>
+          <button type="button" class="ru-btn" id="ruMoreBtn" hidden style="margin-top:8px">Load more accounts</button>
+        </div>
+        <div class="ru-editor">
+          <h4 id="ruFormHeading">Add New User</h4>
+          <form id="ruForm" autocomplete="off">
+            <div class="ru-fields">
+              <label class="ru-wide">Name <input id="ruName" type="text" maxlength="100" required autocomplete="off" placeholder="Full name"></label>
+              <label class="ru-wide">Login Email ID <input id="ruEmail" type="email" maxlength="254" required autocomplete="off" placeholder="user@example.com"></label>
+              <label>Designation <input id="ruDesignation" maxlength="100" placeholder="SSE / JE / ..."></label>
+              <label>Division <input id="ruDivision" maxlength="100" placeholder="BSP / R / NGP"></label>
+              <label>Department <input id="ruDepartment" maxlength="100" placeholder="S&T"></label>
+              <label>Contact number (optional) <input id="ruContact" maxlength="35" inputmode="tel" placeholder="Mobile number"></label>
+              <label class="ru-wide ru-only-create" id="ruCreatePasswordLabel">Temporary password (minimum 10 characters)
+                <input id="ruCreatePassword" type="password" minlength="10" maxlength="128" autocomplete="new-password" placeholder="Enter a strong temporary password"></label>
+            </div>
+            <div class="ru-small ru-only-create" id="ruCreateHint" style="margin-top:8px">The password is sent to Firebase Authentication, not stored in Firestore or this page. Share it privately and ask the user to change it.</div>
+            <div class="ru-small ru-only-edit" id="ruUidRow" hidden style="margin-top:8px">Firebase UID (read only): <span class="ru-uid" id="ruUid"></span></div>
+            <div class="ru-form-actions">
+              <button type="submit" class="ru-btn ru-primary" id="ruSaveBtn">Create User</button>
+              <button type="button" class="ru-btn ru-only-edit" id="ruStatusBtn" hidden>Disable User</button>
+            </div>
+          </form>
+          <div class="ru-pw-section ru-only-edit" id="ruPasswordSection" hidden>
+            <strong style="font-size:12px">Password Management</strong>
+            <p class="ru-small">Existing passwords cannot be viewed. Set a new password or send a reset link.</p>
+            <div class="ru-fields" style="margin-top:7px">
+              <label class="ru-wide">New password (minimum 10 characters)
+                <input type="password" autocomplete="new-password" id="ruNewPassword" minlength="10" maxlength="128" placeholder="New password"></label>
+            </div>
+            <div class="ru-form-actions">
+              <button type="button" class="ru-btn" id="ruSetPasswordBtn">Set New Password</button>
+              <button type="button" class="ru-btn" id="ruResetEmailBtn">Send Reset Email</button>
+            </div>
+          </div>
+          <div class="ru-small" style="margin-top:10px">Admin accounts are protected against modification here. Passwords and service-account secrets are never displayed.</div>
+        </div>
+      </div>
     </section>
     <p class="rail-profile-footer">Account details are taken from the active Firebase session.</p>
   </section>
@@ -17435,6 +17697,7 @@ window.railV44ShowWelcome = function(){
   };
   window.railCloseProfile=function(restoreFocus=true,fromPopstate=false){
     const panel=overlay();if(!panel||panel.hidden)return;
+    if(window.railCloseUserManager)window.railCloseUserManager(true);
     panel.hidden=true;panel.setAttribute('aria-hidden','true');
     const trigger=get('railProfileBtn');if(trigger)trigger.setAttribute('aria-expanded','false');
     if(restoreFocus && trigger && document.documentElement.classList.contains('portal-session-auth'))trigger.focus();
@@ -17464,6 +17727,443 @@ window.railV44ShowWelcome = function(){
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay()&&!overlay().hidden)window.railCloseProfile();});
 })();
 </script>
+<script src="./assets/rail-user-worker-config.js"></script>
+<script id="rail-admin-users-management-script">
+(function(){
+ 'use strict';
+ const get=id=>document.getElementById(id);
+ let users=[], selectedUid='', pageToken=null, busy=false, initialized=false;
+ const authReady=()=>typeof firebase!=='undefined'&&firebase.auth&&firebase.auth().currentUser&&
+   typeof railAdmin!=='undefined'&&railAdmin===true&&document.documentElement.classList.contains('portal-session-auth');
+ const v=id=>get(id)?.value.trim()||'';
+ const msg=(s,bad=false)=>{let el=get('ruFeedback');if(!el)return;el.hidden=!s;el.classList.toggle('ru-error',!!bad);el.textContent=s||'';};
+ const show=id=>(get(id).hidden=false);
+ const hide=id=>(get(id).hidden=true);
+ const setBusy=(val)=>{busy=val;get('ruSaveBtn').disabled=val;get('ruStatusBtn').disabled=val;get('ruSetPasswordBtn').disabled=val;
+   get('ruMoreBtn').disabled=val;get('ruNewBtn').disabled=val;
+   const u=users.find(x=>x.uid===selectedUid);if(u?.admin){get('ruSaveBtn').disabled=true;get('ruStatusBtn').disabled=true;get('ruSetPasswordBtn').disabled=true;get('ruResetEmailBtn').disabled=true;}
+ };
+ async function run(action, data={}){
+   if(!authReady())throw new Error('Admin session required. Please sign in again.');
+   const endpoint=(window.RAIL_USER_WORKER_URL||'').trim().replace(/\/$/,'');
+   if(!endpoint)throw new Error('Cloudflare Worker URL is not configured. Open assets/rail-user-worker-config.js and paste your Worker URL (see README).');
+   let url;
+   try{url=new URL(endpoint);}catch{throw new Error('Cloudflare Worker URL is invalid.');}
+   if(url.protocol!=='https:')throw new Error('Cloudflare Worker URL must use HTTPS.');
+   try{
+     const idToken=await firebase.auth().currentUser.getIdToken(true);
+     const response=await fetch(endpoint+'/api/users',{
+       method:'POST',mode:'cors',cache:'no-store',
+       headers:{'Content-Type':'application/json','Authorization':'Bearer '+idToken},
+       body:JSON.stringify({action,...data})
+     });
+     let result;try{result=await response.json();}catch{throw new Error('Cloudflare Worker returned an invalid response.');}
+     if(!response.ok)throw new Error(result.error||('Worker request failed (HTTP '+response.status+').'));
+     return result;
+   }catch(e){
+     if(e instanceof TypeError)throw new Error('Could not reach Cloudflare Worker. Check Worker deployment, URL and allowed origin.');
+     throw new Error(e?.message||'User Management request failed.');
+   }
+ }
+ const word=(u)=>[u.name||'',u.email||''].join(' ').toLowerCase();
+ function render(){
+   const list=get('ruList');list.replaceChildren();const filter=v('ruSearch').toLowerCase();
+   let count=0;
+   users.filter(u=>word(u).includes(filter)).forEach(u=>{
+     count++;
+     const b=document.createElement('button');b.type='button';
+     b.className='ru-person'+(u.uid===selectedUid?' ru-selected':'')+(u.disabled?' ru-disabled':'');
+     const strong=document.createElement('strong');strong.textContent=(u.name||'No name')+(u.admin?' · ADMIN':'');
+     const small=document.createElement('small');small.textContent=u.email+' · '+(u.disabled?'Disabled':'Active');
+     b.append(strong,small);b.addEventListener('click',()=>choose(u.uid));list.appendChild(b);
+   });
+   if(!count){const p=document.createElement('p');p.className='ru-small';p.textContent=users.length?'No matching account.':'No accounts loaded.';list.appendChild(p);}
+   get('ruCount').textContent=String(users.length);
+   get('ruMoreBtn').hidden=!pageToken;
+ }
+ function pickData(){return {name:v('ruName'),email:v('ruEmail'),designation:v('ruDesignation'),
+    division:v('ruDivision'),department:v('ruDepartment'),contact:v('ruContact')};}
+ function choose(uid){
+   selectedUid=uid;
+   const u=users.find(x=>x.uid===uid);
+   if(!u)return;
+   get('ruFormHeading').textContent=u.admin?'View Admin Account':'Edit User Details';
+   for(const [field,key] of [['ruName','name'],['ruEmail','email'],['ruDesignation','designation'],
+     ['ruDivision','division'],['ruDepartment','department'],['ruContact','contact']])get(field).value=u[key]||'';
+   hide('ruCreatePasswordLabel');hide('ruCreateHint');
+   show('ruUidRow');show('ruPasswordSection');show('ruStatusBtn');
+   get('ruUid').textContent=u.uid;
+   get('ruCreatePassword').required=false;
+   get('ruSaveBtn').textContent='Save Changes';
+   get('ruStatusBtn').textContent=u.disabled?'Enable User':'Disable User';
+   const locked=!!u.admin;
+   [...get('ruForm').querySelectorAll('input')].forEach(inp=>inp.disabled=locked);
+   get('ruNewPassword').disabled=locked;
+   get('ruSaveBtn').disabled=locked;
+   get('ruStatusBtn').disabled=locked;
+   get('ruSetPasswordBtn').disabled=locked;
+   get('ruResetEmailBtn').disabled=locked;
+   get('ruNewPassword').value='';
+   render();msg(locked?'Protected Admin account: details are read-only.':'Edit details or manage account access.');
+ }
+ function newUser(){
+   selectedUid='';get('ruForm').reset();
+   [...get('ruForm').querySelectorAll('input')].forEach(inp=>inp.disabled=false);
+   get('ruFormHeading').textContent='Add New User';show('ruCreatePasswordLabel');show('ruCreateHint');
+   hide('ruUidRow');hide('ruStatusBtn');hide('ruPasswordSection');
+   get('ruCreatePassword').required=true;get('ruSaveBtn').textContent='Create User';get('ruSaveBtn').disabled=false;
+   render();msg('New account will be created in Firebase Authentication.');
+ }
+ async function load(more=false){
+   if(busy)return;setBusy(true);msg(more?'Loading more users…':'Loading existing Firebase accounts…');
+   try{
+     const result=await run('list',{pageToken:more?pageToken||'':''});
+     users=more?[...users,...result.users]:result.users;
+     pageToken=result.nextPageToken;
+     render();msg(users.length+' Firebase account(s) loaded'+(pageToken?' · Load more available.':'.'));
+   }catch(e){msg(e.message,true);}
+   finally{setBusy(false);}
+ }
+ async function save(event){
+   event.preventDefault();if(busy||!authReady())return;
+   const values=pickData();
+   if(!values.email||!values.name)return msg('Name and Email ID are required.',true);
+   const creating=!selectedUid;
+   if(creating&&get('ruCreatePassword').value.length<10)return msg('Password needs at least 10 characters.',true);
+   const action=creating?'create':'update';
+   if(!creating&&!window.confirm('Save changes for '+values.email+'?'))return;
+   setBusy(true);msg(creating?'Creating Firebase user…':'Saving user details…');
+   try{
+     const result=await run(action,{...values, ...(creating?{password:get('ruCreatePassword').value}:{uid:selectedUid})});
+     const i=users.findIndex(x=>x.uid===result.user.uid);
+     if(i<0)users.unshift(result.user);else users[i]=result.user;
+     // Never leave a password in the form after submission.
+     get('ruCreatePassword').value='';
+     choose(result.user.uid);
+     msg(creating?'Firebase account created successfully. Share the temporary password privately.':'User details saved.');
+   }catch(e){get('ruCreatePassword').value='';msg(e.message,true);}
+   finally{setBusy(false);}
+ }
+ async function status(){
+   const u=users.find(x=>x.uid===selectedUid);if(!u||u.admin||busy)return;
+   const disabled=!u.disabled;
+   if(!confirm((disabled?'DISABLE':'ENABLE')+' login for '+u.email+'?'))return;
+   setBusy(true);msg('Updating account access…');
+   try{const result=await run('setDisabled',{uid:u.uid,disabled});users[users.findIndex(x=>x.uid===u.uid)]={...u,...result.user};
+     choose(u.uid);msg(disabled?'User disabled. Existing sessions may remain valid until token expiry.':'User enabled.');}
+   catch(e){msg(e.message,true)}finally{setBusy(false);}
+ }
+ async function setPassword(){
+   const u=users.find(x=>x.uid===selectedUid);if(!u||u.admin||busy)return;
+   const password=get('ruNewPassword').value;
+   if(password.length<10||password.length>128)return msg('New password must contain 10–128 characters.',true);
+   if(!confirm('Change password for '+u.email+'? The previous password will stop working.'))return;
+   setBusy(true);msg('Updating password…');
+   try{await run('setPassword',{uid:u.uid,password});msg('Password updated. Share new credentials privately.');}
+   catch(e){msg(e.message,true)}finally{get('ruNewPassword').value='';setBusy(false)}
+ }
+ async function sendResetEmail(){
+   const u=users.find(x=>x.uid===selectedUid);if(!u||u.admin||busy)return;
+   if(!confirm('Send Firebase password reset email to '+u.email+'?'))return;
+   setBusy(true);msg('Sending password reset email…');
+   try{await firebase.auth().sendPasswordResetEmail(u.email);msg('If email delivery is configured, a password reset email has been requested.');}
+   catch(e){msg(e.message||'Could not send password reset email.',true)}finally{setBusy(false)}
+ }
+ function init(){
+   if(initialized)return;initialized=true;
+   get('ruSearch').addEventListener('input',render);
+   get('ruNewBtn').addEventListener('click',newUser);
+   get('ruBackBtn').addEventListener('click',()=>window.railCloseUserManager());
+   get('ruMoreBtn').addEventListener('click',()=>load(true));
+   get('ruForm').addEventListener('submit',save);
+   get('ruStatusBtn').addEventListener('click',status);
+   get('ruSetPasswordBtn').addEventListener('click',setPassword);
+   get('ruResetEmailBtn').addEventListener('click',sendResetEmail);
+ }
+ window.railOpenUserManager=function(){
+   if(!authReady()){alert('Only an authenticated admin can manage users.');return;}
+   const parent=get('railProfileOverlay');
+   if(!parent||parent.hidden)return;
+   init();parent.classList.add('rail-users-open');show('railUserManagerPanel');
+   get('railProfileTitle').textContent='User Management';
+   newUser();load();
+ };
+ window.railCloseUserManager=function(silent=false){
+   const p=get('railProfileOverlay');if(!p)return;
+   p.classList.remove('rail-users-open');hide('railUserManagerPanel');
+   get('railProfileTitle').textContent='My Profile';
+   selectedUid='';get('ruCreatePassword').value='';get('ruNewPassword').value='';
+   if(!silent)get('railProfileMasterDataBtn')?.focus();
+ };
+})();
+
+</script>
+
+<style id="rail-hmis-government-light-login-v1">
+/* Scope everything to #loginScreen; the authenticated portal remains unmodified. */
+html body #loginScreen.hmis-login-page,html body.dark-theme #loginScreen.hmis-login-page {
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;
+  width:100vw!important;height:100dvh!important;min-height:0!important;max-height:none!important;
+  padding:0!important;margin:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+  gap:0!important;color:#0e315c!important;background:#f1f6fd!important;background-image:none!important;
+  font-family:'Plus Jakarta Sans',Arial,sans-serif!important;color-scheme:light!important;
+  scrollbar-gutter:stable;
+}
+#loginScreen.hmis-login-page #railV44Canvas,
+#loginScreen.hmis-login-page .railV44CardReflection,
+#loginScreen.hmis-login-page .railV44CardBubbles {display:none!important;}
+#loginScreen.hmis-login-page *{box-sizing:border-box;}
+#loginScreen.hmis-login-page .hmis-topbar{position:relative;isolation:isolate;display:flex;flex:0 0 auto;align-items:center;
+  min-height:108px;padding:10px clamp(17px,4vw,55px);background:linear-gradient(105deg,#fff 34%,#eff7ff 100%);gap:20px;
+  border-bottom:1px solid #d9e8f5;overflow:hidden;z-index:1;}
+#loginScreen.hmis-login-page .hmis-brand-block{display:flex;align-items:center;gap:13px;min-width:0;position:relative;z-index:2;flex:0 0 auto;}
+#loginScreen.hmis-login-page .hmis-logo-badge{width:82px;height:82px;border:1px solid #c4dbf5;border-radius:50%;flex:0 0 82px;background:white;
+ display:grid;place-items:center;box-shadow:0 3px 10px rgba(10,73,138,.09);}
+html body #loginScreen.hmis-login-page .hmis-logo-badge .login-logo-svg{width:71px!important;height:71px!important;max-width:none!important;max-height:none!important;filter:none!important;transform:none!important;animation:none!important;}
+#loginScreen.hmis-login-page .hmis-header-name{font-size:clamp(26px,2.6vw,39px);line-height:1.12;font-weight:900;letter-spacing:-.9px;white-space:nowrap;}
+#loginScreen.hmis-login-page .hmis-header-name span,#loginScreen.hmis-login-page .hmis-scene h1 span{color:#0b4d96;}
+#loginScreen.hmis-login-page .hmis-header-name strong,#loginScreen.hmis-login-page .hmis-scene h1 strong{color:#f16b22;}
+#loginScreen.hmis-login-page .hmis-header-subtitle{font-size:clamp(12px,1.35vw,17px);font-weight:800;color:#123961;line-height:1.4;}
+#loginScreen.hmis-login-page .hmis-header-hindi{font-family:'Noto Sans Devanagari',sans-serif;font-size:clamp(10px,1.1vw,14px);font-weight:700;color:#1764a8;line-height:1.6;}
+#loginScreen.hmis-login-page .hmis-header-art{position:absolute;z-index:0;right:132px;top:0;width:49%;height:100%;
+ background:linear-gradient(90deg,white 0%,rgba(255,255,255,.55) 14%,rgba(255,255,255,.12) 60%,rgba(255,255,255,.6) 100%),url('assets/hmis-header-rail.webp') center 45%/cover no-repeat;
+ opacity:.78;pointer-events:none;}
+#loginScreen.hmis-login-page .hmis-head-badge{margin-left:auto;flex:0 0 auto;z-index:2;position:relative;display:flex;align-items:center;gap:9px;color:#114681;font-size:10px;font-weight:900;letter-spacing:.7px;line-height:1.3;padding:12px 14px;border-radius:12px;border:1px solid #c9e0f5;background:rgba(255,255,255,.89);}
+#loginScreen.hmis-login-page .hmis-head-badge i{font-size:23px;color:#f16b22;}
+#loginScreen.hmis-login-page .hmis-topnav{display:flex;align-items:stretch;min-height:49px;flex:0 0 49px;
+ padding:0 clamp(14px,3.5vw,50px);background:linear-gradient(115deg,#063b80,#0c4d98 60%,#073773);box-shadow:0 2px 10px rgba(14,51,96,.15);gap:8px;z-index:2;}
+#loginScreen.hmis-login-page .hmis-navitem{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+ background:transparent;border:0;color:#fff;font-size:13px;font-weight:750;white-space:nowrap;padding:0 14px;cursor:pointer;}
+#loginScreen.hmis-login-page .hmis-navitem:hover,#loginScreen.hmis-login-page .hmis-navitem:focus-visible{background:rgba(255,255,255,.12);outline:none;}
+#loginScreen.hmis-login-page .hmis-navitem.is-current::after{content:'';position:absolute;bottom:0;left:15px;right:15px;height:4px;background:#f47725;border-radius:5px 5px 0 0;}
+#loginScreen.hmis-login-page .hmis-navlogin{margin-left:auto;align-self:center;height:36px;border-radius:7px;background:#086ccf;padding:0 17px;}
+#loginScreen.hmis-login-page .hmis-mainarea{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.53fr) minmax(340px,1fr);align-items:stretch;
+ gap:12px;flex:1 0 auto;min-height:465px;padding:14px clamp(12px,2.6vw,34px) 10px;max-width:1850px;margin:0 auto;width:100%;}
+#loginScreen.hmis-login-page .hmis-scene{position:relative;overflow:hidden;isolation:isolate;min-height:440px;border-radius:12px;
+ border:1px solid #cbe4f7;background:linear-gradient(122deg,#92cbf8 0%,#e7f4ff 38%,#e7f4ff 74%,#b1dcf8 100%);}
+#loginScreen.hmis-login-page .hmis-scene::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+ background:linear-gradient(138deg,rgba(255,255,255,.11) 15%,rgba(255,255,255,.70) 22%,transparent 23%),
+ linear-gradient(140deg,transparent 74%,rgba(255,255,255,.44) 74.6%,transparent 86%);}
+#loginScreen.hmis-login-page .hmis-scene-bg{position:absolute;bottom:0;left:0;right:0;height:45%;z-index:0;
+ background:linear-gradient(180deg,rgba(225,244,255,1) 0%,rgba(225,244,255,0) 17%),url('assets/hmis-tracks.webp') center bottom/cover no-repeat;}
+#loginScreen.hmis-login-page .hmis-scene-signal{position:absolute;left:0;bottom:0;height:100%;width:28%;z-index:1;
+ background:url('assets/hmis-signal.webp') center center/cover no-repeat;
+ -webkit-mask-image:linear-gradient(to right,#000 0%,#000 62%,transparent 100%);mask-image:linear-gradient(to right,#000 0%,#000 62%,transparent 100%);}
+#loginScreen.hmis-login-page .hmis-scene-text{position:relative;z-index:2;text-align:left;margin:6.5% 6% 0 31%;}
+#loginScreen.hmis-login-page .hmis-scene h1{font-size:clamp(27px,3.4vw,55px);font-weight:900;line-height:1.08;letter-spacing:-1px;white-space:nowrap;margin:0;color:#134985;}
+#loginScreen.hmis-login-page .hmis-hero-subtitle{font-size:clamp(13px,1.65vw,23px);color:#0c345e;font-weight:850;margin-top:3px;line-height:1.4;}
+#loginScreen.hmis-login-page .hmis-accentline{width:95px;height:4px;background:linear-gradient(90deg,#f27a21 43%,#0b66c4 43%);border-radius:3px;margin:14px 0 12px;}
+#loginScreen.hmis-login-page .hmis-scene-text p{font-family:'Noto Sans Devanagari',sans-serif;color:#0b3972;font-size:clamp(12px,1.7vw,23px);font-weight:800;line-height:1.55;white-space:nowrap;}
+#loginScreen.hmis-login-page .hmis-features{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:3px;width:70%;margin:30px 2% 0 29%;padding:0 5px;}
+#loginScreen.hmis-login-page .hmis-feature{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;
+ font-size:clamp(9px,1.05vw,12px);font-weight:850;line-height:1.25;color:#103767;}
+#loginScreen.hmis-login-page .hmis-feature-icon{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:20px;box-shadow:0 3px 10px rgba(17,75,135,.15);}
+#loginScreen.hmis-login-page .icon-book{background:#066bd2;}
+#loginScreen.hmis-login-page .icon-folder{background:#8549c9;}
+#loginScreen.hmis-login-page .icon-exam{background:#11a779;}
+#loginScreen.hmis-login-page .icon-links{background:#f39a20;}
+html body #loginScreen.hmis-login-page .login-card.hmis-login-card,
+html body.dark-theme #loginScreen.hmis-login-page .login-card.hmis-login-card{
+  position:relative!important;isolation:isolate;z-index:1!important;display:flex!important;flex-direction:column!important;
+  width:100%!important;max-width:none!important;height:auto!important;max-height:none!important;min-height:440px!important;
+  padding:26px clamp(18px,2.4vw,37px) 20px!important;margin:0!important;
+  text-align:left!important;color:#173b69!important;overflow:visible!important;transform:none!important;
+  background:#fff!important;background-image:none!important;border:1px solid #d8e5f1!important;
+  border-radius:11px!important;box-shadow:0 6px 24px rgba(15,57,104,.09)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;animation:none!important;
+}
+#loginScreen.hmis-login-page .hmis-login-card::before,#loginScreen.hmis-login-page .hmis-login-card::after{content:none!important;display:none!important;}
+#loginScreen.hmis-login-page .hmis-signin-title{display:flex;align-items:center;justify-content:center;gap:12px;color:#103b70;font-size:26px;}
+#loginScreen.hmis-login-page .hmis-signin-title i{color:#1267cc;font-size:34px;}
+#loginScreen.hmis-login-page .hmis-signin-title h2{font-size:clamp(26px,2.3vw,34px);margin:0;font-weight:850;}
+#loginScreen.hmis-login-page .hmis-form-line{height:4px;width:68px;margin:9px auto 13px;}
+#loginScreen.hmis-login-page .hmis-signin-intro{text-align:center;color:#576b83;font-size:13px;margin:0 0 21px;}
+#loginScreen.hmis-login-page .hmis-auth-form{display:block;width:100%;}
+#loginScreen.hmis-login-page .login-form-group{display:block;margin:0 0 15px!important;text-align:left!important;}
+html body #loginScreen.hmis-login-page .login-form-group label,
+html body.dark-theme #loginScreen.hmis-login-page .login-form-group label{color:#173864!important;font-size:13px!important;font-weight:800!important;margin:0 0 7px!important;line-height:1.3!important;}
+#loginScreen.hmis-login-page .login-form-group label em{font-style:normal;color:#da3e3e;}
+html body #loginScreen.hmis-login-page .login-input-wrapper{height:48px!important;border-radius:6px!important;
+ border:1px solid #cbd8e8!important;background:#fff!important;background-image:none!important;
+ box-shadow:none!important;transition:border-color .2s,box-shadow .2s!important;}
+html body #loginScreen.hmis-login-page .login-input-wrapper:focus-within{border-color:#1e78d3!important;box-shadow:0 0 0 3px rgba(30,120,211,.11)!important;}
+html body #loginScreen.hmis-login-page .login-input,
+html body.dark-theme #loginScreen.hmis-login-page .login-input{height:46px!important;line-height:normal!important;border-radius:6px!important;
+ background:transparent!important;color:#183457!important;font-size:13px!important;padding:0 43px!important;text-align:left!important;}
+html body #loginScreen.hmis-login-page .login-input::placeholder,
+html body.dark-theme #loginScreen.hmis-login-page .login-input::placeholder{color:#8291a5!important;opacity:1!important;}
+html body #loginScreen.hmis-login-page .login-input-wrapper > i,
+html body.dark-theme #loginScreen.hmis-login-page .login-input-wrapper > i{color:#607b9c!important;top:50%!important;left:14px!important;transform:translateY(-50%)!important;font-size:15px!important;}
+html body #loginScreen.hmis-login-page .rail-password-eye,
+html body.dark-theme #loginScreen.hmis-login-page .rail-password-eye{color:#5a7896!important;right:9px!important;}
+#loginScreen.hmis-login-page .hmis-form-help{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 14px;
+ font-size:11px;color:#68809c;}
+#loginScreen.hmis-login-page .hmis-form-help span i{color:#1d78ce;margin-right:3px;}
+#loginScreen.hmis-login-page .hmis-forgot{border:0;background:transparent;color:#086ac4;text-decoration:underline;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0;}
+html body #loginScreen.hmis-login-page .login-btn,
+html body.dark-theme #loginScreen.hmis-login-page .login-btn{display:flex!important;justify-content:center!important;align-items:center!important;gap:10px!important;
+ width:100%!important;height:51px!important;min-height:51px!important;border-radius:7px!important;
+ background:#086bd0!important;background-image:linear-gradient(100deg,#0965c4,#0a75de)!important;color:#fff!important;
+ border:0!important;box-shadow:0 4px 10px rgba(3,75,150,.2)!important;font-size:17px!important;font-weight:800!important;margin:0!important;}
+#loginScreen.hmis-login-page .login-btn:hover{filter:brightness(1.05);}
+#loginScreen.hmis-login-page .login-btn::before{display:none!important;}
+html body #loginScreen.hmis-login-page .login-error-msg{color:#ae2525!important;background:#fff3f2;border-radius:5px;
+ font-size:12px!important;font-weight:600!important;margin:10px 0 0!important;padding:8px 10px;text-align:left!important;}
+#loginScreen.hmis-login-page .login-error-msg:empty{display:none!important;}
+#loginScreen.hmis-login-page .hmis-login-separator{display:flex;align-items:center;gap:14px;margin:21px 0 13px;color:#8594a7;font-size:10px;font-weight:800;letter-spacing:1px;}
+#loginScreen.hmis-login-page .hmis-login-separator::before,#loginScreen.hmis-login-page .hmis-login-separator::after{content:'';height:1px;background:#d9e5f0;flex:1;}
+#loginScreen.hmis-login-page .hmis-auth-note{display:flex;align-items:center;gap:12px;background:#e9f3fc;border-radius:7px;
+ padding:12px 13px;font-size:11px;line-height:1.5;color:#456078;}
+#loginScreen.hmis-login-page .hmis-auth-note i{font-size:21px;color:#0a65c7;flex:0 0 auto;}
+#loginScreen.hmis-login-page .hmis-nav-notice{background:#eef6ff;color:#244b75;border-left:3px solid #0b70cc;border-radius:5px;
+ padding:9px 10px;margin:-8px 0 12px;font-size:12px;line-height:1.45;}
+#loginScreen.hmis-login-page .hmis-nav-notice[hidden]{display:none!important;}
+#loginScreen.hmis-login-page .hmis-bottom-bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;
+ background:linear-gradient(90deg,#062f69,#084484);color:#e7f3ff;min-height:37px;padding:8px clamp(14px,4vw,55px);
+ font-size:11px;font-weight:600;}
+#loginScreen.hmis-login-page .hmis-bottom-bar b{color:#ffa653;padding:0 5px;}
+/* The welcome message from V4.4 remains functional and covers this page during sign-in. */
+@media(max-width:900px){
+ #loginScreen.hmis-login-page .hmis-mainarea{grid-template-columns:1fr;max-width:650px;gap:11px;min-height:0;padding:10px 10px 12px;}
+ #loginScreen.hmis-login-page .hmis-scene{min-height:335px;}
+ #loginScreen.hmis-login-page .hmis-scene-text{margin:39px 5% 0 31%;}
+ #loginScreen.hmis-login-page .hmis-scene h1{font-size:clamp(25px,6vw,38px);}
+ #loginScreen.hmis-login-page .hmis-hero-subtitle{font-size:clamp(11px,2.7vw,17px);}
+ #loginScreen.hmis-login-page .hmis-scene-text p{font-size:clamp(10px,2.55vw,15px);}
+ #loginScreen.hmis-login-page .hmis-features{margin-top:21px;}
+ html body #loginScreen.hmis-login-page .login-card.hmis-login-card,html body.dark-theme #loginScreen.hmis-login-page .login-card.hmis-login-card{min-height:0!important;padding:22px 22px 20px!important;}
+ #loginScreen.hmis-login-page .hmis-head-badge{display:none;}
+ #loginScreen.hmis-login-page .hmis-header-art{right:0;width:40%;opacity:.35;}
+}
+@media(max-width:600px){
+ #loginScreen.hmis-login-page .hmis-topbar{min-height:79px;padding:8px 12px;}
+ #loginScreen.hmis-login-page .hmis-logo-badge{width:59px;height:59px;flex-basis:59px;}
+ html body #loginScreen.hmis-login-page .hmis-logo-badge .login-logo-svg{width:52px!important;height:52px!important;}
+ #loginScreen.hmis-login-page .hmis-brand-block{gap:8px;}
+ #loginScreen.hmis-login-page .hmis-header-name{font-size:clamp(22px,6.3vw,30px);letter-spacing:-.7px;}
+ #loginScreen.hmis-login-page .hmis-header-subtitle{font-size:10px;}
+ #loginScreen.hmis-login-page .hmis-header-hindi{font-size:9px;}
+ #loginScreen.hmis-login-page .hmis-header-art{display:none;}
+ #loginScreen.hmis-login-page .hmis-topnav{padding:0 4px;gap:0;min-height:44px;flex-basis:44px;}
+ #loginScreen.hmis-login-page .hmis-navitem{flex:1 1 0;padding:0 3px;font-size:10.5px;gap:4px;}
+ #loginScreen.hmis-login-page .hmis-navitem i{font-size:12px;}
+ #loginScreen.hmis-login-page .hmis-navitem:nth-child(3) span{font-size:0;}
+ #loginScreen.hmis-login-page .hmis-navitem:nth-child(3) span::after{content:'Links';font-size:10.5px;}
+ #loginScreen.hmis-login-page .hmis-navitem:nth-child(4) span{font-size:0;}
+ #loginScreen.hmis-login-page .hmis-navitem:nth-child(4) span::after{content:'Help';font-size:10.5px;}
+ #loginScreen.hmis-login-page .hmis-navlogin{margin-left:3px;height:31px;border-radius:6px;flex:0 0 67px;background:#0875dc;}
+ #loginScreen.hmis-login-page .hmis-mainarea{padding:8px 8px 10px;}
+ #loginScreen.hmis-login-page .hmis-scene{min-height:312px;border-radius:10px;}
+ #loginScreen.hmis-login-page .hmis-scene-signal{width:31%;}
+ #loginScreen.hmis-login-page .hmis-scene-text{margin:40px 3% 0 30%;}
+ #loginScreen.hmis-login-page .hmis-scene h1{font-size:clamp(22px,5.4vw,31px);letter-spacing:-.7px;}
+ #loginScreen.hmis-login-page .hmis-hero-subtitle{font-size:clamp(10px,2.4vw,13px);font-weight:850;}
+ #loginScreen.hmis-login-page .hmis-scene-text p{font-size:clamp(10px,2.65vw,13px);white-space:normal;}
+ #loginScreen.hmis-login-page .hmis-scene-text .hmis-accentline{margin:7px 0 8px;width:68px;height:3px;}
+ #loginScreen.hmis-login-page .hmis-features{width:70%;margin:20px 1% 0 29%;gap:0;}
+ #loginScreen.hmis-login-page .hmis-feature{gap:4px;font-size:8.2px;}
+ #loginScreen.hmis-login-page .hmis-feature-icon{width:34px;height:34px;font-size:15px;}
+ html body #loginScreen.hmis-login-page .login-card.hmis-login-card,html body.dark-theme #loginScreen.hmis-login-page .login-card.hmis-login-card{padding:20px 19px 17px!important;border-radius:10px!important;}
+ #loginScreen.hmis-login-page .hmis-signin-title{gap:9px;}
+ #loginScreen.hmis-login-page .hmis-signin-title i{font-size:28px;}
+ #loginScreen.hmis-login-page .hmis-signin-title h2{font-size:28px;}
+ #loginScreen.hmis-login-page .hmis-signin-intro{margin-bottom:17px;font-size:12px;}
+ #loginScreen.hmis-login-page .login-form-group{margin-bottom:13px!important;}
+ #loginScreen.hmis-login-page .hmis-bottom-bar{justify-content:center;text-align:center;font-size:9px;min-height:31px;}
+ #loginScreen.hmis-login-page .hmis-bottom-bar>span:last-child{display:none;}
+}
+@media(max-width:365px){
+ #loginScreen.hmis-login-page .hmis-topbar{padding:6px 8px;}
+ #loginScreen.hmis-login-page .hmis-header-name{font-size:21px;}
+ #loginScreen.hmis-login-page .hmis-header-hindi{font-size:8px;}
+ #loginScreen.hmis-login-page .hmis-scene{min-height:295px;}
+ #loginScreen.hmis-login-page .hmis-scene-text{margin-left:31%;margin-top:36px;}
+ #loginScreen.hmis-login-page .hmis-scene h1{font-size:21px;}
+ #loginScreen.hmis-login-page .hmis-feature-icon{width:30px;height:30px;}
+}
+@media(min-width:901px) and (max-height:720px){
+ #loginScreen.hmis-login-page .hmis-topbar{min-height:82px;padding-top:5px;padding-bottom:5px;}
+ #loginScreen.hmis-login-page .hmis-logo-badge{width:66px;height:66px;flex-basis:66px;}
+ html body #loginScreen.hmis-login-page .hmis-logo-badge .login-logo-svg{width:56px!important;height:56px!important;}
+ #loginScreen.hmis-login-page .hmis-header-name{font-size:26px;}
+ #loginScreen.hmis-login-page .hmis-topnav{min-height:41px;flex-basis:41px;}
+ #loginScreen.hmis-login-page .hmis-mainarea{min-height:385px;padding-top:8px;padding-bottom:8px;}
+ #loginScreen.hmis-login-page .hmis-scene{min-height:380px;}
+ html body #loginScreen.hmis-login-page .login-card.hmis-login-card,html body.dark-theme #loginScreen.hmis-login-page .login-card.hmis-login-card{min-height:380px!important;padding:13px 23px 12px!important;}
+ #loginScreen.hmis-login-page .hmis-signin-title h2{font-size:25px;}
+ #loginScreen.hmis-login-page .hmis-signin-title i{font-size:27px;}
+ #loginScreen.hmis-login-page .hmis-signin-intro{margin-bottom:10px;}
+ #loginScreen.hmis-login-page .login-form-group{margin-bottom:9px!important;}
+ #loginScreen.hmis-login-page .hmis-form-help{margin-bottom:10px;}
+ #loginScreen.hmis-login-page .hmis-login-separator{margin:11px 0 7px;}
+ #loginScreen.hmis-login-page .hmis-auth-note{padding:7px 10px;}
+ #loginScreen.hmis-login-page .hmis-bottom-bar{min-height:28px;padding-top:5px;padding-bottom:5px;}
+}
+/* Stronger specificity than legacy authenticated-portal header styles. */
+html body #loginScreen.hmis-login-page header.hmis-topbar,
+html body.dark-theme #loginScreen.hmis-login-page header.hmis-topbar{
+  background:linear-gradient(105deg,#fff 34%,#eff7ff 100%)!important;
+  color:#0e315c!important;box-shadow:none!important;
+}
+html body #loginScreen.hmis-login-page .hmis-header-name,
+html body.dark-theme #loginScreen.hmis-login-page .hmis-header-name,
+html body #loginScreen.hmis-login-page .hmis-header-subtitle,
+html body.dark-theme #loginScreen.hmis-login-page .hmis-header-subtitle{color:#0b4d96!important;text-shadow:none!important;}
+html body #loginScreen.hmis-login-page .hmis-header-hindi,
+html body.dark-theme #loginScreen.hmis-login-page .hmis-header-hindi{color:#1764a8!important;text-shadow:none!important;}
+#loginScreen.hmis-login-page .hmis-icon-svg{width:1em;height:1em;display:inline-block;flex:0 0 auto;vertical-align:-.12em;}
+#loginScreen.hmis-login-page .hmis-feature-icon .hmis-icon-svg{width:21px;height:21px;}
+#loginScreen.hmis-login-page .hmis-signin-title .hmis-icon-svg{color:#1267cc;width:36px;height:36px;}
+#loginScreen.hmis-login-page .hmis-form-help .hmis-icon-svg{color:#187ac7;width:14px;height:14px;}
+#loginScreen.hmis-login-page .hmis-head-badge .hmis-icon-svg{font-size:23px;width:23px;height:23px;color:#f16b22;}
+#loginScreen.hmis-login-page .hmis-auth-note .hmis-icon-svg{width:22px;height:22px;color:#0a65c7;}
+#loginScreen.hmis-login-page .login-input-wrapper .hmis-icon-svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:#607b9c;pointer-events:none;}
+#loginScreen.hmis-login-page .rail-password-eye .hmis-icon-svg{position:static;transform:none;color:inherit;width:19px;height:19px;pointer-events:none;}
+#loginScreen.hmis-login-page .login-btn .hmis-icon-svg{width:21px;height:21px;}
+#loginScreen.hmis-login-page .login-form-group label,#loginScreen.hmis-login-page .login-input,#loginScreen.hmis-login-page .hmis-signin-title{ text-shadow:none!important;filter:none!important; }
+@media(min-width:901px) and (min-height:721px){
+ html body #loginScreen.hmis-login-page .login-card.hmis-login-card{justify-content:center!important;}
+}
+@media(max-width:600px){
+ #loginScreen.hmis-login-page .hmis-feature-icon .hmis-icon-svg{width:16px;height:16px;}
+ #loginScreen.hmis-login-page .hmis-signin-title .hmis-icon-svg{width:28px;height:28px;}
+}
+@media(prefers-reduced-motion:reduce){#loginScreen.hmis-login-page .hmis-login-card{animation:none!important;}}
+</style>
+<script id="rail-hmis-login-links-and-reset">
+(function(){
+ 'use strict';
+ function notice(text){const p=document.getElementById('hmisNavInfo');if(p){p.textContent=text;p.hidden=false;}}
+ window.railHmisNavigate=function(which){
+  const card=document.getElementById('hmisSignIn'),scene=document.getElementById('hmisHome');
+  if(which==='home'){const p=document.getElementById('hmisNavInfo');if(p)p.hidden=true;scene?.scrollIntoView({behavior:'smooth',block:'start'});return;}
+  if(which==='about'){notice('RailSNTGyan is a Railway S&T knowledge portal for technical references, approvals and LDCE preparation. Sign in to access its sections.');}
+  if(which==='links'){notice('Important Links are available after signing in. Please use your registered account.');}
+  if(which==='help'){notice('For login assistance, use Forgot password to request a reset email, or contact your RailSNTGyan administrator.');}
+  if(which==='login'){const p=document.getElementById('hmisNavInfo');if(p)p.hidden=true;}
+  card?.scrollIntoView({behavior:'smooth',block:'center'});
+  if(which==='login'||which==='links')setTimeout(function(){document.getElementById('pageEmailInput')?.focus({preventScroll:true});},250);
+ };
+ window.railHmisPasswordReset=async function(){
+  const input=document.getElementById('pageEmailInput');
+  if(!input)return;
+  const email=input.value.trim();
+  if(!email||!input.checkValidity()){notice('Enter your registered email address in the Email Address field, then choose Forgot password again.');input.focus();return;}
+  const btn=document.querySelector('#loginScreen .hmis-forgot');if(btn)btn.disabled=true;
+  notice('Submitting password-reset request…');
+  try{
+   if(typeof firebase==='undefined'||!firebase.auth)throw new Error('Firebase is not ready.');
+   await firebase.auth().sendPasswordResetEmail(email);
+   notice('If this email is registered and password reset is enabled, you will receive a reset link. Please check your inbox and spam folder.');
+  }catch(err){
+   console.warn('Firebase password reset could not be completed:',err?.code||'network error');
+   notice('Unable to send reset email right now. Please verify the email address, your connection, and contact the administrator if needed.');
+  }finally{if(btn)btn.disabled=false;}
+ };
+})();
+</script>
+
 </body>
 
 <!-- 22 October 2026 | RailSNTGyan 3CX vivid-blue contrast fix, DARK MODE ONLY -->
