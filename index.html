@@ -14,24 +14,25 @@
     if (meta) meta.setAttribute('content', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes');
   })();
   </script>
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#07101d">
-  <!-- v83: Dark theme is the default from the very first paint, including BFCache/back navigation. -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f1f5f9">
+  <!-- RailSNTGyan: default light theme from first paint; dark theme is a user choice. -->
   <script id="v83-dark-first-paint-script">
     (function () {
-      var savedTheme = 'dark';
-      try { savedTheme = sessionStorage.getItem('railsntgyan-theme') === 'light' ? 'light' : 'dark'; } catch(e) {}
+      var savedTheme = 'light';
+      try { savedTheme = sessionStorage.getItem('railsntgyan-theme-v2') === 'dark' ? 'dark' : 'light'; } catch(e) {}
       document.documentElement.classList.toggle('dark-theme', savedTheme === 'dark');
       document.documentElement.classList.toggle('rail-saved-light', savedTheme === 'light');
       document.documentElement.style.backgroundColor = savedTheme === 'light' ? '#f1f5f9' : '#07101d';
     })();
   </script>
   <style id="v83-dark-first-paint-style">
-    html, html.dark-theme { background:#07101d !important; color-scheme:dark; }
+    html { background:#f1f5f9 !important; color-scheme:light; }
+    html.dark-theme { background:#07101d !important; color-scheme:dark; }
     html.dark-theme body { background-color:#07101d; }
   .chapter-book-art img.chapter-special-art{width:100%;height:100%;object-fit:contain;display:block;border-radius:8px}
 </style>
-  <style>html { background:#07101d; } body.dark-theme { background:#07101d; color:#e5edf7; }</style>
+  <style>html { background:#f1f5f9; } body.dark-theme { background:#07101d; color:#e5edf7; }</style>
 <style id="rn-light-first-paint-v33">
 html.rail-saved-light,html.rail-saved-light body,
 html.rail-saved-light body:not(.dark-theme) {
@@ -39,10 +40,10 @@ html.rail-saved-light body:not(.dark-theme) {
 }
 </style>
 <style id="dark-first-paint-fix">
-/* DARK FIRST PAINT: these rules live in <head> so login/return never paints light first */
-html, body { background:#07101d !important; color-scheme:dark; }
-html { background-color:#07101d !important; }
-body { background-color:#07101d !important; }
+/* Neutral/light first paint; only explicit dark preference receives dark canvas. */
+html, body { background:#f1f5f9 !important; color-scheme:light; }
+html { background-color:#f1f5f9 !important; }
+body { background-color:#f1f5f9 !important; }
 body.dark-theme { background:#07101d !important; color:#e5edf7 !important; }
 
 html.rail-saved-light,html.rail-saved-light body,
@@ -7314,17 +7315,16 @@ html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback.r
 </head>
 <script id="rn-theme-prebody-v33">
 (function(){
-  var selected='dark';
+  var selected='light';
   try {
-    if(sessionStorage.getItem('secr_portal_authorized')==='true' &&
-       sessionStorage.getItem('railsntgyan-theme')==='light')selected='light';
+    selected = sessionStorage.getItem('railsntgyan-theme-v2')==='dark' ? 'dark' : 'light';
   }catch(e){}
   document.documentElement.classList.toggle('dark-theme',selected==='dark');
   document.documentElement.classList.toggle('rail-saved-light',selected==='light');
   document.documentElement.style.backgroundColor=selected==='dark'?'#07101d':'#f1f5f9';
 })();
 </script>
-<body class="dark-theme">
+<body>
 <script id="rn-theme-body-first-v33">
 (function(){
  var dark=!document.documentElement.classList.contains('rail-saved-light');
@@ -8054,11 +8054,14 @@ html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback.r
         <input type="text" id="headerGlobalSearch" placeholder="Search records..." onkeyup="syncHeaderSearch(this.value)">
       </div>
 
-      <span class="badge-portal badge-cloud" id="networkStatusBadge">
-        <i class="fa-solid fa-wifi"></i> Online
-      </span>
-
       <div class="header-action-stack">
+        <button type="button" id="railThemeSwitch" class="rail-theme-switch" role="switch"
+                aria-checked="false" aria-label="Enable dark theme" title="Switch to Dark Theme">
+          <i class="fa-solid fa-sun rail-theme-sun" aria-hidden="true"></i>
+          <span class="rail-theme-track" aria-hidden="true"><span class="rail-theme-thumb"></span></span>
+          <i class="fa-solid fa-moon rail-theme-moon" aria-hidden="true"></i>
+          <span class="rail-theme-current" aria-hidden="true">Light</span>
+        </button>
         <button type="button" class="header-util-btn rail-profile-trigger" id="railProfileBtn"
                 title="My Profile" aria-label="View my profile" aria-haspopup="dialog" aria-expanded="false"
                 onclick="railOpenProfile()">
@@ -8940,7 +8943,8 @@ html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback.r
       document.querySelectorAll('.modal-overlay').forEach(modal => { modal.style.display = 'none'; });
       goHome(false);
       sessionStorage.removeItem('railsntgyan-theme');
-      if (typeof window.railApplyTheme === 'function') window.railApplyTheme('dark');
+      sessionStorage.removeItem('railsntgyan-theme-v2');
+      if (typeof window.railApplyTheme === 'function') window.railApplyTheme('light');
       sessionStorage.setItem('railsntgyan_allow_exit', 'true');
       sessionStorage.removeItem('secr_portal_authorized');
       document.getElementById('pagePasswordInput').value = '';
@@ -11283,23 +11287,7 @@ html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback.r
     }
 
 
-    // ONLINE / OFFLINE STATUS DETECTOR
-    window.addEventListener('online', () => {
-      const b = document.getElementById('networkStatusBadge');
-      if (b) {
-        b.innerHTML = '<i class="fa-solid fa-wifi"></i> Online';
-        b.className = 'badge-portal badge-cloud';
-      }
-    });
-
-    window.addEventListener('offline', () => {
-      const b = document.getElementById('networkStatusBadge');
-      if (b) {
-        b.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Offline';
-        b.className = 'badge-portal';
-        b.style.color = '#e11d48';
-      }
-    });
+    // Network badge removed from the header; no status listeners are required.
 
     // FINANCIAL YEAR REPORT FACILITY
     function openFYReportModal() {
@@ -12975,42 +12963,85 @@ html.rail-theme-switching *::after {
   }
 </style>
 
+<style id="rail-theme-switch-v2-style">
+/* One accessible slider replacing the old circular theme button. */
+#mainHeader .rail-theme-switch {
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-height:36px;padding:5px 10px;border-radius:999px;
+  border:1px solid #b9d4e8;background:#f1f8fd;color:#0b3b60;
+  font:700 11px/1.1 'Plus Jakarta Sans',sans-serif;letter-spacing:.1px;
+  cursor:pointer;flex:0 0 auto;white-space:nowrap;
+  box-shadow:0 2px 6px rgba(11,59,96,.08);transition:background .2s,border-color .2s;
+}
+#mainHeader .rail-theme-switch:hover {border-color:#3b91c9;background:#e7f3fc}
+#mainHeader .rail-theme-switch:focus-visible {outline:3px solid #f97316;outline-offset:3px}
+#mainHeader .rail-theme-switch .rail-theme-track {
+  display:inline-flex;align-items:center;width:34px;height:19px;flex:none;
+  border-radius:999px;background:#c5d7e6;position:relative;
+  box-shadow:inset 0 1px 3px rgba(9,37,67,.18);
+}
+#mainHeader .rail-theme-switch .rail-theme-thumb {
+  width:15px;height:15px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;
+  box-shadow:0 1px 4px rgba(8,28,56,.25);transition:transform .2s ease;
+}
+#mainHeader .rail-theme-switch .rail-theme-sun {color:#dd8a13}
+#mainHeader .rail-theme-switch .rail-theme-moon {color:#6d86a3}
+#mainHeader .rail-theme-switch .rail-theme-current {min-width:28px;text-align:left}
+body.dark-theme #mainHeader .rail-theme-switch {
+  background:#142a43;color:#f1f7ff;border-color:#526a89;
+  box-shadow:0 2px 9px rgba(0,0,0,.22);
+}
+body.dark-theme #mainHeader .rail-theme-switch:hover {background:#1b3757;border-color:#62b5ec}
+body.dark-theme #mainHeader .rail-theme-switch .rail-theme-track {background:#1677bd}
+body.dark-theme #mainHeader .rail-theme-switch .rail-theme-thumb {transform:translateX(15px)}
+body.dark-theme #mainHeader .rail-theme-switch .rail-theme-sun {color:#8b9aaf}
+body.dark-theme #mainHeader .rail-theme-switch .rail-theme-moon {color:#f9d66e}
+@media(max-width:680px) {
+  #mainHeader .header-action-stack {display:grid;grid-template-columns:86px 32px;gap:4px;align-items:center;justify-items:center}
+  #mainHeader .header-action-stack .btn-logout {grid-column:1/-1;justify-self:end}
+  #mainHeader .rail-theme-switch {gap:5px;padding:5px 7px;min-height:34px}
+  #mainHeader .rail-theme-switch .rail-theme-current {display:none}
+}
+@media(prefers-reduced-motion:reduce) {#mainHeader .rail-theme-switch *,#mainHeader .rail-theme-switch{transition:none!important}}
+</style>
+
 <script id="light-dark-theme-script">
 (function () {
+  // Light by default. The v2 session key means an old dark-first preference
+  // will not override the new portal default on first visit after updating.
+  var KEY = 'railsntgyan-theme-v2';
+  function readTheme() {
+    try { return sessionStorage.getItem(KEY) === 'dark' ? 'dark' : 'light'; }
+    catch (e) { return 'light'; }
+  }
   function applyTheme(theme) {
-    const dark = theme === 'dark';
-
-    // Apply every theme-dependent CSS rule in one visual frame.  Some portal
-    // components have their own hover/layout transitions; temporarily disabling
-    // those transitions prevents sticky cells, cards and sidebar sections from
-    // visually changing before/after the rest of the page.
-    document.documentElement.classList.add('rail-theme-switching');
-    document.documentElement.classList.toggle('dark-theme', dark);
-    document.documentElement.classList.toggle('rail-saved-light', !dark);
-    document.documentElement.style.backgroundColor = dark ? '#07101d' : '#f1f5f9';
+    var dark = theme === 'dark';
+    var root = document.documentElement;
+    root.classList.add('rail-theme-switching');
+    root.classList.toggle('dark-theme', dark);
+    root.classList.toggle('rail-saved-light', !dark);
+    root.style.backgroundColor = dark ? '#07101d' : '#f1f5f9';
     document.body.classList.toggle('dark-theme', dark);
-    const btn = document.getElementById('themeToggleBtn');
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#07101d' : '#f1f5f9');
+    var btn = document.getElementById('railThemeSwitch');
     if (btn) {
-      btn.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      btn.setAttribute('aria-checked', dark ? 'true' : 'false');
+      btn.setAttribute('aria-label', dark ? 'Enable light theme' : 'Enable dark theme');
       btn.title = dark ? 'Switch to Light Theme' : 'Switch to Dark Theme';
-      btn.setAttribute('aria-label', btn.title);
+      btn.classList.toggle('is-dark', dark);
+      var label = btn.querySelector('.rail-theme-current');
+      if (label) label.textContent = dark ? 'Dark' : 'Light';
     }
-    try { sessionStorage.setItem('railsntgyan-theme', theme); } catch(e) {}
-
-    // Force style resolution while transitions are suppressed, then restore the
-    // portal's normal hover/menu animations immediately after the theme has landed.
-    void document.documentElement.offsetWidth;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        document.documentElement.classList.remove('rail-theme-switching');
-      });
+    try { sessionStorage.setItem(KEY, dark ? 'dark' : 'light'); } catch(e) {}
+    // Suppress only during the theme update to keep sticky tables synchronized.
+    void root.offsetWidth;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { root.classList.remove('rail-theme-switching'); });
     });
-
-    // Refresh canvas labels/legend immediately because Chart.js text colors
-    // are drawn on canvas and do not respond to CSS theme changes.
     try {
       if (typeof updateDashboardView === 'function') {
-        requestAnimationFrame(() => updateDashboardView());
+        requestAnimationFrame(function () { updateDashboardView(); });
       }
     } catch(e) {}
   }
@@ -13019,42 +13050,19 @@ html.rail-theme-switching *::after {
   window.toggleRailTheme = function () {
     applyTheme(document.body.classList.contains('dark-theme') ? 'light' : 'dark');
   };
-
-  // Re-assert the default dark theme when returning from an external page via Back/BFCache.
   window.addEventListener('pageshow', function () {
-    var remembered = 'dark';
-    try { remembered = sessionStorage.getItem('railsntgyan-theme') === 'light' ? 'light' : 'dark'; } catch(e) {}
-    if(document.body.classList.contains('dark-theme') !== (remembered==='dark')) applyTheme(remembered);
+    var remembered = readTheme();
+    if (document.body.classList.contains('dark-theme') !== (remembered === 'dark')) {
+      applyTheme(remembered);
+    }
   });
-
-  function installThemeButton() {
-    if (document.getElementById('themeToggleBtn')) return;
-    const profile = document.getElementById('railProfileBtn');
-    const logout = document.querySelector('.btn-logout');
-    const host = (profile && profile.parentElement) || (logout && logout.parentElement);
-    if (!host) return;
-
-    const btn = document.createElement('button');
-    btn.id = 'themeToggleBtn';
-    btn.type = 'button';
-    btn.className = 'theme-toggle-btn';
-    btn.onclick = window.toggleRailTheme;
-    if (profile && profile.parentElement === host) host.insertBefore(btn, profile);
-    else if (logout && logout.parentElement === host) host.insertBefore(btn, logout);
-    else host.appendChild(btn);
-
-    // RailSNTGyan always starts in Dark Theme. This runs after the body
-    // already has dark-theme, so there is no Light -> Dark flash on login or Back.
-    var remembered = 'dark';
-    try { remembered = sessionStorage.getItem('railsntgyan-theme') === 'light' ? 'light' : 'dark'; } catch(e) {}
-    applyTheme(remembered);
+  function installThemeSwitch() {
+    var btn = document.getElementById('railThemeSwitch');
+    if (btn) btn.addEventListener('click', window.toggleRailTheme);
+    applyTheme(readTheme());
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', installThemeButton);
-  } else {
-    installThemeButton();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', installThemeSwitch);
+  else installThemeSwitch();
 })();
 </script>
 
