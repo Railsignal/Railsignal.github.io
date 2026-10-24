@@ -18280,6 +18280,115 @@ html body.dark-theme #loginScreen.hmis-login-page .login-card.hmis-login-card{
  #loginScreen.hmis-login-page .hmis-signin-intro{display:none!important;}
 }
 </style>
+<!-- v2026-10-24: RailSNTGyan HMIS tablet portrait balanced layout; login only -->
+<style id="rails-hmis-tablet-portrait-balance-v2">
+/* The previous 100%-high white panel centered a small form inside a huge empty card.
+   Tablets instead get a full detailed banner, then a naturally sized sign-in card. */
+@media (min-width:601px) and (max-width:900px) and (orientation:portrait) and (min-height:740px) {
+  html body #loginScreen.hmis-login-page {
+    background:linear-gradient(180deg,#edf6ff 0%,#eaf3fc 66%,#f2f7fd 100%)!important;
+  }
+  #loginScreen.hmis-login-page .hmis-topbar {
+    height:clamp(72px,7.5dvh,89px)!important;
+    min-height:0!important;
+    padding:7px clamp(15px,3vw,25px)!important;
+  }
+  #loginScreen.hmis-login-page .hmis-logo-badge {
+    width:clamp(56px,6dvh,74px)!important;
+    height:clamp(56px,6dvh,74px)!important;
+    flex-basis:clamp(56px,6dvh,74px)!important;
+  }
+  #loginScreen.hmis-login-page .hmis-header-name {font-size:clamp(25px,3.9vw,32px)!important;}
+  #loginScreen.hmis-login-page .hmis-header-subtitle {font-size:clamp(11px,1.9vw,14px)!important;}
+  #loginScreen.hmis-login-page .hmis-header-hindi {font-size:clamp(9px,1.45vw,12px)!important;}
+  #loginScreen.hmis-login-page .hmis-topnav {
+    height:44px!important;flex-basis:44px!important;
+    padding-inline:clamp(15px,2.5vw,24px)!important;
+  }
+  #loginScreen.hmis-login-page .hmis-navitem {font-size:11px!important;gap:7px!important;}
+  #loginScreen.hmis-login-page .hmis-mainarea {
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:clamp(285px,35dvh,418px) minmax(0,1fr)!important;
+    justify-items:center!important;align-items:center!important;
+    align-content:stretch!important;
+    gap:clamp(9px,1.4dvh,16px)!important;
+    max-width:760px!important;
+    min-height:0!important;
+    padding:clamp(10px,1.4dvh,16px) clamp(14px,2.4vw,22px)!important;
+    overflow:hidden!important;
+  }
+  #loginScreen.hmis-login-page .hmis-scene {
+    align-self:stretch!important;width:100%!important;min-height:0!important;
+    height:100%!important;border-radius:14px!important;
+    box-shadow:0 6px 20px rgba(12,64,126,.1)!important;
+  }
+  #loginScreen.hmis-login-page .hmis-scene-signal {width:29%!important;background-position:center 48%!important;}
+  #loginScreen.hmis-login-page .hmis-scene-bg {height:60%!important;}
+  #loginScreen.hmis-login-page .hmis-scene-text {
+    margin:clamp(36px,5.7dvh,66px) 5% 0 30%!important;
+    text-align:left!important;
+  }
+  #loginScreen.hmis-login-page .hmis-scene h1 {font-size:clamp(31px,4.6vw,40px)!important;}
+  #loginScreen.hmis-login-page .hmis-hero-subtitle {font-size:clamp(15px,2.1vw,18px)!important;}
+  #loginScreen.hmis-login-page .hmis-scene-text p {font-size:clamp(12px,1.9vw,16px)!important;}
+  #loginScreen.hmis-login-page .hmis-accentline {margin:9px 0!important;}
+  #loginScreen.hmis-login-page .hmis-features {width:68%!important;margin:clamp(16px,2.2dvh,26px) 2% 0 30%!important;gap:7px!important;}
+  #loginScreen.hmis-login-page .hmis-feature {font-size:clamp(9px,1.45vw,11px)!important;gap:6px!important;}
+  #loginScreen.hmis-login-page .hmis-feature-icon {width:clamp(37px,4.5dvh,45px)!important;height:clamp(37px,4.5dvh,45px)!important;}
+  html body #loginScreen.hmis-login-page .login-card.hmis-login-card,
+  html body.dark-theme #loginScreen.hmis-login-page .login-card.hmis-login-card {
+    align-self:center!important;
+    justify-self:center!important;
+    height:auto!important;
+    max-height:100%!important;
+    min-height:0!important;
+    width:100%!important;
+    max-width:610px!important;
+    padding:clamp(14px,2dvh,24px) clamp(24px,4vw,38px)!important;
+    overflow:hidden!important;
+    justify-content:center!important;
+    border-radius:15px!important;
+    box-shadow:0 8px 28px rgba(18,64,121,.11)!important;
+  }
+  #loginScreen.hmis-login-page .hmis-signin-title h2 {font-size:clamp(27px,3.7vw,32px)!important;}
+  #loginScreen.hmis-login-page .hmis-signin-intro {font-size:12px!important;margin-bottom:14px!important;}
+  #loginScreen.hmis-login-page .login-form-group {margin-bottom:12px!important;}
+  html body #loginScreen.hmis-login-page .login-input-wrapper {height:45px!important;}
+  html body #loginScreen.hmis-login-page .login-input {height:43px!important;font-size:13px!important;}
+  #loginScreen.hmis-login-page .hmis-form-help {margin-bottom:12px!important;}
+  #loginScreen.hmis-login-page .hmis-login-separator {margin:13px 0 9px!important;}
+  #loginScreen.hmis-login-page .hmis-auth-note {padding:8px 12px!important;}
+  #loginScreen.hmis-login-page .hmis-bottom-bar {height:27px!important;flex-basis:27px!important;}
+}
+/* On tall tablets, the railway hero shares the screen rather than leaving a vacant band. */
+@media (min-width:601px) and (max-width:900px) and (orientation:portrait) and (min-height:1100px) {
+  #loginScreen.hmis-login-page .hmis-mainarea {
+    grid-template-rows:clamp(465px,44dvh,565px) minmax(0,1fr)!important;
+  }
+}
+@media (min-width:601px) and (max-width:900px) and (orientation:portrait) and (min-height:740px) {
+  #loginScreen.hmis-login-page .hmis-form-line {margin:7px auto 11px!important;align-self:center!important;}
+}
+/* In portrait tablets with short available height (split-screen), keep fields visible.
+   Normal browser viewport remains scroll-free; content can scroll only if indispensable. */
+@media (min-width:601px) and (max-width:900px) and (orientation:portrait) and (min-height:740px) and (max-height:900px) {
+  #loginScreen.hmis-login-page .hmis-mainarea {grid-template-rows:clamp(240px,32dvh,285px) minmax(0,1fr)!important;}
+  #loginScreen.hmis-login-page .hmis-scene-text {margin-top:20px!important;}
+  #loginScreen.hmis-login-page .hmis-features {margin-top:12px!important;}
+  html body #loginScreen.hmis-login-page .login-card.hmis-login-card {padding-block:8px!important;}
+  #loginScreen.hmis-login-page .hmis-form-line {margin:4px auto 6px!important;}
+  #loginScreen.hmis-login-page .hmis-signin-intro {margin-bottom:7px!important;}
+  #loginScreen.hmis-login-page .login-form-group {margin-bottom:7px!important;}
+  html body #loginScreen.hmis-login-page .login-form-group label {margin-bottom:3px!important;}
+  html body #loginScreen.hmis-login-page .login-input-wrapper {height:40px!important;}
+  html body #loginScreen.hmis-login-page .login-input {height:38px!important;}
+  html body #loginScreen.hmis-login-page .login-btn {height:44px!important;min-height:44px!important;}
+  #loginScreen.hmis-login-page .hmis-login-separator {margin:7px 0 5px!important;}
+  #loginScreen.hmis-login-page .hmis-auth-note {padding:6px 9px!important;}
+}
+</style>
+
 <script id="rail-hmis-login-links-and-reset">
 (function(){
  'use strict';

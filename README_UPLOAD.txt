@@ -1,10 +1,25 @@
-RailSNTGyan HMIS Login — NO SCROLL RESPONSIVE FIX
+RAILSNTGYAN — TABLET PORTRAIT LOGIN LAYOUT FIX (24 OCT 2026)
 
-Changes: Login-only CSS locks the outer login screen to the viewport, fits desktop/laptop content by reducing spacing and min-height, and compresses the decorative scene on mobile while keeping email/password/login accessible. Authenticated site is unchanged.
+MAIN CHANGE
+- Tablet portrait, 601–900 CSS px wide: resize the large full-height white sign-in panel
+  into a centered content-sized form, enlarge railway artwork and remove blank space.
+- Fits without page scrolling on tested iPad Mini 768x1024, 800x1280, 768x850.
+- Phone, laptop/desktop and tablet landscape login rules remain unchanged.
+- Firebase login, user/admin management, portal features and Firestore logic untouched.
 
-Upload to GitHub Railsignal/Railsignal.github.io:
-1. Replace index.html at the repository root (same folder as old index.html).
-2. Keep current assets/hmis-header-rail.webp, hmis-signal.webp and hmis-tracks.webp. Images inside this ZIP are provided only as a backup.
-3. If GitHub Pages seems unchanged, hard refresh or open in incognito.
+GITHUB UPLOAD (EASIEST)
+1. First keep a copy of your old index.html.
+2. Replace only root /index.html in GitHub repository Railsignal.github.io.
+3. Existing assets/hmis-header-rail.webp, assets/hmis-signal.webp,
+   assets/hmis-tracks.webp do not need re-upload.
+4. Clear Chrome cache / hard refresh before comparing.
+5. Test an actual tablet and desktop login after publishing. These are layout tests,
+   not live Firebase account sign-in tests.
 
-Cloudflare/Firebase credentials and logic were not changed. Live sign-in needs verification on your deployment.
+COMPLETE PACKAGE
+The assets/ folder is included for convenience if you are restoring/redeploying
+from scratch. Do not delete any other assets, PDFs, JS or data in your repo.
+
+NOTE
+A 'fit to window' browser DevTools screenshot may scale down the tablet preview;
+judge legibility at 100% on the actual tablet device.
