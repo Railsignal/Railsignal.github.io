@@ -105,7 +105,6 @@ html.rail-saved-light body:not(.dark-theme) {
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
 
   <!-- Chart.js for Dashboard Visualizations -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -7223,83 +7222,6 @@ body:not(.dark-theme) #rmModal .rm-excel-preview-item.rm-excel-new{background:#e
  #rmModal .rm-compact-meta{font-size:10.5px!important}
  #rmModal .rm-firestore-note{position:static!important;}
 }
-</style>
-<style id="rail-admin-users-management-css">
-/* RailSNTGyan admin-only Firebase users: embedded UI, no credentials in the browser. */
-#railUserManagerPanel[hidden]{display:none!important}
-#railProfileOverlay.rail-users-open {justify-content:center!important;align-items:center!important;padding:10px!important;}
-#railProfileOverlay.rail-users-open .rail-profile-panel {
-  width:min(950px,calc(100vw - 20px))!important;max-height:calc(100dvh - 20px)!important;
-  padding:clamp(12px,2.4vw,22px)!important;border-radius:18px!important;
-}
-#railProfileOverlay.rail-users-open .rail-profile-details,
-#railProfileOverlay.rail-users-open .rail-profile-badge,
-#railProfileOverlay.rail-users-open #railProfileAdminManagement,
-#railProfileOverlay.rail-users-open .rail-profile-footer{display:none!important}
-#railUserManagerPanel {--ru-border:rgba(127,214,248,.28);--ru-bg:rgba(1,17,37,.48);
-  --ru-text:#f2faff;--ru-muted:#b8d1e8;--ru-input:#092643;color:var(--ru-text);}
-#railUserManagerPanel *{box-sizing:border-box}
-#railUserManagerPanel .ru-top{display:flex;gap:9px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 10px}
-#railUserManagerPanel h3{font-size:16px;font-weight:800;color:inherit;margin:0}
-#railUserManagerPanel .ru-small{font-size:11px;color:var(--ru-muted);line-height:1.5}
-#railUserManagerPanel .ru-actions{display:flex;gap:7px;flex-wrap:wrap}
-#railUserManagerPanel button{font:inherit;cursor:pointer}
-#railUserManagerPanel .ru-btn{border-radius:9px;padding:9px 12px;border:1px solid rgba(120,214,255,.38);
-  background:rgba(12,69,112,.72);color:#f3fbff;font-weight:750;font-size:12px;display:inline-flex;gap:6px;align-items:center;justify-content:center;}
-#railUserManagerPanel .ru-btn.ru-primary{background:linear-gradient(100deg,#068aaf,#1672e4);color:white;border-color:#4fdefe}
-#railUserManagerPanel .ru-btn.ru-danger{background:rgba(151,31,51,.28);border-color:rgba(251,121,139,.5);color:#ffe4e9}
-#railUserManagerPanel .ru-btn:disabled{opacity:.48;cursor:not-allowed}
-#railUserManagerPanel .ru-btn:focus-visible,#railUserManagerPanel input:focus-visible{outline:2px solid #7ae5ff;outline-offset:2px}
-#railUserManagerPanel .ru-feedback{border-radius:9px;padding:9px 11px;border:1px solid var(--ru-border);margin:7px 0 10px;
-  background:rgba(35,133,190,.15);color:#dbf4ff;font-size:12px;line-height:1.45}
-#railUserManagerPanel .ru-feedback.ru-error{color:#ffe0e0;background:rgba(144,23,23,.18);border-color:#d67d7d}
-#railUserManagerPanel .ru-feedback[hidden]{display:none}
-#railUserManagerPanel .ru-columns{display:grid;grid-template-columns:minmax(235px,.85fr) minmax(0,1.15fr);gap:12px;align-items:stretch}
-#railUserManagerPanel .ru-list-wrap,#railUserManagerPanel .ru-editor{border:1px solid var(--ru-border);border-radius:12px;padding:12px;background:var(--ru-bg);min-width:0}
-#railUserManagerPanel .ru-list-wrap{display:flex;flex-direction:column;min-height:320px}
-#railUserManagerPanel .ru-search{width:100%;margin:8px 0 8px}
-#railUserManagerPanel .ru-list{max-height:min(47dvh,440px);overflow:auto;display:flex;flex-direction:column;gap:6px}
-#railUserManagerPanel .ru-person{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;
-  border:1px solid var(--ru-border);background:rgba(24,71,109,.27);border-radius:8px;padding:9px;color:inherit}
-#railUserManagerPanel .ru-person strong{font-size:12px;overflow-wrap:anywhere}
-#railUserManagerPanel .ru-person small{font-size:10px;color:var(--ru-muted);overflow-wrap:anywhere}
-#railUserManagerPanel .ru-person.ru-selected{background:rgba(23,136,190,.4);border-color:#5ad7ff}
-#railUserManagerPanel .ru-person.ru-disabled{border-left:3px solid #ee6c74}
-#railUserManagerPanel .ru-busy{opacity:.65;pointer-events:none}
-#railUserManagerPanel .ru-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-#railUserManagerPanel .ru-fields label{display:flex;flex-direction:column;gap:4px;color:var(--ru-muted);font-size:11px;font-weight:750;min-width:0}
-#railUserManagerPanel .ru-fields label.ru-wide{grid-column:1/-1}
-#railUserManagerPanel input{background:var(--ru-input);color:var(--ru-text);border:1px solid var(--ru-border);font-size:13px;
-  border-radius:8px;padding:9px 10px;min-width:0;width:100%;outline:none}
-#railUserManagerPanel input::placeholder{color:#98b3c8}
-#railUserManagerPanel .ru-editor h4{font-size:14px;margin:0 0 9px}
-#railUserManagerPanel .ru-form-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
-#railUserManagerPanel .ru-pw-section{margin-top:13px;border-top:1px solid var(--ru-border);padding-top:10px}
-#railUserManagerPanel .ru-pw-section[hidden],#railUserManagerPanel .ru-only-create[hidden],
-#railUserManagerPanel .ru-only-edit[hidden]{display:none!important}
-#railUserManagerPanel .ru-uid{font:11px ui-monospace,monospace;word-break:break-all;color:var(--ru-muted)}
-#railUserManagerPanel .ru-pill{font-size:10px;font-weight:800;border:1px solid var(--ru-border);
-  border-radius:50px;padding:2px 6px;color:#d4f4ff}
-html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel {
-  --ru-border:#b4d0e0;--ru-bg:#f5fbff;--ru-text:#153653;--ru-muted:#526d84;--ru-input:#fff;}
-html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-person{background:#eaf5fb;color:#153653}
-html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-person.ru-selected{background:#c7eafc;border-color:#2999d2}
-html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-btn:not(.ru-primary):not(.ru-danger){background:#e3f2ff;color:#154b6a}
-html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback{color:#164869;background:#e3f6ff}
-html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback.ru-error{color:#922b29;background:#ffeded}
-@media(max-width:720px){
- #railProfileOverlay.rail-users-open{align-items:flex-start!important;padding:6px!important;}
- #railProfileOverlay.rail-users-open .rail-profile-panel{width:calc(100vw - 12px)!important;max-height:calc(100dvh - 12px)!important;padding:11px!important}
- #railUserManagerPanel .ru-columns{grid-template-columns:1fr}
- #railUserManagerPanel .ru-list-wrap{min-height:0}
- #railUserManagerPanel .ru-list{max-height:22dvh}
- #railUserManagerPanel .ru-fields{grid-template-columns:1fr 1fr;gap:7px}
- #railUserManagerPanel .ru-fields label.ru-mobile-full{grid-column:1/-1}
- #railUserManagerPanel .ru-btn{padding:8px 10px}
-}
-@media(max-width:370px){#railUserManagerPanel .ru-fields{grid-template-columns:1fr}#railUserManagerPanel .ru-fields label{grid-column:auto!important}}
-#railUserManagerPanel [hidden]{display:none!important}
-
 </style>
 </head>
 <script id="rn-theme-prebody-v33">
@@ -17150,54 +17072,51 @@ html.portal-session-auth body.dark-theme #loginScreen{display:none!important;vis
 </style>
 <!-- Login V4.4 Glass Center refinement (2026-10-24): appearance only; no auth or app changes. -->
 <style id="rails-v44-login-glass-centered-20261024">
-/* 24-Oct-2026: True see-through login card. The railway wallpaper is continuous
-   behind the card: no secondary card image, colored gradient or glass blur. */
+/* Clearer see-through navy glass (roughly 46%-55% opacity), with high-contrast input fields. */
 html body #loginScreen .login-card,
 html body.dark-theme #loginScreen .login-card {
-  background:rgba(3,12,31,.045)!important;
-  background-image:none!important;
-  backdrop-filter:none!important;
-  -webkit-backdrop-filter:none!important;
-  box-shadow:0 0 0 1.5px rgba(130,232,255,.58),
-             0 12px 34px rgba(0,9,28,.18),
-             0 0 24px rgba(11,190,255,.12)!important;
+  background:
+    radial-gradient(circle at 19% 18%,rgba(255,198,145,.07),transparent 26%),
+    radial-gradient(circle at 83% 73%,rgba(27,110,255,.09),transparent 32%),
+    radial-gradient(circle at 28% 86%,rgba(76,232,255,.045),transparent 20%),
+    linear-gradient(180deg,rgba(12,35,72,.46),rgba(5,20,44,.55))!important;
+  backdrop-filter:blur(7px) saturate(1.05)!important;
+  -webkit-backdrop-filter:blur(7px) saturate(1.05)!important;
 }
-/* The old decorative reflection looked like a second backdrop and covered the
-   actual scene. Remove it. Keep the ambient constellation/bubble canvas outside. */
-html body #loginScreen .railV44CardReflection {display:none!important;}
-html body #loginScreen .railV44CardBubbles {opacity:.13!important;}
-/* Keep white labels and headings readable against the photograph. */
-html body #loginScreen .login-brand-title,
-html body #loginScreen .login-brand-subtitle,
-html body #loginScreen .login-desc,
-html body #loginScreen .login-form-group label {
-  text-shadow:0 2px 7px rgba(0,8,26,.95),0 1px 3px rgba(0,8,26,.7)!important;
-}
-/* Real mobile/tablet centered positioning retained from previous tested layout. */
+/* True horizontal and vertical centering for portrait mobile/tablet. */
 @media (orientation:portrait) and (max-width:1100px) {
   html body #loginScreen, html body.dark-theme #loginScreen {
-    align-items:center!important;justify-content:center!important;
-    padding-top:12px!important;padding-bottom:12px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding-top:12px!important;
+    padding-bottom:12px!important;
   }
   html body #loginScreen .login-card, html body.dark-theme #loginScreen .login-card {
-    margin:auto!important;transform:none!important;
+    margin:auto!important;
+    transform:none!important;
   }
 }
+/* Move the portrait railway image slightly left so the red signal remains visible
+   beside the centered card (not behind it) on regular smartphones. */
 @media (orientation:portrait) and (max-width:600px) {
   html body #loginScreen, html body.dark-theme #loginScreen {
     background-position:35% bottom!important;
   }
 }
+/* Tablet landscape: remove the earlier visual offset, center the existing compact card. */
 @media (orientation:landscape) and (min-width:650px) and (max-height:1000px) and (pointer:coarse) {
-  html body #loginScreen,html body.dark-theme #loginScreen {
-    align-items:center!important;justify-content:center!important;
+  html body #loginScreen, html body.dark-theme #loginScreen {
+    align-items:center!important;
+    justify-content:center!important;
   }
   html body #loginScreen .login-card,html body.dark-theme #loginScreen .login-card {
-    margin:auto!important;transform:none!important;
+    margin:auto!important;
+    transform:none!important;
   }
 }
+/* For narrow/short screens keep flex scrolling available while centered when space permits. */
 @media (orientation:portrait) and (max-height:540px) {
-  html body #loginScreen,html body.dark-theme #loginScreen {align-items:safe center!important;}
+  html body #loginScreen, html body.dark-theme #loginScreen {align-items:safe center!important;}
 }
 </style>
 <script id="rails-login-v44-background-script">
@@ -17451,67 +17370,6 @@ window.railV44ShowWelcome = function(){
         <span><strong>ADD IN DATABASE</strong><small>Stations, Divisions, Agencies, EI/MSDAC OEMs &amp; more</small></span>
         <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
       </button>
-      <button type="button" id="railProfileUserManageBtn" class="rail-profile-master-link"
-        onclick="railOpenUserManager()" title="Create Firebase users, edit profiles, disable accounts and manage passwords"
-        style="margin-top:9px">
-        <i class="fa-solid fa-users-gear" aria-hidden="true"></i>
-        <span><strong>MANAGE USERS</strong><small>Add User · Edit Details · Enable/Disable · Reset Password</small></span>
-        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-      </button>
-    </section>
-    <!-- Firebase user management: visible only in an existing verified Admin Profile. -->
-    <section id="railUserManagerPanel" hidden aria-label="Firebase User Management">
-      <div class="ru-top">
-        <div><h3><i class="fa-solid fa-users-gear" aria-hidden="true"></i> USER MANAGEMENT</h3>
-          <div class="ru-small">Existing Firebase accounts · Secure Admin access</div></div>
-        <div class="ru-actions">
-          <button class="ru-btn" type="button" id="ruBackBtn"><i class="fa-solid fa-arrow-left"></i> Profile</button>
-          <button class="ru-btn ru-primary" type="button" id="ruNewBtn"><i class="fa-solid fa-user-plus"></i> Add User</button>
-        </div>
-      </div>
-      <div class="ru-feedback" id="ruFeedback" role="status" aria-live="polite">Loading existing Firebase users…</div>
-      <div class="ru-columns">
-        <div class="ru-list-wrap">
-          <strong style="font-size:12px">Firebase Accounts <span class="ru-pill" id="ruCount">0</span></strong>
-          <input class="ru-search" id="ruSearch" type="search" autocomplete="off" placeholder="Search name or email" aria-label="Search users">
-          <div id="ruList" class="ru-list" role="list" aria-label="Users"></div>
-          <button type="button" class="ru-btn" id="ruMoreBtn" hidden style="margin-top:8px">Load more accounts</button>
-        </div>
-        <div class="ru-editor">
-          <h4 id="ruFormHeading">Add New User</h4>
-          <form id="ruForm" autocomplete="off">
-            <div class="ru-fields">
-              <label class="ru-wide">Name <input id="ruName" type="text" maxlength="100" required autocomplete="off" placeholder="Full name"></label>
-              <label class="ru-wide">Login Email ID <input id="ruEmail" type="email" maxlength="254" required autocomplete="off" placeholder="user@example.com"></label>
-              <label>Designation <input id="ruDesignation" maxlength="100" placeholder="SSE / JE / ..."></label>
-              <label>Division <input id="ruDivision" maxlength="100" placeholder="BSP / R / NGP"></label>
-              <label>Department <input id="ruDepartment" maxlength="100" placeholder="S&T"></label>
-              <label>Contact number (optional) <input id="ruContact" maxlength="35" inputmode="tel" placeholder="Mobile number"></label>
-              <label class="ru-wide ru-only-create" id="ruCreatePasswordLabel">Temporary password (minimum 10 characters)
-                <input id="ruCreatePassword" type="password" minlength="10" maxlength="128" autocomplete="new-password" placeholder="Enter a strong temporary password"></label>
-            </div>
-            <div class="ru-small ru-only-create" id="ruCreateHint" style="margin-top:8px">The password is sent to Firebase Authentication, not stored in Firestore or this page. Share it privately and ask the user to change it.</div>
-            <div class="ru-small ru-only-edit" id="ruUidRow" hidden style="margin-top:8px">Firebase UID (read only): <span class="ru-uid" id="ruUid"></span></div>
-            <div class="ru-form-actions">
-              <button type="submit" class="ru-btn ru-primary" id="ruSaveBtn">Create User</button>
-              <button type="button" class="ru-btn ru-only-edit" id="ruStatusBtn" hidden>Disable User</button>
-            </div>
-          </form>
-          <div class="ru-pw-section ru-only-edit" id="ruPasswordSection" hidden>
-            <strong style="font-size:12px">Password Management</strong>
-            <p class="ru-small">Existing passwords cannot be viewed. Set a new password or send a reset link.</p>
-            <div class="ru-fields" style="margin-top:7px">
-              <label class="ru-wide">New password (minimum 10 characters)
-                <input type="password" autocomplete="new-password" id="ruNewPassword" minlength="10" maxlength="128" placeholder="New password"></label>
-            </div>
-            <div class="ru-form-actions">
-              <button type="button" class="ru-btn" id="ruSetPasswordBtn">Set New Password</button>
-              <button type="button" class="ru-btn" id="ruResetEmailBtn">Send Reset Email</button>
-            </div>
-          </div>
-          <div class="ru-small" style="margin-top:10px">Admin accounts are protected against modification here. Passwords and service-account secrets are never displayed.</div>
-        </div>
-      </div>
     </section>
     <p class="rail-profile-footer">Account details are taken from the active Firebase session.</p>
   </section>
@@ -17577,7 +17435,6 @@ window.railV44ShowWelcome = function(){
   };
   window.railCloseProfile=function(restoreFocus=true,fromPopstate=false){
     const panel=overlay();if(!panel||panel.hidden)return;
-    if(window.railCloseUserManager)window.railCloseUserManager(true);
     panel.hidden=true;panel.setAttribute('aria-hidden','true');
     const trigger=get('railProfileBtn');if(trigger)trigger.setAttribute('aria-expanded','false');
     if(restoreFocus && trigger && document.documentElement.classList.contains('portal-session-auth'))trigger.focus();
@@ -17606,168 +17463,6 @@ window.railV44ShowWelcome = function(){
   document.addEventListener('click',function(e){if(e.target===overlay())window.railCloseProfile();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay()&&!overlay().hidden)window.railCloseProfile();});
 })();
-</script>
-<script id="rail-admin-users-management-script">
-(function(){
- 'use strict';
- const get=id=>document.getElementById(id);
- let users=[], selectedUid='', pageToken=null, busy=false, initialized=false;
- const authReady=()=>typeof firebase!=='undefined'&&firebase.auth&&firebase.auth().currentUser&&
-   typeof railAdmin!=='undefined'&&railAdmin===true&&document.documentElement.classList.contains('portal-session-auth');
- const v=id=>get(id)?.value.trim()||'';
- const msg=(s,bad=false)=>{let el=get('ruFeedback');if(!el)return;el.hidden=!s;el.classList.toggle('ru-error',!!bad);el.textContent=s||'';};
- const show=id=>(get(id).hidden=false);
- const hide=id=>(get(id).hidden=true);
- const setBusy=(val)=>{busy=val;get('ruSaveBtn').disabled=val;get('ruStatusBtn').disabled=val;get('ruSetPasswordBtn').disabled=val;
-   get('ruMoreBtn').disabled=val;get('ruNewBtn').disabled=val;
-   const u=users.find(x=>x.uid===selectedUid);if(u?.admin){get('ruSaveBtn').disabled=true;get('ruStatusBtn').disabled=true;get('ruSetPasswordBtn').disabled=true;get('ruResetEmailBtn').disabled=true;}
- };
- async function run(action, data={}){
-   if(!authReady())throw new Error('Admin session required. Please sign in again.');
-   if(!firebase.functions)throw new Error('Firebase Functions SDK did not load. Refresh this page.');
-   try{
-     const fn=firebase.app().functions('us-central1').httpsCallable('railManageUsers');
-     const response=await fn({action,...data});return response.data;
-   }catch(e){
-     const code=e?.code||'';
-     if(code==='functions/not-found'||code==='functions/unavailable')
-       throw new Error('Secure Cloud Function is not available. Deploy functions/railManageUsers first (see README).');
-     if(code==='functions/permission-denied')throw new Error('Access denied. Confirm this account has Firebase admin:true claim.');
-     throw new Error(e?.message||'User Management request failed.');
-   }
- }
- const word=(u)=>[u.name||'',u.email||''].join(' ').toLowerCase();
- function render(){
-   const list=get('ruList');list.replaceChildren();const filter=v('ruSearch').toLowerCase();
-   let count=0;
-   users.filter(u=>word(u).includes(filter)).forEach(u=>{
-     count++;
-     const b=document.createElement('button');b.type='button';
-     b.className='ru-person'+(u.uid===selectedUid?' ru-selected':'')+(u.disabled?' ru-disabled':'');
-     const strong=document.createElement('strong');strong.textContent=(u.name||'No name')+(u.admin?' · ADMIN':'');
-     const small=document.createElement('small');small.textContent=u.email+' · '+(u.disabled?'Disabled':'Active');
-     b.append(strong,small);b.addEventListener('click',()=>choose(u.uid));list.appendChild(b);
-   });
-   if(!count){const p=document.createElement('p');p.className='ru-small';p.textContent=users.length?'No matching account.':'No accounts loaded.';list.appendChild(p);}
-   get('ruCount').textContent=String(users.length);
-   get('ruMoreBtn').hidden=!pageToken;
- }
- function pickData(){return {name:v('ruName'),email:v('ruEmail'),designation:v('ruDesignation'),
-    division:v('ruDivision'),department:v('ruDepartment'),contact:v('ruContact')};}
- function choose(uid){
-   selectedUid=uid;
-   const u=users.find(x=>x.uid===uid);
-   if(!u)return;
-   get('ruFormHeading').textContent=u.admin?'View Admin Account':'Edit User Details';
-   for(const [field,key] of [['ruName','name'],['ruEmail','email'],['ruDesignation','designation'],
-     ['ruDivision','division'],['ruDepartment','department'],['ruContact','contact']])get(field).value=u[key]||'';
-   hide('ruCreatePasswordLabel');hide('ruCreateHint');
-   show('ruUidRow');show('ruPasswordSection');show('ruStatusBtn');
-   get('ruUid').textContent=u.uid;
-   get('ruCreatePassword').required=false;
-   get('ruSaveBtn').textContent='Save Changes';
-   get('ruStatusBtn').textContent=u.disabled?'Enable User':'Disable User';
-   const locked=!!u.admin;
-   [...get('ruForm').querySelectorAll('input')].forEach(inp=>inp.disabled=locked);
-   get('ruNewPassword').disabled=locked;
-   get('ruSaveBtn').disabled=locked;
-   get('ruStatusBtn').disabled=locked;
-   get('ruSetPasswordBtn').disabled=locked;
-   get('ruResetEmailBtn').disabled=locked;
-   get('ruNewPassword').value='';
-   render();msg(locked?'Protected Admin account: details are read-only.':'Edit details or manage account access.');
- }
- function newUser(){
-   selectedUid='';get('ruForm').reset();
-   [...get('ruForm').querySelectorAll('input')].forEach(inp=>inp.disabled=false);
-   get('ruFormHeading').textContent='Add New User';show('ruCreatePasswordLabel');show('ruCreateHint');
-   hide('ruUidRow');hide('ruStatusBtn');hide('ruPasswordSection');
-   get('ruCreatePassword').required=true;get('ruSaveBtn').textContent='Create User';get('ruSaveBtn').disabled=false;
-   render();msg('New account will be created in Firebase Authentication.');
- }
- async function load(more=false){
-   if(busy)return;setBusy(true);msg(more?'Loading more users…':'Loading existing Firebase accounts…');
-   try{
-     const result=await run('list',{pageToken:more?pageToken||'':''});
-     users=more?[...users,...result.users]:result.users;
-     pageToken=result.nextPageToken;
-     render();msg(users.length+' Firebase account(s) loaded'+(pageToken?' · Load more available.':'.'));
-   }catch(e){msg(e.message,true);}
-   finally{setBusy(false);}
- }
- async function save(event){
-   event.preventDefault();if(busy||!authReady())return;
-   const values=pickData();
-   if(!values.email||!values.name)return msg('Name and Email ID are required.',true);
-   const creating=!selectedUid;
-   if(creating&&get('ruCreatePassword').value.length<10)return msg('Password needs at least 10 characters.',true);
-   const action=creating?'create':'update';
-   if(!creating&&!window.confirm('Save changes for '+values.email+'?'))return;
-   setBusy(true);msg(creating?'Creating Firebase user…':'Saving user details…');
-   try{
-     const result=await run(action,{...values, ...(creating?{password:get('ruCreatePassword').value}:{uid:selectedUid})});
-     const i=users.findIndex(x=>x.uid===result.user.uid);
-     if(i<0)users.unshift(result.user);else users[i]=result.user;
-     // Never leave a password in the form after submission.
-     get('ruCreatePassword').value='';
-     choose(result.user.uid);
-     msg(creating?'Firebase account created successfully. Share the temporary password privately.':'User details saved.');
-   }catch(e){get('ruCreatePassword').value='';msg(e.message,true);}
-   finally{setBusy(false);}
- }
- async function status(){
-   const u=users.find(x=>x.uid===selectedUid);if(!u||u.admin||busy)return;
-   const disabled=!u.disabled;
-   if(!confirm((disabled?'DISABLE':'ENABLE')+' login for '+u.email+'?'))return;
-   setBusy(true);msg('Updating account access…');
-   try{const result=await run('setDisabled',{uid:u.uid,disabled});users[users.findIndex(x=>x.uid===u.uid)]={...u,...result.user};
-     choose(u.uid);msg(disabled?'User disabled. Existing sessions may remain valid until token expiry.':'User enabled.');}
-   catch(e){msg(e.message,true)}finally{setBusy(false);}
- }
- async function setPassword(){
-   const u=users.find(x=>x.uid===selectedUid);if(!u||u.admin||busy)return;
-   const password=get('ruNewPassword').value;
-   if(password.length<10||password.length>128)return msg('New password must contain 10–128 characters.',true);
-   if(!confirm('Change password for '+u.email+'? The previous password will stop working.'))return;
-   setBusy(true);msg('Updating password…');
-   try{await run('setPassword',{uid:u.uid,password});msg('Password updated. Share new credentials privately.');}
-   catch(e){msg(e.message,true)}finally{get('ruNewPassword').value='';setBusy(false)}
- }
- async function sendResetEmail(){
-   const u=users.find(x=>x.uid===selectedUid);if(!u||u.admin||busy)return;
-   if(!confirm('Send Firebase password reset email to '+u.email+'?'))return;
-   setBusy(true);msg('Sending password reset email…');
-   try{await firebase.auth().sendPasswordResetEmail(u.email);msg('If email delivery is configured, a password reset email has been requested.');}
-   catch(e){msg(e.message||'Could not send password reset email.',true)}finally{setBusy(false)}
- }
- function init(){
-   if(initialized)return;initialized=true;
-   get('ruSearch').addEventListener('input',render);
-   get('ruNewBtn').addEventListener('click',newUser);
-   get('ruBackBtn').addEventListener('click',()=>window.railCloseUserManager());
-   get('ruMoreBtn').addEventListener('click',()=>load(true));
-   get('ruForm').addEventListener('submit',save);
-   get('ruStatusBtn').addEventListener('click',status);
-   get('ruSetPasswordBtn').addEventListener('click',setPassword);
-   get('ruResetEmailBtn').addEventListener('click',sendResetEmail);
- }
- window.railOpenUserManager=function(){
-   if(!authReady()){alert('Only an authenticated admin can manage users.');return;}
-   const parent=get('railProfileOverlay');
-   if(!parent||parent.hidden)return;
-   init();parent.classList.add('rail-users-open');show('railUserManagerPanel');
-   get('railProfileTitle').textContent='User Management';
-   newUser();load();
- };
- window.railCloseUserManager=function(silent=false){
-   const p=get('railProfileOverlay');if(!p)return;
-   p.classList.remove('rail-users-open');hide('railUserManagerPanel');
-   get('railProfileTitle').textContent='My Profile';
-   selectedUid='';get('ruCreatePassword').value='';get('ruNewPassword').value='';
-   if(!silent)get('railProfileMasterDataBtn')?.focus();
- };
-})();
-
 </script>
 </body>
 
