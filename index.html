@@ -93,6 +93,16 @@ html.rail-saved-light body:not(.dark-theme) {
   </style>
   <link rel="preload" as="image" href="assets/login-desktop-4k.webp" media="(orientation:landscape)">
   <link rel="preload" as="image" href="assets/login-mobile-4k.webp" media="(orientation:portrait)">
+  <style id="rail-auth-welcome-lock-fix-20261024">
+    /* AUTH VISIBILITY LOCK. More specific than HMIS display:flex!important.
+       Never expose portal while logged out or logged-in login overlay while authed. */
+    html.portal-session-auth body #loginScreen.hmis-login-page,
+    html.portal-session-auth body.dark-theme #loginScreen.hmis-login-page {
+      display:none !important;
+      visibility:hidden !important;
+      pointer-events:none !important;
+    }
+  </style>
   <title>RailSNTGyan - Railway S&T Knowledge Portal</title>
   <!-- Hindi calligraphy only for the V4.4 welcome message; serif fallback works offline. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8827,9 +8837,15 @@ html.rail-saved-light body:not(.dark-theme) #railUserManagerPanel .ru-feedback.r
         document.documentElement.classList.remove('rail-auth-pending');
         return;
       }
-      if (visible && window.railV44ResetWelcome) window.railV44ResetWelcome();
+      // On BOTH login completion and logout, clear the V4.4 welcome overlay.
+      // A stale .railV44Show otherwise keeps dimming the authenticated Home.
+      if (window.railV44ResetWelcome) window.railV44ResetWelcome();
       document.documentElement.classList.toggle('portal-session-auth', !visible);
-      screen.style.display = visible ? 'flex' : 'none';
+      // IMPORTANT: HMIS login visual CSS declares display:flex !important.
+      // Setting ordinary element.style.display='none' cannot override it.
+      // Inline !important below definitively closes the login screen after auth.
+      screen.style.setProperty('display', visible ? 'flex' : 'none', 'important');
+      screen.style.setProperty('visibility', visible ? 'visible' : 'hidden', 'important');
       document.documentElement.classList.remove('rail-auth-pending');
     }
 
