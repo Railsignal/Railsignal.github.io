@@ -17072,51 +17072,54 @@ html.portal-session-auth body.dark-theme #loginScreen{display:none!important;vis
 </style>
 <!-- Login V4.4 Glass Center refinement (2026-10-24): appearance only; no auth or app changes. -->
 <style id="rails-v44-login-glass-centered-20261024">
-/* Clearer see-through navy glass (roughly 46%-55% opacity), with high-contrast input fields. */
+/* 24-Oct-2026: True see-through login card. The railway wallpaper is continuous
+   behind the card: no secondary card image, colored gradient or glass blur. */
 html body #loginScreen .login-card,
 html body.dark-theme #loginScreen .login-card {
-  background:
-    radial-gradient(circle at 19% 18%,rgba(255,198,145,.07),transparent 26%),
-    radial-gradient(circle at 83% 73%,rgba(27,110,255,.09),transparent 32%),
-    radial-gradient(circle at 28% 86%,rgba(76,232,255,.045),transparent 20%),
-    linear-gradient(180deg,rgba(12,35,72,.46),rgba(5,20,44,.55))!important;
-  backdrop-filter:blur(7px) saturate(1.05)!important;
-  -webkit-backdrop-filter:blur(7px) saturate(1.05)!important;
+  background:rgba(3,12,31,.045)!important;
+  background-image:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:0 0 0 1.5px rgba(130,232,255,.58),
+             0 12px 34px rgba(0,9,28,.18),
+             0 0 24px rgba(11,190,255,.12)!important;
 }
-/* True horizontal and vertical centering for portrait mobile/tablet. */
+/* The old decorative reflection looked like a second backdrop and covered the
+   actual scene. Remove it. Keep the ambient constellation/bubble canvas outside. */
+html body #loginScreen .railV44CardReflection {display:none!important;}
+html body #loginScreen .railV44CardBubbles {opacity:.13!important;}
+/* Keep white labels and headings readable against the photograph. */
+html body #loginScreen .login-brand-title,
+html body #loginScreen .login-brand-subtitle,
+html body #loginScreen .login-desc,
+html body #loginScreen .login-form-group label {
+  text-shadow:0 2px 7px rgba(0,8,26,.95),0 1px 3px rgba(0,8,26,.7)!important;
+}
+/* Real mobile/tablet centered positioning retained from previous tested layout. */
 @media (orientation:portrait) and (max-width:1100px) {
   html body #loginScreen, html body.dark-theme #loginScreen {
-    align-items:center!important;
-    justify-content:center!important;
-    padding-top:12px!important;
-    padding-bottom:12px!important;
+    align-items:center!important;justify-content:center!important;
+    padding-top:12px!important;padding-bottom:12px!important;
   }
   html body #loginScreen .login-card, html body.dark-theme #loginScreen .login-card {
-    margin:auto!important;
-    transform:none!important;
+    margin:auto!important;transform:none!important;
   }
 }
-/* Move the portrait railway image slightly left so the red signal remains visible
-   beside the centered card (not behind it) on regular smartphones. */
 @media (orientation:portrait) and (max-width:600px) {
   html body #loginScreen, html body.dark-theme #loginScreen {
     background-position:35% bottom!important;
   }
 }
-/* Tablet landscape: remove the earlier visual offset, center the existing compact card. */
 @media (orientation:landscape) and (min-width:650px) and (max-height:1000px) and (pointer:coarse) {
-  html body #loginScreen, html body.dark-theme #loginScreen {
-    align-items:center!important;
-    justify-content:center!important;
+  html body #loginScreen,html body.dark-theme #loginScreen {
+    align-items:center!important;justify-content:center!important;
   }
   html body #loginScreen .login-card,html body.dark-theme #loginScreen .login-card {
-    margin:auto!important;
-    transform:none!important;
+    margin:auto!important;transform:none!important;
   }
 }
-/* For narrow/short screens keep flex scrolling available while centered when space permits. */
 @media (orientation:portrait) and (max-height:540px) {
-  html body #loginScreen, html body.dark-theme #loginScreen {align-items:safe center!important;}
+  html body #loginScreen,html body.dark-theme #loginScreen {align-items:safe center!important;}
 }
 </style>
 <script id="rails-login-v44-background-script">
